@@ -1,0 +1,45 @@
+.browse-library {
+    max-width: 100%;
+    padding: 3rem 0px;
+    margin: auto auto 3rem auto;
+    .age-groups {
+        margin: 2rem auto;
+        text-align: center;
+        width: min(1020px, 95%);
+        .age-group-list {
+            display: inline-flex;
+            justify-content: center;
+            margin: 1.5rem auto;
+            padding: 0px 1rem;
+            gap: 1rem;
+            .age-group {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+                width: 8rem;
+                height: 8rem;
+                padding: 1rem;
+                font-weight: 900;
+                background: #DBDBDB;
+                border: 1px solid #C5C5C5;
+                border-radius: 50%;
+                transition: 0.3s all ease;
+                h2 {
+                    font-size: 1.5rem;
+                }
+                p {
+                    font-size: 0.9rem;
+                }
+            }
+            .selected-age-group {
+                color: white;
+                background: #4285F4;
+                border: 1px solid #2A6DDC;
+                box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}

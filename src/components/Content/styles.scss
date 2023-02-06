@@ -1,0 +1,31 @@
+.content {
+    min-height: calc(100vh - 102px);
+    padding: 3rem 0px;
+    width: min(1400px, 95%);
+    margin: auto;
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .content-container {
+        margin: auto;
+        width: min(700px, 100%);
+        .content-text {
+            font-size: 1rem;
+            line-height: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            font-weight: 500;
+            text-align: justify;
+            a {
+                color: #FA7E0A;
+                text-decoration: underline;
+            }
+            span {
+                color: #FA7E0A;
+            }
+        }
+    }
+}

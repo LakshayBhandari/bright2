@@ -1,0 +1,166 @@
+.landing {
+    .hero {
+        background-color: rgba(0,0,0,0.7);
+        background-blend-mode: multiply;
+        height: max(600px, 70vh);
+        background-position: center -0.5rem;
+        color: #FFFFFF;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        > * {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: max(2.5rem, 6vw);
+            font-family: 'Francois One';
+        }
+        h2 {
+            font-size: max(2rem, 3vw);
+        }
+        h3 {
+            font-size: max(1.5rem, 2vw);
+        }
+        .mobile-number {
+            display: flex;
+            input {
+                border: 0px;
+                height: 3rem;
+                font-size: 1.125rem;
+            }
+            input[type='number'] {
+                background-color: #FFFFFF;
+                border-radius: 5px 0px 0px 5px;
+                width: min(400px, 70vw);
+                padding: 0px 1rem;
+            }
+            input[type='submit'] {
+                background-color: #FF8513;
+                border-radius: 0px 5px 5px 0px;
+                width: 50px;
+                color: #FFFFFF;
+                font-weight: bold;
+            }
+        }
+    }
+    .process {
+        margin: 3rem auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        .step {
+            margin: auto;
+            width: min(700px, 90%);
+            align-items: center;
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            p {
+                font-size: 1rem;
+            }
+            h1 {
+                font-size: max(3.5vw, 3.25rem);
+            }
+            h2 {
+                font-size: max(1.75vw, 1.5rem);
+            }
+            .step-count {
+                text-align: center;
+                color: #FF8513;
+            }
+            img {
+                margin: auto;
+                width: 5rem;
+            }
+        }
+    }
+    .illustrations {
+        margin: 3rem 0px;
+        .illustration {
+            display: flex;
+            align-items: center;
+            color: #FFFFFF;
+            padding: 3rem 0px;
+            border-top: 10px solid transparent;
+            .illustration-text {
+                display: flex;
+                padding: 3rem;
+                flex-direction: column;
+                gap: 1.5rem;
+                h1 {
+                    font-size: max(3rem, 3vw);
+                }
+                p {
+                    font-size: 1.25rem;
+                }
+            }
+            img {
+                margin-left: auto;
+                width: 40rem;
+            }
+            &:nth-child(even) {
+                flex-direction: row-reverse;
+                img {
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+    .gold-button {
+        width: min(700px, 95%);
+        margin: 3rem auto;
+    }
+    .faqs {
+        border: solid #D2D2D2;
+        border-width: 3px 0px;
+        padding: 3rem 0px;
+        h1 {
+            text-align: center;
+        }
+        .faq-accordion {
+            display: flex;
+            margin: 3rem auto;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: min(700px, 90%);
+            .faq {
+                .question {
+                    border-radius: 5px;
+                    background: #EAEAEA;
+                    padding: 1.5rem;
+                    display: flex;
+                    svg {
+                        margin-left: auto;
+                    }
+                }
+                .answer {
+                    padding: 1.5rem;
+                }
+            }
+        }
+    }
+    .gold-button {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+    @media (max-width: 968px) {
+        .illustrations {
+            .illustration {
+                flex-direction: column;
+                &:nth-child(even) {
+                    flex-direction: column;
+                    .illustration-text {
+                        text-align: right;
+                    }
+                }
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

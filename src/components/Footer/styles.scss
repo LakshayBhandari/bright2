@@ -1,0 +1,80 @@
+.footer {
+    margin-top: auto;
+    .banner {
+        position: relative;
+        height: 225px;
+        text-align: center;
+        background: linear-gradient(180deg, rgba(36, 104, 216, 0) 8.06%, #4285F4 83.71%);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        h2 {
+            color: #4285F4;
+            font-size: 2rem;
+            font-family: Ubuntu;
+            padding-top: 3rem;
+            margin: 0.5rem;
+        }
+        .banner-image {
+            position: absolute;
+            width: 100%;
+            height: 75px;
+            bottom: 0px;
+            left: 0px;
+            z-index: -2;
+        }
+    }
+    .footer-links-wrap {
+        border-top: 8px solid #D9E7FD;
+        background-color: #4285F4;        
+    }
+    .footer-links-container {
+        position: relative;
+        margin: 0px auto;
+        display: grid;
+        align-items: flex-start;
+        grid-template-columns: repeat(4, 1fr);
+        width: 900px;
+        gap: 1.5rem;
+        max-width: 100%;
+        padding: 3rem 1.5rem;
+        .footer-links, .footer-social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            color: white;
+            a {
+                text-decoration: none;
+                color: white;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+        .footer-social-links {
+            .social-links {
+                display: flex;
+                gap: 0.75rem;
+                svg {
+                    font-size: 2rem;
+                    background-color: white;
+                    color: #4285F4;
+                    padding: 0.5rem;
+                    border-radius: 50%;
+                }
+            }
+        }
+        h1 {
+            font-family: Ubuntu;
+            color: white;
+            span {
+                color: #154DAB;
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        .footer-links-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}

@@ -1,0 +1,44 @@
+.otp-field {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    input {
+        background-color: #FFEDD7;
+        text-align: center;
+        color: #808080;
+        height: 3rem;
+        width: 3rem;
+        margin-top: 0.25rem;
+        border: 0px;
+        padding: 0px 1rem;
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+}
+.resend-otp {
+    display: flex;
+    align-items: center;
+    > * {
+        color: #1595DC;
+    }
+    gap: 0.5rem;
+    svg {
+        animation: spin 1s infinite;
+    }
+    @keyframes spin {
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+    }
+    .secondary-text {
+        color: #1595DC;
+    }
+}
+.resend-otp-button {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #1595DC;
+    text-decoration: underline;
+    text-align: left;
+    background-color: transparent;
+    margin: -1rem 0px;
+}

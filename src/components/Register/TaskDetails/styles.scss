@@ -1,0 +1,48 @@
+.task-details {
+    .task-list {
+        position: relative;
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        .task {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            width: 100%;
+            background-color: rgba(99, 99, 99, 0.2);
+            padding: 0.75rem 3rem;
+            border-radius: 5px;
+            svg {
+                height: 20px;
+                width: 20px;
+                background-color: #636363;
+                padding: 0.25rem;
+                border-radius: 50%;
+                color: white;
+            }
+            p {
+                color: #636363;
+            }
+            .payment-text {
+                position: absolute;
+                bottom: -1.25rem;
+                font-weight: bold;
+                left: 5.35rem;
+                color: black;
+                font-size: 0.75rem;
+            }
+        }
+        .task-line {
+            position: absolute;
+            width: 2px;
+            background-color: black;
+            height: 90px;
+            top: 1rem;
+            left: 3.65rem;
+            z-index: 0;
+        }
+    }
+}

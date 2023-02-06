@@ -1,0 +1,60 @@
+.plans {
+      margin: 5rem auto;
+      width: 95%;
+      h2 {
+          text-align: center;
+      }
+      .plan-list {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          margin: 1.5rem auto;
+          justify-content: center;
+          gap: 1rem;
+          width: 600px;
+          max-width: 100%;
+          .plan {
+              display: flex;
+              flex-direction: column;
+              border-top: 30px solid #F75549;
+              border-radius: 10px;
+              text-align: center;
+              box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+              padding-bottom: 0.5rem;
+              > h1 {
+                  padding-top: 1rem;
+                  font-family: 'COCOGOOSE', 'Roboto', 'sans-serif';
+                  font-size: 3rem;
+              }
+              > h3 {
+                  padding-bottom: 1rem;
+              }
+              .price-container {
+                  position: relative;
+                  margin-top: 1rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 0.5rem;
+                  font-size: 0.9rem;
+                  font-weight: bold;
+                  img {
+                      position: absolute;
+                      width: 3rem;
+                      left: 0.5rem;
+                      bottom: -1rem;
+                  }
+                  .price {
+                      margin-left: 4rem;
+                  }
+              }
+          }
+      }
+      button {
+          height: 35px;
+          width: min(200px, 90%) !important;
+          font-size: 1rem !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+  }

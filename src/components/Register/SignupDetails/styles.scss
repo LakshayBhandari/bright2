@@ -1,0 +1,74 @@
+.signup-details {
+    .signup-details-form {
+        width: min(500px, 95%);
+    }
+    .added-children {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        .child {
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            h3 {
+                font-size: 1.5rem;
+            }
+            * {
+                font-weight: normal;
+                font-family: 'Francois One';
+            }
+        }
+    }
+    .add-child-button {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        justify-content: center;
+        width: 100px;
+        height: 30px;
+        font-weight: normal;
+        svg {
+            background-color: #343434;
+            color: white;
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            padding: 0.25rem;
+        }
+    }
+    .input-field {
+        label {
+            justify-content: flex-start;
+            gap: 0.5rem;
+        }
+        textarea {
+            height: 75px;
+            width: 100%;
+            color: black;
+            font-weight: 500;
+            background-color: #DBDBDB;
+            border: 0px;
+            padding: 1rem;
+            resize: none;
+            border-radius: 5px;
+            outline: none;
+        }
+    }
+    .same-as-login {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.25rem;
+        width: 100%;
+        margin-top: -1.5rem;
+        font-size: 0.8rem;
+        color: #808080;
+        input {
+            width: 17.5px;
+            height: 17.5px;
+            background: #FFFFFF;
+            border: 0px;
+            border-radius: 3px;
+        }
+    }
+}

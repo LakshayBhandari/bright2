@@ -1,0 +1,94 @@
+.book-slider {
+    margin: 1.5rem auto;
+    max-width: 100%;
+    cursor: grab;
+    > h3 {
+        text-align: center;
+        padding: 1.5rem;
+    }
+    .books {
+        background: rgba(66, 133, 244, 0.1);
+        position: relative;
+        padding: 1rem 3rem;
+        > svg {
+            position: absolute;
+            font-size: 1.5rem;
+            top: calc(50% - 0.75rem);
+            color: #ffffff;
+        }
+        .no-books-text {
+            margin: 1.5rem 0px;
+            color: black;
+        }
+        .left-arrow {
+            color: black;
+            left: 0.5rem;
+        }
+        .right-arrow {
+            color: black;
+            right: 0.5rem;
+        }
+        .book-list {
+            display: inline-flex;
+            margin: 0.5rem auto;
+            justify-content: center;
+            gap: 1rem;
+            overflow-x: hidden;
+            padding-top: 1rem;
+            min-width: 100%;
+            max-width: auto;
+            .loading {
+                border-color: #4285F4 #4285F4 transparent transparent;
+                margin: 1rem 0px;
+                align-self: center;
+            }
+            .book {
+                position: relative;
+                height: auto;
+                background-color: #ffffff;
+                padding: 1rem 1rem 1rem 1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                max-width: 250px;
+                p {
+                    font-size: 0.9rem;
+                }
+                .book-image {
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    height: 190px;
+                    > img {
+                        height: 190px;
+                    }
+                }
+                .book-details {
+                    margin-top: auto;
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    .book-detail {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
+                    &:nth-child(2) {
+                        p {
+                            color: #4285F4;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        .books {
+            padding: 1rem;
+            .left-arrow,
+            .right-arrow {
+                display: none;
+            }
+        }
+    }
+}
