@@ -1,4 +1,4 @@
-const domain = process.env.REACT_APP_DEVELOPMENT_API;
+const domain = process.env.REACT_APP_API + '/api_v2';
 
 const urls = {
     getUser: domain + '/get-user',

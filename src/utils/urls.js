@@ -1,4 +1,4 @@
-const domain = process.env.REACT_APP_API + '/api_v2';
+const domain = process.env.REACT_APP_API + '/api';
 
 const newDomain = process.env.REACT_APP_API + '/api_v2_new_books'
 
