@@ -1,6 +1,6 @@
-const domain = process.env.REACT_APP_API || 'https://bukrent.com/api_v2';
+const domain = process.env.REACT_APP_API + 'api_v2';
 
-const newDomain = 'http://localhost:5000/api_v2_new_books'
+const newDomain = process.env.REACT_APP_API + '/api_v2_new_books'
 
 const urls = {
     getMostBorrowedBooks: domain + '/get-most-borrowed',
