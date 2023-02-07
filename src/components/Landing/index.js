@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
-import Plans from '../Plans';
+import { useEffect } from 'react';
 import './styles.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import devUrls from '../../utils/devUrls';
 import { Link } from 'react-router-dom';
-import { faqs, illustrations, process } from './constants';
-import { AiOutlineUp, AiOutlineDown } from 'react-icons/ai';
+import { items, sections } from './constants';
 import { useNavigate } from 'react-router-dom';
 import { flushRegisterDetails, setAlert, setRegisterDetails } from '../../reducers/mainSlice';
+import { Fragment } from 'react';
 
 const Landing = () => {
 	const navigate = useNavigate();
@@ -16,15 +15,6 @@ const Landing = () => {
 	const { main: { isLoggedIn, registerDetails: { mobileNumber } } } = useSelector(
 		state => state
 	);
-	const [ isShowingFaq, setIsShowingFaq ] = useState(Array(faqs.length).fill(false));
-
-	const toggleFaq = (i, showing) => {
-		const newIsShowingFaqs = isShowingFaq.map((showingFaq, j) => {
-			if (i === j) return showing;
-			return showingFaq;
-		});
-		setIsShowingFaq(newIsShowingFaqs);
-	};
 
 	const goToRegister = async event => {
 		event.preventDefault();
@@ -63,68 +53,55 @@ const Landing = () => {
 
 	return (
 		<main className="landing" id='home'>
-			<div className="hero" style={{ backgroundImage: 'url(/hero.png)' }}>
-				<h3>Delhi-NCR’s Largest Online Library Service</h3>
-				<h1>Online Book Library</h1>
-				<h2>You Order - We Deliver</h2>
-				{!isLoggedIn && <form className="mobile-number">
+			<div className="hero">
+				<div className='hero-heading'>
+					<h4>Delhi NCR - Largest</h4>
+					<h1>Library - Home Delivered</h1>
+				</div>
+				<div className='hero-items'>
+					{items.map(item => {
+						return (
+							<div key={item.id} className='hero-item'>
+								<h3>{item.title}</h3>
+								<span>{item.text}</span>
+							</div>
+						);
+					})}
+				</div>
+				{!isLoggedIn && 
+				<form className="mobile-number">
 					<input
 						type="number"
 						placeholder="Enter Mobile Number..."
 						onChange={({ target: { value } }) => dispatch(setRegisterDetails({ mobileNumber: value }))}
 					/>
-					<input type="submit" value="Go" onClick={goToRegister} />
+					<input type="submit" value="Get Started" onClick={goToRegister} />
 				</form>}
 			</div>
-			<div className="process">
-				{process.map((step, i) => {
+			<div className='sections'>
+				{sections.map(section => {
 					return (
-						<div className="step" key={i}>
-							{step.text}
-							<h1 className="step-count">{i + 1}</h1>
-							<img src={step.image} alt="Process" loading="lazy"/>
-							<h2>{step.title}</h2>
-						</div>
-					);
-				})}
-			</div>
-			<div className="illustrations">
-				{illustrations.map((illustration, i) => {
-					return (
-						<div
-							className="illustration"
-							style={{ backgroundColor: illustration.color, borderColor: illustration.borderColor }}
-							key={i}
-						>
-							<div className="illustration-text">
-								<h1>{illustration.title}</h1>
-								<p>{illustration.text}<br />Leave it to us!</p>
-							</div>
-							<img src={illustration.image} alt="Illustration"  loading="lazy"/>
-						</div>
-					);
-				})}
-			</div>
-			<Link to="/browse-library" className="gold-button">Browse Library</Link>
-			<div className="faqs" id='faqs'>
-				<h1>Frequently Asked Questions</h1>
-				<div className="faq-accordion">
-					{faqs.map((faq, i) => {
-						return (
-							<div className="faq" key={i}>
-								<div className="question">
-									<p>{faq.question}</p>
-									{isShowingFaq[i]
-										? <AiOutlineUp onClick={() => toggleFaq(i, false)} />
-										: <AiOutlineDown onClick={() => toggleFaq(i, true)} />}
+						<div key={section.id} className='section'>
+							<div className='section-wrapper'>
+								<div className='section-info'>
+									<div className='section-info-heading'>
+										<h2>{section.title}</h2>
+										<h2 style={{color: section.color}}>{section.subTitle}</h2>
+									</div>
+									<p>{section.text}</p>
+									<Link to={section.link}>
+										{section.icon || <Fragment/>}
+										{section.linkText}
+									</Link>
 								</div>
-								{isShowingFaq[i] && <p className="answer">{faq.answer}</p>}
+								<div className='section-image'>
+									<img src={section.image} alt='Section'/>
+								</div>
 							</div>
-						);
-					})}
-				</div>
+						</div>
+					);
+				})}
 			</div>
-			<Plans />
 		</main>
 	);
 };

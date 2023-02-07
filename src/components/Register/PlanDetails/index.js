@@ -126,7 +126,7 @@ const PlanDetails = () => {
 		<div className='plan-details'>
 			<h2>Choose your reading plan today</h2>
 			<div className='plan-description'>
-				<div>
+				<div className='plan-description-wrapper'>
 					<p><HiCheckCircle/> Choose Any Book</p>
 					<p><HiCheckCircle/> Free Doorstep Delivery</p>
 					<p><HiCheckCircle/> Change/Cancel Anytime</p>
@@ -158,9 +158,20 @@ const PlanDetails = () => {
 							<div className='plan-stat-items'>
 								{stat.items.map((item, j) => {
 									const className = j === selectedPlan.planId - 1 ? 'selected-plan-stat-item' : '';
-									if(i === 0) 
-										return <h3 className={className} key={item}>{item}</h3>;
-									return <p className={className} key={item}>{item}</p>;
+									if(i === 0) {
+										return (
+											<h3 className={className} key={item.text}>
+												{item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/>
+												{item.text}
+											</h3>
+										);
+									}
+									return (
+										<p className={className} key={item.text}>
+											{item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/>
+											{item.text}
+										</p>
+									);
 								})}
 							</div>
 						</div>
