@@ -1,6 +1,6 @@
 {
-  "short_name": "Bukrent",
-  "name": "Bukrent - Online Book Library",
+  "short_name": "BrightR",
+  "name": "BrightR - Online Book Library",
   "icons": [
     {
       "src": "logo.png",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#FF8513",
+  "theme_color": "#4285F4",
   "background_color": "#FFFFFF"
 }
