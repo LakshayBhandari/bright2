@@ -89,10 +89,17 @@ const Landing = () => {
 										<h2 style={{color: section.color}}>{section.subTitle}</h2>
 									</div>
 									<p>{section.text}</p>
+									{section.link && 
 									<Link to={section.link}>
-										{section.icon || <Fragment/>}
+										
 										{section.linkText}
-									</Link>
+									</Link>}
+									{section.outerLink &&
+										<a href={section.outerLink} target='_blank'>
+											{section.icon || <Fragment/>}
+											{section.linkText}
+										</a>
+									}
 								</div>
 								<div className='section-image'>
 									<img src={section.image} alt='Section'/>
