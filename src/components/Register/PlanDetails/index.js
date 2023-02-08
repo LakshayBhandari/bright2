@@ -3,7 +3,7 @@ import { nextStepRegister, setAlert, setRegisterDetails } from '../../../reducer
 import './styles.scss';
 import axios from 'axios';
 import devUrls from '../../../utils/devUrls';
-import { planStats, plans } from './constants';
+import { planPrices, planStats, plans } from './constants';
 import {HiCheckCircle} from 'react-icons/hi';
 import {Link} from 'react-router-dom';
 
@@ -118,8 +118,7 @@ const PlanDetails = () => {
 	};
 
 	const getPrice = () => {
-		if (selectedSubscription === 12) return selectedPlan.price * 12 * 0.9;
-		return selectedPlan.price * selectedSubscription;
+		return planPrices[selectedPlan.bookCount][selectedSubscription];
 	};
 
 	return (
@@ -186,7 +185,7 @@ const PlanDetails = () => {
 						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 1 }))}
 					>
 						<h3>Monthly</h3>
-						<p>₹ {selectedPlan.price}/-</p>
+						<p>₹ {planPrices[selectedPlan.bookCount][1]}/-</p>
 						<span>Auto-Debit</span>
 					</div>
 					<div 
@@ -194,14 +193,14 @@ const PlanDetails = () => {
 						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 3 }))}
 					>
 						<h3>Quarterly</h3>
-						<p>₹ {selectedPlan.price * 3}/-</p>
+						<p>₹ {planPrices[selectedPlan.bookCount][3]}/-</p>
 					</div>
 					<div 
 						className={`plan-duration ${selectedSubscription === 12 ? 'selected-plan-duration' : ''}`}
 						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 12 }))}
 					>
 						<h3>Annual</h3>
-						<p>₹ {Math.round(selectedPlan.price * 12 * 0.9)}/-</p>
+						<p>₹ {planPrices[selectedPlan.bookCount][12]}/-</p>
 						<div className='plan-discount'>
 							<strong>10%</strong><br/> Discount
 						</div>
