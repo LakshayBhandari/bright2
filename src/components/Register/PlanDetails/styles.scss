@@ -38,11 +38,16 @@
         display: flex;
         width: min(500px, 95%);
         margin: -5.5rem auto 0px auto;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background-color: white;;
         .plan-type {
             flex: 1;
             min-height: 11rem;
             max-height: auto;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: white;
             padding: 1.5rem 1rem;
             border: 1px solid #BCBCBC;
             display: flex;

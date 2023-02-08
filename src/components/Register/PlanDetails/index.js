@@ -202,7 +202,7 @@ const PlanDetails = () => {
 						<h3>Annual</h3>
 						<p>₹ {planPrices[selectedPlan.bookCount][12]}/-</p>
 						<div className='plan-discount'>
-							<strong>10%</strong><br/> Discount
+							<strong>Save ₹ {selectedPlan.savings}/-</strong>
 						</div>
 					</div>
 				</div>

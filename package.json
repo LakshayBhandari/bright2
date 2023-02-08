@@ -25,6 +25,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-sticky": "^6.0.3",
     "read-more-react": "^1.0.10",
     "sass": "^1.54.8",
     "web-vitals": "^2.1.4"

@@ -8,6 +8,7 @@ export const plans = [
         image: "/images/Art/plan-1.png",
         planId: 1,
         razorpayId: "plan_Kfp8XM8HNym5or",
+        savings: '500',
     },
     {
         title: "Standard",
@@ -19,6 +20,7 @@ export const plans = [
         image: "/images/Art/plan-2.png",
         planId: 2,
         razorpayId: "plan_KfpBDN0ZyGY29s",
+        savings: '750',
     },
     {
         title: "Premium",
@@ -30,6 +32,7 @@ export const plans = [
         image: "/images/Art/plan-3.png",
         planId: 3,
         razorpayId: "plan_KfpCxeWR1J5CkD",
+        savings: '1000',
     },
 ];
 
