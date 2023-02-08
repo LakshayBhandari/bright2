@@ -15,9 +15,9 @@ const BrowseLibrary = () => {
 	const [ age, setAge ] = useState(0);
 	const { book: { bookSet } } = useSelector(state => state);
 
-	const getBooks = async() => {
+	const getBookSet = async() => {
 		try {
-			const response = await axios.get(urls.getNewBooks, { params: { age } });
+			const response = await axios.get(urls.getBookSet, { params: { age } });
 			dispatch(setBookSet({bookSet: response.data.book_set}));
 			console.log(response.data.book_set);
 		} catch (err) {
@@ -27,7 +27,7 @@ const BrowseLibrary = () => {
 
 	useEffect(
 		() => {
-			getBooks();
+			getBookSet();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[age]
