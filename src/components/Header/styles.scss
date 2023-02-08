@@ -95,6 +95,7 @@ header {
         .top-header {
             justify-content: space-between;
             position: relative;
+            z-index: 10;
             > * {
                 z-index: 10;
             }
