@@ -32,7 +32,7 @@ const Footer = () => {
 							<div><a target='_blank' rel="noreferrer" href="https://www.instagram.com/bukrent/?igshid=YmMyMTA2M2Y="><FaInstagram /></a></div>
 						</div>
 					</div>
-					<h1>Bright<span>R</span></h1>
+					<h1>Bright<span>R</span>.Club</h1>
 				</div>
 			</div>
 		</footer>

@@ -41,7 +41,7 @@ const Header = () => {
 		<header>
 			<div className="top-header">
 				<Link to='/'>
-					<h1>Bright<span>R</span></h1>
+					<h1>Bright<span>R</span>.Club</h1>
 				</Link>
 				<div className="search-bar">
 					<input
