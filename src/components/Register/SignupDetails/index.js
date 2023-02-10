@@ -138,7 +138,7 @@ const SignupDetails = () => {
 					<input type='checkbox' value={sameAsLogin} onClick={() => setSameAsLogin(_ => !_)}/>
 					<p>Same as login number</p>
 				</div>
-				<button className="gold-button" onClick={handleSubmit}>Add Details</button>
+				<button className="blue-button" onClick={handleSubmit}>Add Details</button>
 			</form>
 		</div>
 	);

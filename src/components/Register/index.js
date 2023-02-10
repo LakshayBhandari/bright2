@@ -45,32 +45,33 @@ const Register = () => {
 	return (
 		<Fragment>
 			{registrationDone &&
-				<div className="payment-done">
-					<h1>Congratulations!!!</h1>
-					<b>Your details have been saved</b>
-					<img src="/images/Art/congratulations.png" alt="Congratulations" />
-					<p>Thank you for subscribing</p>
-					<div className="login-details">
-						<span>Login ID</span>
-						<p>{mobileNumber}</p>
+				<div className='backdrop'>
+					<div className="payment-done">
+						<h1>Congratulations!</h1>
+						<b>Your details have been saved</b>
+						<p>Thank you for subscribing</p>
+						<div className="login-details">
+							<span>Mobile Number</span>
+							<p>{mobileNumber}</p>
+						</div>
+						<div className="password-field login-details">
+							<span>Password</span>
+							<input
+								type={showPassword ? 'text' : 'password'}
+								value={password}
+								onChange={({ target: { value } }) => setPassword(value)}
+								disabled={!isEditing}
+							/>
+							{showPassword
+								? <AiFillEye onClick={() => setShowPassword(false)} />
+								: <AiFillEyeInvisible onClick={() => setShowPassword(true)} />}
+						</div>
+						<p className="password-edit" onClick={() => setIsEditing(_ => !_)}>
+							{isEditing ? 'Done' : 'Edit'}
+						</p>
+						<span>You will receive a confirmation through SMS</span>
+						<button className="blue-button" onClick={finishRegistration}>Browse Library</button>
 					</div>
-					<div className="password-field login-details">
-						<span>Password</span>
-						<input
-							type={showPassword ? 'text' : 'password'}
-							value={password}
-							onChange={({ target: { value } }) => setPassword(value)}
-							disabled={!isEditing}
-						/>
-						{showPassword
-							? <AiFillEye onClick={() => setShowPassword(false)} />
-							: <AiFillEyeInvisible onClick={() => setShowPassword(true)} />}
-					</div>
-					<p className="password-edit" onClick={() => setIsEditing(_ => !_)}>
-						{isEditing ? 'Done' : 'Edit'}
-					</p>
-					<span>You will receive a confirmation through SMS</span>
-					<button className="gold-button" onClick={finishRegistration}>Browse Library</button>
 				</div>}
 			<div className="register" style={paymentDone || registrationDone ? { opacity: '0.1' } : {}}>
 				{registerFlow[registrationStep].element}

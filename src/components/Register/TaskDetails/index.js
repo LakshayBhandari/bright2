@@ -40,7 +40,7 @@ const TaskDetails = () => {
 					</div>
 					<div className="task-line" />
 				</div>
-				<button type="submit" className="gold-button" onClick={handleSubmit}>{getButtonText()}</button>
+				<button type="submit" className="blue-button" onClick={handleSubmit}>{getButtonText()}</button>
 			</form>
 		</div>
 	);

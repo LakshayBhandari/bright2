@@ -106,7 +106,7 @@ const OTP = () => {
 							<FaHourglassEnd />
 						</div>
 					: <input type="button" value="Resend OTP" onClick={resendOtp} className="resend-otp-button" />}
-				<button type="submit" className="gold-button" onClick={handleSubmit}>Confirm OTP</button>
+				<button type="submit" className="blue-button" onClick={handleSubmit}>Confirm OTP</button>
 			</form>
 		</div>
 	);

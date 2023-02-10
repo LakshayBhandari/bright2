@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&family=Francois+One&display=swap');
-@import url(//db.onlinewebfonts.com/c/d14035f6b1afeabafbee4abb2ebf0fc6?family=COCOGOOSE);
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
 
 * {
@@ -109,13 +106,13 @@ img {
     max-width: auto;
 }
 
-.gold-button {
+.blue-button {
     text-decoration: none;
     color: #FFFFFF;
     text-align: center;
     width: min(25vw, 95%);
     padding: 1.25rem 0px;
-    background: #F37600;
+    background: #4285F4;
     border-radius: 8px;
     margin: auto;
     display: block;
@@ -133,8 +130,8 @@ img {
     margin-top: -0.5rem;
     display: block;
     background-color: transparent;
-    border: 3px solid #FF8513;
-    color: #FF8513;
+    border: 3px solid #4285F4;
+    color: #4285F4;
     font-size: 1rem;
     font-weight: normal;
 }

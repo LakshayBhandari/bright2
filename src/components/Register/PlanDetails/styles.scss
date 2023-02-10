@@ -42,7 +42,6 @@
         position: sticky;
         top: 0;
         z-index: 5;
-        background-color: white;;
         .plan-type {
             flex: 1;
             min-height: 11rem;
@@ -212,7 +211,7 @@
 .payment-done {
     width: min(350px, 90%);
     background-color: #FFFFFF;
-    padding: 1rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -241,5 +240,53 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    b {
+        font-size: 0.9rem;
+    }
+    span {
+        font-size: 0.8rem;
+    }
+    p {
+        font-size: 0.9rem;
+        color: #808080;
+    }
+    button {
+        width: 100%;
+        height: 35px;
+        padding: 0px;
+        font-weight: bold;
+    }
+    .login-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        position: relative;
+        p, input {
+            display: flex;
+            padding: 0.5rem;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            padding-right: 1rem;
+            background: #F1F1F0;
+            border-radius: 5px;
+            margin-left: auto;
+        }
+        svg {
+            bottom: 10px;
+            right: 0.5rem;
+            position: absolute;
+        }
+    }
+    .password-edit {
+        margin-left: auto;
+        justify-self: flex-end;
+        color: #156D9C;
+        text-decoration: underline;
     }
 }

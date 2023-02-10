@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { plans } from '../components/Plans/constants';
+import { plans } from '../components/Register/PlanDetails/constants';
 
 const initialState = {
 	isLoggedIn: false,
