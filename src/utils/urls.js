@@ -55,7 +55,8 @@ const urls = {
     getSuggestedBooks: domain + '/get-suggestions',
     changeDeliveryDate: domain + '/change-delivery-date',
 
-    getBookSet: newDomain + '/get-book-set'
+    getBookSet: newDomain + '/get-book-set',
+    getCategoryBooks: newDomain + '/get-category-books',
 };
 
 export default urls;

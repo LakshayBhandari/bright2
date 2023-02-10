@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './styles.scss';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import BookSlider from '../BookSlider';
@@ -11,8 +11,9 @@ const ages = 15;
 const MAX = 10;
 
 const BrowseLibrary = () => {
+	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
-	const [ age, setAge ] = useState(0);
+	const [ age, setAge ] = useState(8);
 	const { book: { bookSet } } = useSelector(state => state);
 
 	const getBookSet = async() => {
@@ -33,11 +34,17 @@ const BrowseLibrary = () => {
 		[age]
 	);
 
+	useEffect(() => {
+		if(ageScrollRef.current) {
+			ageScrollRef.current.container.current.scrollLeft = 1160;
+		}
+	}, []);
+
 	return (
 		<div className="browse-library">
 			<div className="age-groups">
 				<h2>Select By Age</h2>
-				<ScrollContainer vertical={false}>
+				<ScrollContainer vertical={false} ref={ageScrollRef}>
 					<div className="age-group-list">
 						{Array(ages).fill(true).map((_, i) => {
 							return (

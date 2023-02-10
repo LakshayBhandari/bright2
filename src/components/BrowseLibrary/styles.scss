@@ -10,18 +10,18 @@
             display: inline-flex;
             justify-content: center;
             margin: 1.5rem auto;
-            padding: 0px 1rem;
-            gap: 1rem;
+            padding: 0px 16px;
+            gap: 16px;
             .age-group {
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
+                gap: 16px;
                 cursor: pointer;
-                width: 8rem;
-                height: 8rem;
-                padding: 1rem;
+                width: 128px;
+                height: 128px;
+                padding: 16px;
                 font-weight: 900;
                 background: #DBDBDB;
                 border: 1px solid #C5C5C5;

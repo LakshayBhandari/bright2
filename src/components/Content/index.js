@@ -12,13 +12,13 @@ const contentPages = {
     'Disclaimer': {content: disclaimer},
     'Privacy Policy': {content: privacyPolicy},
     'Refund Policy': {content: refundPolicy},
-    'Terms and Conditions': {content: termsAndConditions, titleColor: '#FA7E0A'},
+    'Terms and Conditions': {content: termsAndConditions},
 };
 
 const Content = ({type}) => {
     return (
         <div className={`content ${type}-content`}>
-            <h1 style={{color: contentPages[type].titleColor}}>{type}</h1>
+            <h1 style={{color: '#4285F4'}}>{type}</h1>
             <div className='content-container'>
                 {contentPages[type].content}
             </div>

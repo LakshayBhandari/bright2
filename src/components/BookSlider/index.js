@@ -94,7 +94,7 @@ const BookSlider = ({
 											</div>
 											<div className='book-detail'>
 												<img src='/icons/reviews.png' alt='Reviews'/>
-												<p>{book.review_count}</p>
+												<p>{Number(book.review_count).toLocaleString()}</p>
 											</div>
 										</div>
 									</div>

@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Register from './components/Register';
 import Content from './components/Content';
+import HowItWorks from './components/Content/HowItWorks';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetAlert } from './reducers/mainSlice';
 import axios from 'axios';
@@ -53,6 +54,7 @@ const App = () => {
 			<Routes>
 				<Route path="/browse-library" element={<BrowseLibrary />} />
 				<Route path="/register" element={isLoggedIn ? <Navigate to='/'/> : <Register />} />
+				<Route path="/how-it-works" element={<HowItWorks/>} />
 				<Route path="/about-us" element={<Content type='About Us'/>} />
 				<Route path="/contact-us" element={<Content type='Contact Us'/>} />
 				<Route path="/disclaimer" element={<Content type='Disclaimer'/>} />
