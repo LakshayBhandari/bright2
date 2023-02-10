@@ -49,7 +49,7 @@ export const sections = [
 		color: '#33A200',
 		image: '/icons/section-5.png',
 		linkText: '8826609863',
-		outerLink: 'https://wa.me/8826609863',
+		outerLink: 'https://wa.me/+918826609863',
 		icon: <FaWhatsapp/>,
 	},
 	{
