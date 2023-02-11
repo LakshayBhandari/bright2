@@ -60,6 +60,6 @@ export const sections = [
 		color: '#F75549',
 		image: '/icons/section-6.png',
 		linkText: 'Must Read Section',
-		link: '/browse-library',
+		link: '/must-read',
 	},
 ];

@@ -9,15 +9,15 @@ import urls from '../../utils/urls';
 
 const ages = 15;
 
-const BrowseLibrary = () => {
+const MustRead = () => {
 	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
 	const [ age, setAge ] = useState(8);
 	const { book: { bookSet } } = useSelector(state => state);
 
-	const getBookSet = async() => {
+	const getMustReadBookSet = async() => {
 		try {
-			const response = await axios.get(urls.getBookSet, { params: { age } });
+			const response = await axios.get(urls.getMustReadBookSet, { params: { age } });
 			dispatch(setBookSet({bookSet: response.data.book_set}));
 			console.log(response.data.book_set);
 		} catch (err) {
@@ -27,7 +27,7 @@ const BrowseLibrary = () => {
 
 	useEffect(
 		() => {
-			getBookSet();
+			getMustReadBookSet();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[age]
@@ -41,7 +41,7 @@ const BrowseLibrary = () => {
 
 	return (
 		<div className="browse-library">
-			<h1>Browse Library</h1>
+			<h1>Must Read Collection</h1>
 			<div className="age-groups">
 				<h3>Select By Age</h3>
 				<ScrollContainer vertical={false} ref={ageScrollRef}>
@@ -74,4 +74,4 @@ const BrowseLibrary = () => {
 	);
 };
 
-export default BrowseLibrary;
+export default MustRead;

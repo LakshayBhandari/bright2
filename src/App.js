@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import BrowseLibrary from './components/BrowseLibrary';
+import MustRead from './components/BrowseLibrary/MustRead';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Register from './components/Register';
@@ -52,6 +53,7 @@ const App = () => {
 			{alert.text && <p className="alert" style={{ backgroundColor: alert.color }}>{alert.text}</p>}
 			<Header />
 			<Routes>
+				<Route path="/must-read" element={<MustRead />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
 				<Route path="/register" element={isLoggedIn ? <Navigate to='/'/> : <Register />} />
 				<Route path="/how-it-works" element={<HowItWorks/>} />
