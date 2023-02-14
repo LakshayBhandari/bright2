@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import BrowseLibrary from './components/BrowseLibrary';
+import YourLibrary from './components/YourLibrary';
 import MustRead from './components/BrowseLibrary/MustRead';
 import Footer from './components/Footer';
 import Landing from './components/Landing';
 import Register from './components/Register';
+import Login from './components/Login';
+import ForgotPassword from './components/Login/ForgotPassword';
 import Content from './components/Content';
 import HowItWorks from './components/Content/HowItWorks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,6 +58,9 @@ const App = () => {
 			<Routes>
 				<Route path="/must-read" element={<MustRead />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
+				<Route path='/your-library' element={isLoggedIn ? <YourLibrary /> : <Navigate to='/'/>}/>
+				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />
+				<Route path="/login" element={isLoggedIn ? <Navigate to='/'/> : <Login />} />
 				<Route path="/register" element={isLoggedIn ? <Navigate to='/'/> : <Register />} />
 				<Route path="/how-it-works" element={<HowItWorks/>} />
 				<Route path="/about-us" element={<Content type='About Us'/>} />

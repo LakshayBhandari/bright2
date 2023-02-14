@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
 import {
 	addToWishlist,
@@ -22,8 +21,9 @@ import devUrls from '../../utils/devUrls';
 const wishlistAdd = async (book, dispatch) => {
 	dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
 	dispatch(addToWishlist({ book }));
+	console.log(book);
 	try {
-		await axios.post(devUrls.addToWishlist, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.addToWishlist, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -33,7 +33,7 @@ const wishlistRemove = async (book, dispatch) => {
 	dispatch(setAlert({ text: `${book.name} removed from wishlist`, color: '#F75549' }));
 	dispatch(removeFromWishlist({ book }));
 	try {
-		await axios.post(devUrls.removeFromWishlist, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.removeFromWishlist, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -43,7 +43,7 @@ const suggestionDump = async (book, dispatch) => {
 	dispatch(setAlert({ text: `${book.name} removed from suggestions`, color: '#F75549' }));
 	dispatch(removeFromSuggestedBooks({ book }));
 	try {
-		await axios.post(devUrls.dumpBook, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.dumpBook, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -52,7 +52,7 @@ const suggestionDump = async (book, dispatch) => {
 const wishlistPrevious = async (book, dispatch, i) => {
 	dispatch(increasePriority({ i }));
 	try {
-		await axios.post(devUrls.wishlistPrevious, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.wishlistPrevious, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -61,7 +61,7 @@ const wishlistPrevious = async (book, dispatch, i) => {
 const wishlistNext = async (book, dispatch, i) => {
 	dispatch(decreasePriority({ i }));
 	try {
-		await axios.post(devUrls.wishlistNext, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.wishlistNext, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -70,7 +70,7 @@ const wishlistNext = async (book, dispatch, i) => {
 const readBefore = async (book, dispatch) => {
 	dispatch(addToPreviousBooks({ book }));
 	try {
-		await axios.post(devUrls.dumpRead, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.dumpRead, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -79,7 +79,7 @@ const readBefore = async (book, dispatch) => {
 const dislike = async (book, dispatch) => {
 	dispatch(removeFromDump({ book }));
 	try {
-		await axios.post(devUrls.dumpDislike, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.dumpDislike, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
@@ -88,21 +88,21 @@ const dislike = async (book, dispatch) => {
 const retain = async (book, dispatch) => {
 	dispatch(retainBook({ book }));
 	try {
-		await axios.post(devUrls.retainBook, {guid: book.guid}, {withCredentials: true});
+		await axios.post(devUrls.retainBook, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
 		console.log(err);
 	}
 };
 
-export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
-	if (!overlay) {
+export const getOverlay = (overlay, sectionBooks, book, i, dispatch, isLoggedIn) => {
+	if (!overlay && isLoggedIn) {
 		return (
 			<div className="book-overlay">
 				<button onClick={() => wishlistAdd(book, dispatch)}>
 					<AiOutlineHeart />
 					<p>Add to Wishlist</p>
 				</button>
-				<Link to={`/book/${book.guid}`}>View Details</Link>
+				{/* <Link to={`/book/${book.isbn}`}>View Details</Link> */}
 			</div>
 		);
 	} else if (overlay === 'wishlist') {
@@ -121,7 +121,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
 					<button
 						className="low-priority"
 						onClick={() => wishlistNext(book, dispatch, i)}
-						style={{ backgroundColor: 'red', width: '100px' }}
+						style={{ backgroundColor: '#F75549', width: '100px' }}
 					>
 						<p>Low</p>
 						<BsArrowRight />
@@ -131,7 +131,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
 	} else if (overlay === 'current') {
 		return (
 			<div className="book-overlay">
-				<button style={{ backgroundColor: '#FF8513' }} onClick={() => retain(book, dispatch)}>
+				<button style={{ backgroundColor: '#4285F4' }} onClick={() => retain(book, dispatch)}>
 					<HiOutlineBookOpen />
 					<p>Retain</p>
 				</button>
@@ -146,7 +146,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
 						if (j < book.userRating)
 							return (
 								<FaStar
-									style={{ fontSize: '1.5rem', color: '#FF8513', marginLeft: '0.25rem' }}
+									style={{ fontSize: '1.5rem', color: '#4285F4', marginLeft: '0.25rem' }}
 									key={j}
 									onClick={rateBook}
 								/>
@@ -168,7 +168,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
 				<button style={{ backgroundColor: '#B0AFAF' }} onClick={() => readBefore(book, dispatch)}>
 					Read Before
 				</button>
-				<button style={{ backgroundColor: 'red' }} onClick={() => dislike(book, dispatch)}>
+				<button style={{ backgroundColor: '#F75549' }} onClick={() => dislike(book, dispatch)}>
 					<HiThumbDown />
 					<p>Dislike</p>
 				</button>
@@ -182,7 +182,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, plan) => {
 					<p>Add to Wishlist</p>
 				</button>
 				<button
-					style={{ backgroundColor: 'red' }}
+					style={{ backgroundColor: '#F75549' }}
 					onClick={() => suggestionDump(book, dispatch)}
 				>
 					<MdClose />

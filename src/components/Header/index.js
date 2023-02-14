@@ -55,10 +55,10 @@ const Header = () => {
 					</button>
 				</div>
 				<div className={`header-actions ${showDropDown ? 'show-drop-down' : 'hide-drop-down'}`}>
-					{/* {isLoggedIn
-						? <Link className="subscribe-button" to="/your-library">Your Library</Link>
-						: <Link className="subscribe-button" to="/">Log In / Sign Up</Link>} */}
 					<Link to="/browse-library" className="subscribe-button">Browse Library</Link>
+					{isLoggedIn
+						? <Link className="subscribe-button" to="/your-library">Your Library</Link>
+						: <Link className="subscribe-button" to="/">Log In / Sign Up</Link>}
 					{isLoggedIn && <button onClick={logOut} className='subscribe-button'>Log Out</button>}
 					<img alt="Book" src="/icons/profile.png" />
 				</div>

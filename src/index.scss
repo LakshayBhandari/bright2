@@ -107,31 +107,35 @@ img {
 }
 
 .blue-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: #FFFFFF;
     text-align: center;
     width: min(25vw, 95%);
-    padding: 1.25rem 0px;
     background: #4285F4;
-    border-radius: 8px;
+    border-radius: 3px;
     margin: auto;
-    display: block;
     font-size: 1rem;
-    font-weight: normal;
+    font-weight: bold;
+    height: 35px;
 }
 
-.gold-border-button {
+.blue-border-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     text-align: center;
     width: min(25vw, 95%);
-    padding: 1.25rem 0px;
-    border-radius: 8px;
+    border-radius: 3px;
     margin: auto;
     margin-top: -0.5rem;
-    display: block;
     background-color: transparent;
     border: 3px solid #4285F4;
     color: #4285F4;
     font-size: 1rem;
-    font-weight: normal;
+    font-weight: bold;
+    height: 35px;
 }

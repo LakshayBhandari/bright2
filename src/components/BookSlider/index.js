@@ -3,16 +3,20 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import './styles.scss';
 import {AiOutlineLeft, AiOutlineRight} from 'react-icons/ai';
 import Loading from '../Loading';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { getOverlay } from './utils';
+import { useSelector, useDispatch } from 'react-redux';
 
 const BookSlider = ({
 	title,
 	books,
 	booksTitle,
 	getBooks = () => {},
+	overlay,
+	showOverlay = true
 }) => {
+	const {main: {isLoggedIn}} = useSelector(state => state);
+	const dispatch = useDispatch();
 	const [booksLoading, setBooksLoading] = useState(false);
 	const [sectionBooks, setSectionBooks] = useState(books.length ? books : ['No books to show']);
 	const [booksScroll, setBooksScroll] = useState(0);
@@ -77,7 +81,7 @@ const BookSlider = ({
 				<ScrollContainer vertical={false} ref={booksRef}>
 					{(!sectionBooks?.length || sectionBooks[0] === 'No books to show')
 						?
-						<h3 className='no-books-text'>No books to show</h3>
+						<h3 style={{textAlign: 'center', fontSize: '0.9rem'}} className='no-books-text'>No books to show</h3>
 						:
 						<div className="book-list">
 							{sectionBooks?.map((book, i) => {
@@ -88,15 +92,18 @@ const BookSlider = ({
 										</div>
 										<p>{book.name.split(':')[0]}</p>
 										<div className='book-details'>
+											{book.rating && 
 											<div className='book-detail'>
 												<p>{book.rating}</p>
 												<img src='/icons/star.png' alt='Rating'/>
-											</div>
+											</div>}
+											{book.review_count && !isNaN(book.review_count) && 
 											<div className='book-detail'>
 												<img src='/icons/reviews.png' alt='Reviews'/>
 												<p>{Number(book.review_count).toLocaleString()}</p>
-											</div>
+											</div>}
 										</div>
+										{showOverlay && getOverlay(overlay, sectionBooks, book, i, dispatch, isLoggedIn)}
 									</div>
 								);
 							})}

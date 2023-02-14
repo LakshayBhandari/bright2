@@ -1,18 +1,14 @@
-.otp-field {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    input {
-        background-color: #FFEDD7;
-        text-align: center;
-        color: #808080;
-        height: 5rem;
-        width: 5rem;
-        margin-top: 0.25rem;
-        border: 0px;
-        padding: 0px 1rem;
-        font-size: 1.75rem;
-        font-weight: bold;
+.otp {
+    .otp-field {
+        > * {
+            display: flex;
+            gap: 0.5rem;
+            > * {
+                height: 3rem;
+                flex: 1;
+                margin: 0px !important;
+            }
+        }
     }
 }
 .resend-otp {
