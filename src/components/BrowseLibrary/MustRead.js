@@ -25,6 +25,13 @@ const MustRead = () => {
 		}
 	};
 
+	const scrollToCenter = () => {
+		if(ageScrollRef.current) {
+			console.log(ageScrollRef.current.container)
+			ageScrollRef.current.container.current.scrollLeft = 1160 - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
+		}
+	};
+
 	useEffect(
 		() => {
 			getMustReadBookSet();
@@ -34,9 +41,11 @@ const MustRead = () => {
 	);
 
 	useEffect(() => {
-		if(ageScrollRef.current) {
-			ageScrollRef.current.container.current.scrollLeft = 1160;
-		}
+		scrollToCenter();
+		window.addEventListener('resize', scrollToCenter);
+		return () => {
+			window.removeEventListener('resize', scrollToCenter);
+		};
 	}, []);
 
 	return (

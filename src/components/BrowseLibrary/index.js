@@ -41,6 +41,7 @@ const BrowseLibrary = () => {
 	);
 
 	useEffect(() => {
+		scrollToCenter();
 		window.addEventListener('resize', scrollToCenter);
 		return () => {
 			window.removeEventListener('resize', scrollToCenter);
