@@ -17,7 +17,7 @@ const MustRead = () => {
 
 	const getMustReadBookSet = async() => {
 		try {
-			const response = await axios.get(urls.getMustReadBookSet, { params: { age } });
+			const response = await axios.get(urls.getBookSet, { params: { age, section_name: 'Must Read' } });
 			dispatch(setBookSet({bookSet: response.data.book_set}));
 			console.log(response.data.book_set);
 		} catch (err) {

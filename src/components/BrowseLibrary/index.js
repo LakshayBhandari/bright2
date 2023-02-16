@@ -17,11 +17,18 @@ const BrowseLibrary = () => {
 
 	const getBookSet = async() => {
 		try {
-			const response = await axios.get(urls.getBookSet, { params: { age } });
+			const response = await axios.get(urls.getBookSet, { params: { age, section_name: 'Browse Library' } });
 			dispatch(setBookSet({bookSet: response.data.book_set}));
 			console.log(response.data.book_set);
 		} catch (err) {
 			console.log(err);
+		}
+	};
+
+	const scrollToCenter = () => {
+		if(ageScrollRef.current) {
+			console.log(ageScrollRef.current.container)
+			ageScrollRef.current.container.current.scrollLeft = 1160 - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
 		}
 	};
 
@@ -34,9 +41,10 @@ const BrowseLibrary = () => {
 	);
 
 	useEffect(() => {
-		if(ageScrollRef.current) {
-			ageScrollRef.current.container.current.scrollLeft = 1160;
-		}
+		window.addEventListener('resize', scrollToCenter);
+		return () => {
+			window.removeEventListener('resize', scrollToCenter);
+		};
 	}, []);
 
 	return (
