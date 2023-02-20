@@ -49,3 +49,13 @@
         }
     }
 }
+.search-books {
+    min-height: 300px;
+    margin: 3rem auto 5rem auto;
+    .info, > p {
+        text-align: center;
+    }
+    > p {
+        margin: 1rem auto;
+    }
+}

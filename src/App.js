@@ -11,6 +11,7 @@ import Login from './components/Login';
 import ForgotPassword from './components/Login/ForgotPassword';
 import Content from './components/Content';
 import HowItWorks from './components/Content/HowItWorks';
+import SearchBooks from './components/BrowseLibrary/SearchBooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetAlert } from './reducers/mainSlice';
 import axios from 'axios';
@@ -58,6 +59,7 @@ const App = () => {
 			<Routes>
 				<Route path="/must-read" element={<MustRead />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
+				<Route path="/search-books" element={<SearchBooks />} />
 				<Route path='/your-library' element={isLoggedIn ? <YourLibrary /> : <Navigate to='/'/>}/>
 				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />
 				<Route path="/login" element={isLoggedIn ? <Navigate to='/'/> : <Login />} />

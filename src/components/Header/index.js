@@ -24,7 +24,7 @@ const Header = () => {
 			dispatch(setSearchedBooks({searchedBooks: []}));
 			return dispatch(setAlert({text: 'Enter atleast 3 characters', color: '#F75549'}));
 		}
-		const response = await axios.get(urls.search, {params: {query: searchQuery.trim()}});
+		const response = await axios.get(urls.getBooks, {params: {search_query: searchQuery.trim()}});
 		dispatch(setSearchedBooks({searchedBooks: response.data.books}));
 	};
 

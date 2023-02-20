@@ -58,6 +58,7 @@ const urls = {
     getBookSet: newDomain + '/get-book-set',
     getCategoryBooks: newDomain + '/get-category-books',
     getMustReadBookSet: newDomain + '/get-must-read-book-set',
+    getBooks: newDomain + '/get-new-books',
 };
 
 export default urls;
