@@ -1,28 +1,40 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './styles.scss';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import BookSlider from '../BookSlider';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBookSet } from '../../reducers/bookSlice';
+import { increaseBookSetLimit, resetBookSet, appendBookSet, setBookSet, setAge, load, stopLoad } from '../../reducers/bookSlice';
 import axios from 'axios';
 import urls from '../../utils/urls';
 
 const ages = 15;
 
 const MustRead = () => {
+	const loadMoreRef = useRef(null);
 	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
-	const [ age, setAge ] = useState(8);
-	const { book: { bookSet } } = useSelector(state => state);
+	const { book: { loading, age, bookSet, bookSetLimit } } = useSelector(state => state);
 
-	const getMustReadBookSet = async() => {
+	const getMustReadBookSet = async () => {
+		if(loading) 
+			return;
 		try {
-			const response = await axios.get(urls.getBookSet, { params: { age, section_name: 'Must Read' } });
-			dispatch(setBookSet({bookSet: response.data.book_set}));
+			dispatch(load());
+			const response = await axios.get(urls.getBookSet, { params: { 
+				age, 
+				section_name: 'Must Read', 
+				start: bookSetLimit - 3,
+				end: bookSetLimit
+			}});
+			if(bookSetLimit === 3) 
+				dispatch(setBookSet({bookSet: response.data.book_set}));
+			else 
+				dispatch(appendBookSet({bookSet: response.data.book_set}));
 			console.log(response.data.book_set);
 		} catch (err) {
 			console.log(err);
 		}
+		dispatch(stopLoad());
 	};
 
 	const scrollToCenter = () => {
@@ -32,18 +44,27 @@ const MustRead = () => {
 		}
 	};
 
+	const loadMore = () => {
+		if (loadMoreRef.current) {
+			if (window.innerHeight + window.scrollY >= loadMoreRef.current.offsetTop) dispatch(increaseBookSetLimit());
+		}
+	};
+
 	useEffect(
 		() => {
 			getMustReadBookSet();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[age]
+		[age, bookSetLimit]
 	);
 
 	useEffect(() => {
+		dispatch(resetBookSet());
 		scrollToCenter();
 		window.addEventListener('resize', scrollToCenter);
+		window.addEventListener('scroll', loadMore);
 		return () => {
+			window.removeEventListener('scroll', loadMore);
 			window.removeEventListener('resize', scrollToCenter);
 		};
 	}, []);
@@ -60,7 +81,7 @@ const MustRead = () => {
 								<div 
 									key={i} 
 									className={`age-group ${i === age ? 'selected-age-group' : ''}`} 
-									onClick={() => setAge(i)}
+									onClick={() => dispatch(setAge({age: i}))}
 								>
 									<h2>{i} - {i + 1}</h2>
 									<p>Years</p>
@@ -76,9 +97,11 @@ const MustRead = () => {
 						key={books.category}
 						title={books.category}
 						books={books.books}
+						getBooks={getMustReadBookSet}
 					/>
 				);
 			})}
+			<div ref={loadMoreRef}></div>
 		</div>
 	);
 };

@@ -2,7 +2,6 @@ import {useState, useEffect, useRef} from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll'
 import './styles.scss';
 import {AiOutlineLeft, AiOutlineRight} from 'react-icons/ai';
-import Loading from '../Loading';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getOverlay } from './utils';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,40 +10,22 @@ const BookSlider = ({
 	title,
 	books,
 	booksTitle,
-	getBooks = () => {},
 	overlay,
 	showOverlay = true
 }) => {
 	const {main: {isLoggedIn}} = useSelector(state => state);
 	const dispatch = useDispatch();
-	const [booksLoading, setBooksLoading] = useState(false);
 	const [sectionBooks, setSectionBooks] = useState(books.length ? books : ['No books to show']);
 	const [booksScroll, setBooksScroll] = useState(0);
 	const booksRef = useRef(null);
 
-	const updateBooks = async () => {
-		const element = booksRef.current.container.current;
-		setBooksScroll(element.scrollLeft);
-		if(!booksLoading && element.scrollLeft === element.scrollWidth - element.clientWidth) {
-			setBooksLoading(true);
-			await getBooks({
-				start: element.children[0].children.length + 10,
-				end: element.children[0].children.length + 20,
-				type: 'a'
-			});
-			setBooksLoading(false);
-		}
-	};
-
-	const slide = (direction, ref, update) => {
+	const slide = (direction, ref) => {
 		const element = ref.current.container.current;
 		setBooksScroll(element.scrollLeft)
 		if(direction === 'right')
 			element.scrollTo(element.scrollLeft + element.clientWidth - 100, 0);
 		else
 			element.scrollTo(element.scrollLeft - element.clientWidth - 100, 0);
-		if(update)
-			updateBooks();
 	};
 
 	useEffect(() => {
@@ -54,12 +35,6 @@ const BookSlider = ({
 			setSectionBooks(['No books to show']);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [books]);
-
-	useEffect(() => {
-		if(booksRef?.current)
-			booksRef.current.container.current.addEventListener('scroll', updateBooks);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [booksRef]);
 
 	return (
 		<div className="book-slider">
@@ -107,7 +82,6 @@ const BookSlider = ({
 									</div>
 								);
 							})}
-							{booksLoading && <Loading/>}
 						</div>
 					}
 				</ScrollContainer>
@@ -117,17 +91,3 @@ const BookSlider = ({
 };
 
 export default BookSlider;
-
-/*
-{book === 'skeleton'
-	?
-	<Skeleton height={'12rem'}/>
-	:
-	<LazyLoadImage
-		alt='Book'
-		src={book.image}
-		width={125}
-		visibleByDefault={true}
-	/>
-}
-*/

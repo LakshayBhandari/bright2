@@ -18,7 +18,7 @@ import axios from 'axios';
 import devUrls from './utils/devUrls';
 
 const App = () => {
-	const { main: { alert, user, isLoggedIn } } = useSelector(state => state);
+	const { book: {loading}, main: { alert, user, isLoggedIn } } = useSelector(state => state);
 	const location = useLocation();
 	const dispatch = useDispatch();
 
@@ -55,6 +55,11 @@ const App = () => {
 	return (
 		<div className="app">
 			{alert.text && <p className="alert" style={{ backgroundColor: alert.color }}>{alert.text}</p>}
+			{loading && 
+				<div className="loading-spinner-container">
+					<div className='loading-spinner'></div>
+				</div>
+			}
 			<Header />
 			<Routes>
 				<Route path="/must-read" element={<MustRead />} />

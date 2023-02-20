@@ -38,6 +38,33 @@ html {
     }
 }
 
+.loading-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  top: 1rem;
+  left: calc(50% - 25px);
+  background-color: #4285F4;
+  z-index: 10;
+  box-shadow: 0px 0px 3px black;
+}
+
+.loading-spinner {
+  border: 3px solid white;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border-color: white white transparent transparent;
+  animation: spinny 1s infinite linear;
+}
+@keyframes spinny {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
