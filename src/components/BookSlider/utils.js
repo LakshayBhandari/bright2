@@ -17,6 +17,7 @@ import { FaStar } from 'react-icons/fa';
 import { HiThumbDown, HiOutlineBookOpen } from 'react-icons/hi';
 import axios from 'axios';
 import devUrls from '../../utils/devUrls';
+import {Link} from 'react-router-dom';
 
 const wishlistAdd = async (book, dispatch) => {
 	dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
@@ -102,7 +103,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, isLoggedIn)
 					<AiOutlineHeart />
 					<p>Add to Wishlist</p>
 				</button>
-				{/* <Link to={`/book/${book.isbn}`}>View Details</Link> */}
+				<Link to={`/book/${book.isbn}`}>View Details</Link>
 			</div>
 		);
 	} else if (overlay === 'wishlist') {

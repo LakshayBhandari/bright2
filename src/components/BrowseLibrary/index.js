@@ -30,7 +30,6 @@ const BrowseLibrary = () => {
 				dispatch(setBookSet({bookSet: response.data.book_set}));
 			else 
 				dispatch(appendBookSet({bookSet: response.data.book_set}));
-			console.log(response.data.book_set);
 		} catch (err) {
 			console.log(err);
 		}
