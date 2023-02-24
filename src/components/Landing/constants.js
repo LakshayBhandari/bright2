@@ -39,7 +39,7 @@ export const sections = [
 		color: '#4285F4',
 		image: '/icons/section-4.png',
 		linkText: 'Compare Pricing',
-		link: '/compare-pricing',
+		link: '/pricing',
 	},
 	{
 		id: 5,

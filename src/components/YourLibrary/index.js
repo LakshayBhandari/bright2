@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BookSlider from '../BookSlider';
 import './styles.scss';
 import { suggestedCategories, bookArchives } from './constants';

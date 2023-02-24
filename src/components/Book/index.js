@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import './styles.scss';
 import { FaStar } from 'react-icons/fa';
 import BookSlider from '../BookSlider';
@@ -12,6 +12,9 @@ import {addToWishlist} from '../../reducers/wishlistSlice';
 import axios from 'axios';
 import urls from '../../utils/urls';
 import randomInteger from 'random-int';
+import moment from 'moment';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 
 const Book = () => {
 	const navigate = useNavigate();
@@ -27,8 +30,11 @@ const Book = () => {
 			const newBook = response.data.books[0]
 			setBook({
 				...newBook, 
-				for_age: `${newBook.min_age} - ${newBook.max_age} years`,
 				stars: Math.round(Number(newBook.rating)),
+				pages: newBook.pages && `${newBook.pages} pages`,
+				price: newBook.price && `₹ ${newBook.price}/-`,
+				for_age: newBook.for_age || `${newBook.min_age} - ${newBook.max_age} years`,
+				publication_date: newBook.publication_date && moment(newBook.publication_date).format("MMM Do YY"),
 			});
 			setCategories(Array.from(new Set(newBook.categories.map(({category}) => category.name))));
 		} catch(err) {
@@ -47,6 +53,7 @@ const Book = () => {
 	};
 
 	useEffect(() => {
+		console.log(book);
 		if(book)
 			getSimilarBooks();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,6 +63,7 @@ const Book = () => {
 		getBook();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isbn]);
+
 
 	if (!book) return <h1 style={{ margin: '10rem', textAlign: 'center', padding: '1rem' }}>Loading...</h1>;
 	return (
@@ -73,10 +81,12 @@ const Book = () => {
 					</div>
 					<div className="stats">
 						{stats.map((stat, i) => {
+							if(!book[stat.name] && !stat.default) 
+								return <Fragment key={i}/>
 							return (
-								<div className='stat'>
-								<img alt="Stat" src={stat.image} />
-								<p>{book[stat.name] ? `${book[stat.name]} ${stat.pad || ''}` : stat.default}</p>
+								<div className='stat' key={i}>
+									<img alt="Stat" src={stat.image} />
+									<p>{book[stat.name] ? `${book[stat.name]}` : stat.default}</p>
 								</div>
 							);
 						})}
@@ -91,7 +101,7 @@ const Book = () => {
 							);
 						})}
 					</div>
-					<div className="description">
+					{/* <div className="description">
 						<h4>Description</h4>
 						<ReadMore
 							readMoreText={<b>Read More</b>}
@@ -100,11 +110,11 @@ const Book = () => {
 						>
 							At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
 						</ReadMore>
-					</div>
+					</div> */}
 				</div>
 				<div className="book-image">
 					<div className="image">
-						<img alt="Book" src={book.image.replace('218', '536')}/>
+						<img alt="Book" src={book.image.replace('SY2', 'SY8').replace('SX2', 'SX8').replace('US2', 'US4')}/>
 					</div>
 					<button onClick={() => {
 						dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));

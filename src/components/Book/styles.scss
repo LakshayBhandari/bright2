@@ -1,13 +1,14 @@
 .single-book {
-    width: 1200px;
+    width: 1100px;
     max-width: 100%;
     margin: 3rem auto;
     padding: 0px 1rem;
     > .book {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 40% 60%;
         grid-template-rows: 1fr;
         gap: 1.5rem;
+        width: 100%;
         .book-main-details {
             display: flex;
             flex-direction: column;
@@ -70,19 +71,22 @@
             }
         }
         .book-image {
+            width: 100%;
             grid-row: 1/3;
+            margin-left: auto;
             .image {
                 background-color: #F1F1F0;
                 padding: 1.5rem;
                 display: flex;
                 justify-content: center;
                 gap: 1rem;
+                width: 100%;
                 > img {
                     border-radius: 3px;
-                    width: max(80%, 30vw);
+                    width: 100%;
                 }
             }
-            button {
+            > button {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -150,6 +154,12 @@
             .book-image {
                 width: 500px;
                 max-width: 95%;
+                margin: auto;
+                .image {
+                    > div {
+                        width: 100%;
+                    }
+                } 
             }
         }
     }

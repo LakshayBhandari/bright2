@@ -5,7 +5,7 @@ import './styles.scss';
 
 const TaskDetails = () => {
 	const dispatch = useDispatch();
-	const { main: { registerDetails: { verificationDone, paymentDone, registrationDone, paymentStatus } } } = useSelector(
+	const { main: { registerDetails: { paymentDone, registrationDone, paymentStatus } } } = useSelector(
 		state => state
 	);
 

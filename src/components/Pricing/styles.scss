@@ -1,0 +1,230 @@
+.pricing {
+    max-width: 100%;
+    padding: 3rem 0px;
+    margin: auto auto 3rem auto;
+    * {
+        scroll-behavior: auto !important;
+    }
+    > h1 {
+        text-align: center;
+        color: #4285F4;
+    }
+    .age-groups {
+        margin: 2rem auto;
+        text-align: center;
+        width: min(1020px, 95%);
+        .age-group-list {
+            display: inline-flex;
+            justify-content: center;
+            margin: 1.5rem auto;
+            padding: 0px 16px;
+            gap: 16px;
+            .age-group {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+                cursor: pointer;
+                width: 128px;
+                height: 128px;
+                padding: 16px;
+                font-weight: 900;
+                background: #DBDBDB;
+                border: 1px solid #C5C5C5;
+                border-radius: 50%;
+                transition: 0.3s all ease;
+                h2 {
+                    font-family: Ubuntu;
+                    font-size: 1.5rem;
+                }
+                p {
+                    font-family: Ubuntu;
+                    font-size: 0.9rem;
+                }
+            }
+            .selected-age-group {
+                color: white;
+                background: #4285F4;
+                border: 1px solid #2A6DDC;
+                box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+    .books {
+        background: rgba(66, 133, 244, 0.1);
+        position: relative;
+        padding: 1rem 3rem;
+        * {
+            scroll-behavior: smooth !important;
+        }
+        h3, > p {
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        > p {
+            margin: 0.75rem;
+        }
+        > svg {
+            position: absolute;
+            font-size: 1.5rem;
+            top: calc(50% - 0.75rem);
+            color: #ffffff;
+        }
+        .no-books-text {
+            margin: 1.5rem 0px;
+            color: black;
+        }
+        .left-arrow {
+            color: black;
+            left: 0.5rem;
+        }
+        .right-arrow {
+            color: black;
+            right: 0.5rem;
+        }
+        .book-list {
+            display: inline-flex;
+            margin: 0.5rem auto;
+            justify-content: center;
+            gap: 1rem;
+            overflow-x: hidden;
+            padding-top: 1rem;
+            min-width: 100%;
+            max-width: auto;
+            .loading {
+                border-color: #4285F4 #4285F4 transparent transparent;
+                margin: 1rem 0px;
+                align-self: center;
+            }
+            .book {
+                position: relative;
+                height: auto;
+                background-color: #ffffff;
+                padding: 1rem 1rem 1rem 1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                max-width: 250px;
+                > p {
+                    display: -webkit-box;
+                    overflow : hidden;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;  
+                    font-size: 1rem;
+                }
+                .book-image {
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    height: 190px;
+                    > img {
+                        height: 190px;
+                    }
+                }
+                .book-details {
+                    margin-top: auto;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 1rem;
+                    .book-detail {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        color: #4285F4;
+                    }
+                }
+            }
+        }
+    }
+    .platforms {
+        gap: 1rem;
+        display: flex;
+        width: min(500px, 95%);
+        margin: 1.5rem auto;
+        .platform {
+            flex: 1;
+            min-height: 11rem;
+            max-height: auto;
+            background-color: white;
+            padding: 1.5rem 1rem;
+            border: 1px solid #BCBCBC;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 0.75rem;
+            border-radius: 8px;
+            transition: 0.3s all ease;
+            justify-content: flex-end;
+            text-align: center;
+            img {
+                width: 60%;
+            }
+            p {
+                font-size: 1.125rem;
+                font-weight: bold;
+            }
+            span {
+                color: #2367D8;
+                font-size: 0.8rem;
+            }
+        }
+        .selected-platform {
+            border-color: #2A6DDC;
+            background-color: #4285F4;
+            p, span {
+                color: white;
+            }
+        }
+    }
+    .platform-stats {
+        width: min(500px, 100%);
+        margin: 1.5rem auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid #4285F4;
+        border-bottom: 0px;
+        border-radius: 3px;
+        padding-top: 1rem;
+        .platform-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #4285F4;
+            > h3 {
+                font-size: 1.125rem;
+                font-weight: normal;
+                color: #4285F4;
+            }
+            .platform-stat-items {
+                width: min(450px, 90%);
+                margin: auto;
+                display: flex;
+                justify-content: space-between;
+                h3 {
+                    font-family: Ubuntu;
+                }
+                p {
+                    font-size: 0.85rem;
+                }
+                .selected-platform-stat-item {
+                    transition: 0.3s all ease;
+                    color: #4285F4;
+                }
+            }
+        }
+    }
+    @media (max-width: 512px) {
+        .platform-stats {
+            width: 100%;
+            border: 0px;
+        }
+    }
+}

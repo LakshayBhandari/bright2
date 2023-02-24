@@ -13,6 +13,7 @@ import Content from './components/Content';
 import HowItWorks from './components/Content/HowItWorks';
 import SearchBooks from './components/BrowseLibrary/SearchBooks';
 import Book from './components/Book';
+import Pricing from './components/Pricing';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetAlert } from './reducers/mainSlice';
 import axios from 'axios';
@@ -71,6 +72,7 @@ const App = () => {
 				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />
 				<Route path="/login" element={isLoggedIn ? <Navigate to='/'/> : <Login />} />
 				<Route path="/register" element={isLoggedIn ? <Navigate to='/'/> : <Register />} />
+				<Route path="/pricing" element={<Pricing/>}/>
 				<Route path="/how-it-works" element={<HowItWorks/>} />
 				<Route path="/about-us" element={<Content type='About Us'/>} />
 				<Route path="/contact-us" element={<Content type='Contact Us'/>} />
