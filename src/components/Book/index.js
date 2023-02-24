@@ -116,7 +116,7 @@ const Book = () => {
 					<div className="image">
 						<Splide options={ { width: '100%', rewind: true } } aria-label="React Splide Example">
 							<SplideSlide>
-								<img alt="Book" src={book.image.replace('SY2', 'SY8').replace('SX2', 'SX8').replace('US2', 'US4')}/>
+								<img alt="Book" src={book.image.replace('SY2', 'SY8').replace('SX2', 'SX8').replace('US2', 'US8')}/>
 							</SplideSlide>
 							{book.images.map((image, i) => {
 								if(i === 0) 
