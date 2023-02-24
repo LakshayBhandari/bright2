@@ -7,15 +7,6 @@ export const platforms = [
 export const platformStats = [
     {
         id: 1,
-        title: "Annual Cost",
-        items: [
-            { text: "₹ 52,000/-" },
-            { text: "₹ 7,500/-" },
-            { text: "₹ 43,000/-" },
-        ],
-    },
-    {
-        id: 2,
         title: "Book Choice",
         items: [
             { text: "Limited Stock" },
@@ -24,7 +15,7 @@ export const platformStats = [
         ],
     },
     {
-        id: 3,
+        id: 2,
         title: "Suggestions",
         items: [
             { text: "Limited Advice" },
@@ -33,7 +24,7 @@ export const platformStats = [
         ],
     },
     {
-        id: 4,
+        id: 3,
         title: "Book Read",
         items: [
             { text: "Landfills" },
