@@ -13,8 +13,8 @@ import axios from 'axios';
 import urls from '../../utils/urls';
 import randomInteger from 'random-int';
 import moment from 'moment';
-import { Slide } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 const Book = () => {
 	const navigate = useNavigate();
@@ -114,7 +114,20 @@ const Book = () => {
 				</div>
 				<div className="book-image">
 					<div className="image">
-						<img alt="Book" src={book.image.replace('SY2', 'SY8').replace('SX2', 'SX8').replace('US2', 'US4')}/>
+						<Splide options={ { width: '100%', rewind: true } } aria-label="React Splide Example">
+							<SplideSlide>
+								<img alt="Book" src={book.image.replace('SY2', 'SY8').replace('SX2', 'SX8').replace('US2', 'US4')}/>
+							</SplideSlide>
+							{book.images.map((image, i) => {
+								if(i === 0) 
+									return <Fragment key={i}/>
+								return (
+									<SplideSlide key={image}>
+										<img src={image} alt='Book'/>
+									</SplideSlide>
+								);
+							})}
+						</Splide>
 					</div>
 					<button onClick={() => {
 						dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
