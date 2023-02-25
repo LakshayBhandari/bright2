@@ -1,6 +1,6 @@
 const domain = process.env.REACT_APP_API + '/api';
 
-const newDomain = process.env.REACT_APP_API + '/api_v2_new_books'
+const newDomain = process.env.REACT_APP_API + '/api_v2_books'
 
 const urls = {
     getMostBorrowedBooks: domain + '/get-most-borrowed',
