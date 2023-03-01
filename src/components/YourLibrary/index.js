@@ -12,10 +12,11 @@ import {
 	setPreviousBooks,
 	setCurrentBooks,
 } from '../../reducers/wishlistSlice';
-import { getAgeGroupColor, getDay, getDate } from '../../utils';
-import { FaCalendar } from 'react-icons/fa';
+import { getAgeGroupColor, getDay, getDate, getFormattedDate } from '../../utils';
+import { FaEdit, FaCalendar } from 'react-icons/fa';
 import axios from 'axios';
 import devUrls from '../../utils/devUrls';
+import { setUser, setAlert } from '../../reducers/mainSlice';
 
 const YourLibrary = () => {
 	const state = useSelector(state => state);
@@ -100,6 +101,19 @@ const YourLibrary = () => {
 		}
 	};
 
+	const updateDeliveryDate = async (event) => {
+		try {
+			const response = await axios.post(devUrls.changeDeliveryDate, {
+				delivery_date: getFormattedDate(event.target.value),
+			}, {withCredentials: true});
+			dispatch(setAlert({text: 'Delivery date updated', color: '#33A200'}));
+			dispatch(setUser({user: response.data.user}));
+		} catch (err) {
+			console.log(err);
+			dispatch(setAlert({text: err.response.data.message, color: '#F75549'}));
+		}
+	};
+
 	useEffect(() => {
 		getWishlist();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,8 +148,10 @@ const YourLibrary = () => {
 								);
 							})}
 						</div>
-						<button className="date-button">
+						<button className="blue-button date-button">
 							<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
+							<FaEdit/>
+							<input type='date' onChange={updateDeliveryDate}/>
 						</button>
 						{user.next_delivery_date && <div className="time-date">
 							<div className="time-date-column">

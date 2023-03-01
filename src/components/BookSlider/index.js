@@ -5,6 +5,8 @@ import {AiOutlineLeft, AiOutlineRight} from 'react-icons/ai';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getOverlay } from './utils';
 import { useSelector, useDispatch } from 'react-redux';
+import {getDate} from '../../utils';
+import moment from 'moment';
 
 const BookSlider = ({
 	title,
@@ -13,7 +15,7 @@ const BookSlider = ({
 	overlay,
 	showOverlay = true
 }) => {
-	const {main: {isLoggedIn}} = useSelector(state => state);
+	const {main: {user, isLoggedIn}, wishlist: {bucket}} = useSelector(state => state);
 	const dispatch = useDispatch();
 	const [sectionBooks, setSectionBooks] = useState(books.length ? books : ['No books to show']);
 	const [booksScroll, setBooksScroll] = useState(0);
@@ -26,6 +28,12 @@ const BookSlider = ({
 			element.scrollTo(element.scrollLeft + element.clientWidth - 100, 0);
 		else
 			element.scrollTo(element.scrollLeft - element.clientWidth - 100, 0);
+	};
+
+	const getWishlistDeliveryDate = (i, date) => {
+		if(bucket.length) 
+			return getDate(moment(date).add(7 * (Math.round((i + 1) / user.books_per_week)), 'days'));
+		return getDate(moment(date).add(7 * (Math.round((i + 1) / user.books_per_week) - 1), 'days'));
 	};
 
 	useEffect(() => {
@@ -78,6 +86,11 @@ const BookSlider = ({
 												<p>{Number(book.review_count).toLocaleString()}</p>
 											</div>}
 										</div>
+										{overlay === 'wishlist' &&
+											<p className='wishlist-delivery-date'>
+												{getWishlistDeliveryDate(i, user.next_delivery_date)}
+											</p>										
+										}
 										{showOverlay && getOverlay(overlay, sectionBooks, book, i, dispatch, isLoggedIn)}
 									</div>
 								);

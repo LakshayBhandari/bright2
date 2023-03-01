@@ -145,6 +145,19 @@
                         opacity: 1;
                     }
                 }
+                .wishlist-delivery-date {
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    background-color: #33A200;
+                    color: white;
+                    font-size: 0.9rem;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                }
             }
         }
     }

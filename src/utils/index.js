@@ -22,7 +22,7 @@ export const getDay = date => {
 
 export const getDate = date => {
 	const d = new Date(date);
-	return `${d.getDate()} ${months[d.getMonth()]}`;
+	return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 };
 
 export const getFormattedDate = date => {
@@ -33,7 +33,7 @@ export const getFormattedDate = date => {
 	let day = String(d.getDate() + 1);
 	if(day.length < 2)
 		day = "0" + day;
-	return `${d.getFullYear()}-${month}-${day}`;
+	return `${d.getFullYear()}-${month}-${day - 1}`;
 };
 
 export const getAge = date => {
