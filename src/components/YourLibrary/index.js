@@ -153,20 +153,20 @@ const YourLibrary = () => {
 							<FaEdit/>
 							<input type='date' onChange={updateDeliveryDate}/>
 						</button>
-						{user.next_delivery_date && <div className="time-date">
-							<div className="time-date-column">
-								<img src="/icons/time.png" alt="Time" />
-								<p>Time - {user.delivery_time}</p>
-							</div>
-							<div className="time-date-column">
-								<FaCalendar />
-								<p>Day - {getDay(user.next_delivery_date)}</p>
-							</div>
-						</div>}
 					</div>
 					:
 					<p className='blue-button create-bucket'>No Bucket Created</p>
 				}
+				{user.next_delivery_date && <div className="time-date">
+					<div className="time-date-column">
+						<img src="/icons/time.png" alt="Time" />
+						<p>Time - {user.delivery_time}</p>
+					</div>
+					<div className="time-date-column">
+						<FaCalendar />
+						<p>Day - {getDay(user.next_delivery_date)}</p>
+					</div>
+				</div>}
 			</div>
 			<div className="wishlist">
 				<h3>Wishlist</h3>
