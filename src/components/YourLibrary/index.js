@@ -157,7 +157,8 @@ const YourLibrary = () => {
 					:
 					<p className='blue-button create-bucket'>No Bucket Created</p>
 				}
-				{user.next_delivery_date && <div className="time-date">
+				{user.next_delivery_date && 
+				<div className="time-date" style={{margin: '1.5rem auto'}}>
 					<div className="time-date-column">
 						<img src="/icons/time.png" alt="Time" />
 						<p>Time - {user.delivery_time}</p>
