@@ -148,17 +148,17 @@ const YourLibrary = () => {
 								);
 							})}
 						</div>
-						<button className="blue-button date-button">
-							<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
-							<FaEdit/>
-							<input type='date' onChange={updateDeliveryDate}/>
-						</button>
 					</div>
 					:
 					<p className='blue-button create-bucket'>No Bucket Created</p>
 				}
+				<button className="blue-button date-button">
+					<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
+					<FaEdit/>
+					<input type='date' onChange={updateDeliveryDate}/>
+				</button>
 				{user.next_delivery_date && 
-				<div className="time-date" style={{margin: '1.5rem auto'}}>
+				<div className="time-date">
 					<div className="time-date-column">
 						<img src="/icons/time.png" alt="Time" />
 						<p>Time - {user.delivery_time}</p>
