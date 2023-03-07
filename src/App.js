@@ -16,8 +16,8 @@ import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, resetAlert } from './reducers/mainSlice';
-import axios from 'axios';
 import devUrls from './utils/devUrls';
+import axios from 'axios';
 
 const App = () => {
 	const { book: {loading}, main: { alert, user, isLoggedIn } } = useSelector(state => state);
