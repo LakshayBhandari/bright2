@@ -44,70 +44,36 @@ const PlanDetails = () => {
 		await selectPlan();
 		await selectPlanDuration();
 		try {
-			let instance;
-			if(selectedSubscription === 1) {
-				const response = await axios.post(
-					devUrls.generateSubscriptionId,
-					{ mobile_number: mobileNumber },
-					{ withCredentials: true }
-				);
-				instance = window.Razorpay({
-					...response.data,
-					handler: async data => {
-						await axios.post(
-							devUrls.verifySubscription,
-							{
-								payment_id: data.razorpay_payment_id,
-								subscription_id: data.razorpay_subscription_id,
-								signature: data.razorpay_signature,
-							},
-							{ withCredentials: true }
-						);
-						await axios.post(
-							devUrls.subscriptionSuccessful,
-							{
-								subscription_id: data.razorpay_subscription_id,
-								payment_id: data.razorpay_payment_id,
-								mobile_number: mobileNumber,
-							},
-							{ withCredentials: true }
-						);
-						dispatch(setRegisterDetails({ paymentDone: true, paymentStatus: 'Paid' }));
-						dispatch(nextStepRegister());
-					},
-				});
-			} else {
-				const response = await axios.post(
-					devUrls.generateOrderId,
-					{ mobile_number: mobileNumber, card: selectedSubscription },
-					{ withCredentials: true }
-				);
-				instance = window.Razorpay({
-					...response.data,
-					handler: async data => {
-						await axios.post(
-							devUrls.verifyOrder,
-							{
-								payment_id: data.razorpay_payment_id,
-								order_id: data.razorpay_order_id,
-								signature: data.razorpay_signature,
-							},
-							{ withCredentials: true }
-						);
-						await axios.post(
-							devUrls.orderSuccessful,
-							{
-								order_id: data.razorpay_order_id,
-								payment_id: data.razorpay_payment_id,
-								mobile_number: mobileNumber,
-							},
-							{ withCredentials: true }
-						);
-						dispatch(setRegisterDetails({ paymentDone: true, paymentStatus: 'Paid' }));
-						dispatch(nextStepRegister());
-					},
-				});
-			}
+			const response = await axios.post(
+				devUrls.generateOrderId,
+				{ mobile_number: mobileNumber, card: selectedSubscription },
+				{ withCredentials: true }
+			);
+			const instance = window.Razorpay({
+				...response.data,
+				handler: async data => {
+					await axios.post(
+						devUrls.verifyOrder,
+						{
+							payment_id: data.razorpay_payment_id,
+							order_id: data.razorpay_order_id,
+							signature: data.razorpay_signature,
+						},
+						{ withCredentials: true }
+					);
+					await axios.post(
+						devUrls.orderSuccessful,
+						{
+							order_id: data.razorpay_order_id,
+							payment_id: data.razorpay_payment_id,
+							mobile_number: mobileNumber,
+						},
+						{ withCredentials: true }
+					);
+					dispatch(setRegisterDetails({ paymentDone: true, paymentStatus: 'Paid' }));
+					dispatch(nextStepRegister());
+				},
+			});
 			instance.on('payment.failed', response => {
 				dispatch(setAlert({ text: 'Payment failed! Try again later', color: 'F75549' }));
 			});
@@ -161,7 +127,7 @@ const PlanDetails = () => {
 										return (
 											<h3 className={className} key={item.text}>
 												{item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/>
-												{item.text}
+												{item[selectedSubscription]}
 											</h3>
 										);
 									}
