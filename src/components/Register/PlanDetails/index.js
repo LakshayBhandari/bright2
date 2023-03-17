@@ -152,7 +152,6 @@ const PlanDetails = () => {
 					>
 						<h3>Monthly</h3>
 						<p>₹ {planPrices[selectedPlan.bookCount][1]}/-</p>
-						<span>Auto-Debit</span>
 					</div>
 					<div 
 						className={`plan-duration ${selectedSubscription === 3 ? 'selected-plan-duration' : ''}`}
