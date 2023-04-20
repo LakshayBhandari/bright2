@@ -28,8 +28,8 @@ const Footer = () => {
 						<b>Follow Us</b>
 						<div className="social-links">
 							<div><a target='_blank' rel="noreferrer" href="https://twitter.com/scraplabs"><FaTwitter /></a></div>
-							<div><a target='_blank' rel="noreferrer" href="https://www.facebook.com/people/Bukrentcom/100083678604060/?hc_ref=ARQ2SMcItq8kH1IVvo9fW14V-yD2nawYKnU-8ubCPDH-hfa6nzA_zHAB-SVgVLYUuT8&fref=nf"><FaFacebook /></a></div>
-							<div><a target='_blank' rel="noreferrer" href="https://www.instagram.com/bukrent/?igshid=YmMyMTA2M2Y="><FaInstagram /></a></div>
+							<div><a target='_blank' rel="noreferrer" href="https://www.facebook.com/people/brightrclub/100090330153935/"><FaFacebook /></a></div>
+							<div><a target='_blank' rel="noreferrer" href="https://www.instagram.com/brightr.club/"><FaInstagram /></a></div>
 						</div>
 					</div>
 					<h1>Bright<span>R</span>.Club</h1>
