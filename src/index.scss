@@ -129,8 +129,8 @@ img {
     left: calc(50% - 250px);
     color: #FFFFFF;
     text-align: center;
-    min-width: 500px;
-    max-width: auto;
+    width: min(500px, 95%);
+    height: auto;
 }
 
 .blue-button {

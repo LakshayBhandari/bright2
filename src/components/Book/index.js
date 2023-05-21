@@ -4,7 +4,6 @@ import { FaStar } from 'react-icons/fa';
 import BookSlider from '../BookSlider';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
-import ReadMore from "react-read-more-read-less";
 import { productDetails, stats } from './constants';
 import {setAlert} from '../../reducers/mainSlice';
 import {useDispatch} from 'react-redux';
@@ -15,6 +14,7 @@ import randomInteger from 'random-int';
 import moment from 'moment';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import devUrls from '../../utils/devUrls';
 
 const Book = () => {
 	const navigate = useNavigate();
@@ -40,6 +40,16 @@ const Book = () => {
 		} catch(err) {
 			console.log(err);
 			navigate('/');
+		}
+	};
+
+	const wishlistAdd = async (book) => {
+		dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
+		dispatch(addToWishlist({ book }));
+		try {
+			await axios.post(devUrls.addToWishlist, {isbn: book.isbn}, {withCredentials: true});
+		} catch (err) {
+			console.log(err);
 		}
 	};
 
@@ -129,10 +139,7 @@ const Book = () => {
 							})}
 						</Splide>
 					</div>
-					<button onClick={() => {
-						dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
-						dispatch(addToWishlist({book}))
-					}}>
+					<button onClick={() => wishlistAdd(book)}>
 						<AiOutlineHeart />
 						<p>Add to Wishlist</p>
 					</button>
