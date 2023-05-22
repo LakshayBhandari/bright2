@@ -22,7 +22,6 @@ import {Link} from 'react-router-dom';
 const wishlistAdd = async (book, dispatch) => {
 	dispatch(setAlert({ text: `${book.name} added to wishlist`, color: '#33A200' }));
 	dispatch(addToWishlist({ book }));
-	console.log(book);
 	try {
 		await axios.post(devUrls.addToWishlist, {isbn: book.isbn}, {withCredentials: true});
 	} catch (err) {
@@ -103,7 +102,7 @@ export const getOverlay = (overlay, sectionBooks, book, i, dispatch, isLoggedIn)
 					<AiOutlineHeart />
 					<p>Add to Wishlist</p>
 				</button>
-				<Link to={`/book/${book.isbn}`}>View Details</Link>
+				{/* <Link to={`/book/${book.isbn}`}>View Details</Link> */}
 			</div>
 		);
 	} else if (overlay === 'wishlist') {

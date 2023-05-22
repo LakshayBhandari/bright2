@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 	bookSet: [],
 	bookSetLimit: 3,
-	age: 8,
+	age: 5,
 	searchedBooks: [],
 	searchQuery: '',
 	loading: false,

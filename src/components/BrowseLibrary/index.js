@@ -7,7 +7,7 @@ import { increaseBookSetLimit, resetBookSet, appendBookSet, setBookSet, setAge, 
 import axios from 'axios';
 import urls from '../../utils/urls';
 
-const ages = 15;
+const ages = 12;
 
 const BrowseLibrary = () => {
 	const loadMoreRef = useRef(null);
@@ -21,7 +21,7 @@ const BrowseLibrary = () => {
 		try {
 			dispatch(load());
 			const response = await axios.get(urls.getBookSet, { params: { 
-				age, 
+				age: age === '12+' ? 13 : age, 
 				section_name: 'Browse Library', 
 				start: bookSetLimit - 3,
 				end: bookSetLimit
@@ -37,10 +37,8 @@ const BrowseLibrary = () => {
 	};
 
 	const scrollToCenter = () => {
-		if(ageScrollRef.current) {
-			console.log(ageScrollRef.current.container)
-			ageScrollRef.current.container.current.scrollLeft = 1160 - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
-		}
+		if(ageScrollRef.current) 
+			ageScrollRef.current.container.current.scrollLeft = 730 - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
 	};
 
 	const loadMore = () => {
@@ -87,6 +85,13 @@ const BrowseLibrary = () => {
 								</div>
 							);
 						})}
+						<div 
+							className={`age-group ${age === '12+' ? 'selected-age-group' : ''}`} 
+							onClick={() => dispatch(setAge({age: '12+'}))}
+						>
+							<h2>12+</h2>
+							<p>Years</p>
+						</div>
 					</div>
 				</ScrollContainer>
 			</div>

@@ -29,7 +29,7 @@ export const sections = [
 		color: '#F8B200',
 		image: '/icons/section-3.png',
 		linkText: 'Browse Collection',
-		link: '/must-read',
+		link: '/browse-library',
 	},
 	{
 		id: 4,
@@ -60,6 +60,6 @@ export const sections = [
 		color: '#F75549',
 		image: '/icons/section-6.png',
 		linkText: 'Must Read Section',
-		link: '/must-read',
+		link: '/browse-library',
 	},
 ];
