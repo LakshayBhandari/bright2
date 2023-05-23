@@ -38,18 +38,18 @@ const BrowseLibrary = () => {
 
 	const scrollToCenter = () => {
 		if(ageScrollRef.current) 
-			ageScrollRef.current.container.current.scrollLeft = 730 - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
+			ageScrollRef.current.container.current.scrollLeft = (145.5 * (age === '12+' ? 13 : age)) - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
 	};
 
 	const loadMore = () => {
-		if (loadMoreRef.current) {
+		if (loadMoreRef.current) 
 			if (window.innerHeight + window.scrollY >= loadMoreRef.current.offsetTop) dispatch(increaseBookSetLimit());
-		}
 	};
 
 	useEffect(
 		() => {
 			getBookSet();
+			scrollToCenter();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[age, bookSetLimit]
