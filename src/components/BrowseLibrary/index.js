@@ -23,10 +23,10 @@ const BrowseLibrary = () => {
 			const response = await axios.get(urls.getBookSet, { params: { 
 				age: age === '12+' ? 13 : age, 
 				section_name: 'Browse Library', 
-				start: bookSetLimit - 5,
+				start: bookSetLimit - 10,
 				end: bookSetLimit
 			}});
-			if(bookSetLimit === 5) 
+			if(bookSetLimit === 10) 
 				dispatch(setBookSet({bookSet: response.data.book_set}));
 			else 
 				dispatch(appendBookSet({bookSet: response.data.book_set}));

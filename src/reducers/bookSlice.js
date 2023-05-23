@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	bookSet: [],
-	bookSetLimit: 5,
+	bookSetLimit: 10,
 	age: 5,
 	searchedBooks: [],
 	searchQuery: '',
@@ -24,7 +24,7 @@ export const bookSlice = createSlice({
 		},
 		increaseBookSetLimit: (state) => {
 			if(!state.loading) 
-				state.bookSetLimit = state.bookSetLimit + 5;
+				state.bookSetLimit = state.bookSetLimit + 10;
 		},
 		resetBookSet: (state) => {
 			state.bookSetLimit = initialState.bookSetLimit;
