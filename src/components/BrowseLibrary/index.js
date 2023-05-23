@@ -60,12 +60,9 @@ const BrowseLibrary = () => {
 
 	useEffect(() => {
 		dispatch(resetBookSet());
-		scrollToCenter();
-		window.addEventListener('resize', scrollToCenter);
 		window.addEventListener('scroll', loadMore);
 		return () => {
 			window.removeEventListener('scroll', loadMore);
-			window.removeEventListener('resize', scrollToCenter);
 		};
 	}, []);
 
