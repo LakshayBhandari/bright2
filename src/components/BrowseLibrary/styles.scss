@@ -9,22 +9,22 @@
         text-align: center;
         color: #4285F4;
     }
-    .age-groups {
+    .filters {
         margin: 2rem auto;
         text-align: center;
-        width: min(1020px, 95%);
-        .age-group-list {
+        width: min(1290px, 95%);
+        .filter-list {
             display: inline-flex;
             justify-content: center;
             margin: 1.5rem auto;
             padding: 0px 16px;
             gap: 16px;
-            .age-group {
+            .filter {
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
-                gap: 16px;
+                gap: 1rem;
                 cursor: pointer;
                 width: 128px;
                 height: 128px;
@@ -43,11 +43,25 @@
                     font-size: 0.9rem;
                 }
             }
-            .selected-age-group {
+            .selected-filter {
                 color: white;
                 background: #4285F4;
                 border: 1px solid #2A6DDC;
                 box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+    .filters-square {
+        margin: 1rem auto;
+        .filter-list {
+            gap: 0.25rem;
+            .filter {
+                width: 100px;
+                height: 100px;
+                border-radius: 3px;
+                h3 {
+                    font-size: 1rem;
+                }
             }
         }
     }

@@ -29,7 +29,7 @@ export const sections = [
 		color: '#F8B200',
 		image: '/icons/section-3.png',
 		linkText: 'Browse Collection',
-		link: '/browse-library',
+		link: '/must-read',
 	},
 	{
 		id: 4,
