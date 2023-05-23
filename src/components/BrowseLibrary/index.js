@@ -46,10 +46,13 @@ const BrowseLibrary = () => {
 			if (window.innerHeight + window.scrollY >= loadMoreRef.current.offsetTop) dispatch(increaseBookSetLimit());
 	};
 
+	useEffect(() => {
+		scrollToCenter();
+	}, [age]);
+
 	useEffect(
 		() => {
 			getBookSet();
-			scrollToCenter();
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[age, bookSetLimit]
