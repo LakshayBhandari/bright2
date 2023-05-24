@@ -52,13 +52,14 @@
         }
     }
     .filters-square {
-        margin: 1rem auto;
+        margin: 0px auto;
         .filter-list {
             gap: 0.25rem;
             .filter {
-                width: 100px;
-                height: 100px;
+                width: 6.875rem;
+                height: 6.875rem;
                 border-radius: 3px;
+                gap: 0.25rem;
                 h3 {
                     font-size: 1rem;
                 }

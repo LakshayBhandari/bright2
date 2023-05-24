@@ -59,6 +59,7 @@ const BrowseLibrary = () => {
 	);
 
 	useEffect(() => {
+		getBookSet();
 		dispatch(resetBookSet());
 		window.addEventListener('scroll', loadMore);
 		return () => {

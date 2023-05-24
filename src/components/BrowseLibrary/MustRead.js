@@ -98,26 +98,29 @@ const MustRead = () => {
 				<ScrollContainer vertical={false}>
 					<div className="filter-list">
 						<div 
-							className={`filter ${bookSetSize.total === 100 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 100, single: 10})}
+							className={`filter ${bookSetSize.total === 30 ? 'selected-filter' : ''}`} 
+							onClick={() => setBookSetSize({total: 30, single: 3})}
 						>
-							<h3>Top 100 Books</h3>
+							<h2>30</h2>
+							<p>Top Books</p>
 						</div>
 					</div>
 					<div className="filter-list">
 						<div 
-							className={`filter ${bookSetSize.total === 30 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 30, single: 10})}
+							className={`filter ${bookSetSize.total === 100 ? 'selected-filter' : ''}`} 
+							onClick={() => setBookSetSize({total: 100, single: 10})}
 						>
-							<h3>Top 30 Books</h3>
+							<h2>100</h2>
+							<p>Top Books</p>
 						</div>
 					</div>
 					<div className="filter-list">
 						<div 
 							className={`filter ${bookSetSize.total === 10 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 10, single: 5})}
+							onClick={() => setBookSetSize({total: 10, single: 2})}
 						>
-							<h3>Top 10 Books</h3>
+							<h2>10</h2>
+							<p>Top Books</p>
 						</div>
 					</div>
 				</ScrollContainer>
