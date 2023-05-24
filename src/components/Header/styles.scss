@@ -2,11 +2,11 @@ header {
     .top-header {
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         background-color: #4285F4;
-        height: 70px;
+        height: 80px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
+        padding: 1rem 2rem;
         gap: 3rem;
         > a {
             h1 {
@@ -91,7 +91,7 @@ header {
             margin-left: auto;
         }
     }
-    @media (max-width: 1028px) {
+    @media (max-width: 1128px) {
         .top-header {
             justify-content: space-between;
             position: relative;

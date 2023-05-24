@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './styles.scss';
+import arrayShuffle from 'array-shuffle';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import BookSlider from '../BookSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,13 +31,14 @@ const MustRead = () => {
 				},
 			});
 			const {books} = response.data;
-			console.log(books.length);
 			const _bookSet = [];
 			for(let i = 0; i < books.length; ++i) {
 				if(i % bookSetSize.single === 0) 
 					_bookSet.push({category: `Set ${Math.floor(i / bookSetSize.single) + 1}`, books: []});
 				_bookSet[Math.floor(i / bookSetSize.single)].books.push(books[i]);
 			}
+			for(let i = 0; i < _bookSet.length; ++i) 
+				_bookSet[i].books = arrayShuffle(_bookSet[i].books);
 			dispatch(setBookSet({bookSet: _bookSet}));
 		} catch (err) {
 			console.log(err);
@@ -104,8 +106,6 @@ const MustRead = () => {
 							<h2>30</h2>
 							<p>Top Books</p>
 						</div>
-					</div>
-					<div className="filter-list">
 						<div 
 							className={`filter ${bookSetSize.total === 100 ? 'selected-filter' : ''}`} 
 							onClick={() => setBookSetSize({total: 100, single: 10})}
@@ -113,8 +113,6 @@ const MustRead = () => {
 							<h2>100</h2>
 							<p>Top Books</p>
 						</div>
-					</div>
-					<div className="filter-list">
 						<div 
 							className={`filter ${bookSetSize.total === 10 ? 'selected-filter' : ''}`} 
 							onClick={() => setBookSetSize({total: 10, single: 2})}
