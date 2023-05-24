@@ -15,21 +15,28 @@ const MustRead = () => {
 	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
 	const { book: { loading, age, bookSet } } = useSelector(state => state);
-	const [bookSetSize, setBookSetSize] = useState({total: 100, single: 10});
+	const [bookSetSize, setBookSetSize] = useState({total: 100, single: 10, categoryLimit: 8});
 
 	const getMustReadBookSet = async () => {
 		if(loading) 
 			return;
 		try {
 			dispatch(load());
-			const response = await axios.get(urls.getBooks, {
+			const response = await axios.get(urls.getMustReadSet, {
 				params: {
-					start: 0,
-					end: bookSetSize.total,
+					count: bookSetSize.total,
 					age: age === '12+' ? 13 : age,
-					sort_review_count: 1
+					category_limit: bookSetSize.categoryLimit,
 				},
 			});
+			// const response = await axios.get(urls.getBooks, {
+			// 	params: {
+			// 		start: 0,
+			// 		end: bookSetSize.total,
+			// 		age: age === '12+' ? 13 : age,
+			// 		sort_review_count: 1
+			// 	},
+			// });
 			const {books} = response.data;
 			const _bookSet = [];
 			for(let i = 0; i < books.length; ++i) {
@@ -101,21 +108,21 @@ const MustRead = () => {
 					<div className="filter-list">
 						<div 
 							className={`filter ${bookSetSize.total === 30 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 30, single: 3})}
+							onClick={() => setBookSetSize({total: 30, single: 3, categoryLimit: 3})}
 						>
 							<h2>30</h2>
 							<p>Top Books</p>
 						</div>
 						<div 
 							className={`filter ${bookSetSize.total === 100 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 100, single: 10})}
+							onClick={() => setBookSetSize({total: 100, single: 10, categoryLimit: 8})}
 						>
 							<h2>100</h2>
 							<p>Top Books</p>
 						</div>
 						<div 
 							className={`filter ${bookSetSize.total === 10 ? 'selected-filter' : ''}`} 
-							onClick={() => setBookSetSize({total: 10, single: 2})}
+							onClick={() => setBookSetSize({total: 10, single: 2, categoryLimit: 2})}
 						>
 							<h2>10</h2>
 							<p>Top Books</p>
