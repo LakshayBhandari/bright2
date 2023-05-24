@@ -69,15 +69,15 @@ const BrowseLibrary = () => {
 	return (
 		<div className="browse-library">
 			<h1>Browse Library</h1>
-			<div className="age-groups">
+			<div className="filters">
 				<h3>Select By Age</h3>
 				<ScrollContainer vertical={false} ref={ageScrollRef}>
-					<div className="age-group-list">
+					<div className="filter-list">
 						{Array(ages).fill(true).map((_, i) => {
 							return (
 								<div 
 									key={i} 
-									className={`age-group ${i === age ? 'selected-age-group' : ''}`} 
+									className={`filter ${i === age ? 'selected-filter' : ''}`} 
 									onClick={() => dispatch(setAge({age: i}))}
 								>
 									<h2>{i} - {i + 1}</h2>
@@ -86,7 +86,7 @@ const BrowseLibrary = () => {
 							);
 						})}
 						<div 
-							className={`age-group ${age === '12+' ? 'selected-age-group' : ''}`} 
+							className={`filter ${age === '12+' ? 'selected-filter' : ''}`} 
 							onClick={() => dispatch(setAge({age: '12+'}))}
 						>
 							<h2>12+</h2>
