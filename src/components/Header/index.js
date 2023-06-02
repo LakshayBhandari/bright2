@@ -56,7 +56,7 @@ const Header = () => {
 				</div>
 				<div className={`header-actions ${showDropDown ? 'show-drop-down' : 'hide-drop-down'}`}>
 					<Link to="/browse-library" className="subscribe-button">Browse Library</Link>
-					<Link to="/must-read" className="subscribe-button">Must Read</Link>
+					<Link to="/most-popular" className="subscribe-button">Most Popular</Link>
 					{isLoggedIn
 						? <Link className="subscribe-button" to="/your-library">Your Library</Link>
 						: <Link className="subscribe-button" to="/">Sign In</Link>}

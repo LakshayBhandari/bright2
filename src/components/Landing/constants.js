@@ -25,11 +25,11 @@ export const sections = [
 		id: 3,
 		title: 'Must Read Collection',
 		subTitle: 'Top 100 Books',
-		text: 'Based on International reviews we have created a must read collection for every age group.',
+		text: 'Based on International reviews we have created a most popular collection for every age group.',
 		color: '#F8B200',
 		image: '/icons/section-3.png',
 		linkText: 'Browse Collection',
-		link: '/must-read',
+		link: '/most-popular',
 	},
 	{
 		id: 4,
@@ -59,7 +59,7 @@ export const sections = [
 		text: 'Build the habit of reading by giving kids access to hundreds of physical books every year.',
 		color: '#F75549',
 		image: '/icons/section-6.png',
-		linkText: 'Must Read Section',
-		link: '/must-read',
+		linkText: 'Most Popular Section',
+		link: '/most-popular',
 	},
 ];

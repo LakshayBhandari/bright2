@@ -1,1 +1,1 @@
-export const searchBarPages = [ '/browse-library', '/your-library', '/search-books' ];
+export const searchBarPages = [ '/browse-library', '/most-popular', '/your-library', '/search-books' ];

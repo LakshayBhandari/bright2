@@ -10,7 +10,7 @@ import urls from '../../utils/urls';
 
 const ages = 12;
 
-const MustRead = () => {
+const MostPopular = () => {
 	const loadMoreRef = useRef(null);
 	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const MustRead = () => {
 
 	return (
 		<div className="browse-library">
-			<h1>Must Read Collection</h1>
+			<h1>Most Popular Collection</h1>
 			<div className="filters">
 				<h3>Select By Age</h3>
 				<ScrollContainer vertical={false} ref={ageScrollRef}>
@@ -137,4 +137,4 @@ const MustRead = () => {
 	);
 };
 
-export default MustRead;
+export default MostPopular;
