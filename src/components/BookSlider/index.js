@@ -71,7 +71,7 @@ const BookSlider = ({
 								console.log(book.name, book.stock_available);
 								return (
 									<div 
-										className={`book ${isLoggedIn && !book.stock_available ? 'book-not-available' : ''}`} 
+										className={`book ${isLoggedIn && !Boolean(book.stock_available) ? 'book-not-available' : ''}`} 
 										key={i}
 									>
 										<div className='book-image'>
