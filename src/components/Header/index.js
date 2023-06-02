@@ -59,7 +59,7 @@ const Header = () => {
 					<Link to="/most-popular" className="subscribe-button">Most Popular</Link>
 					{isLoggedIn
 						? <Link className="subscribe-button" to="/your-library">Your Library</Link>
-						: <Link className="subscribe-button" to="/">Sign In</Link>}
+						: <Link className="subscribe-button" to="/login">Sign In</Link>}
 					{isLoggedIn && <button onClick={logOut} className='subscribe-button'>Log Out</button>}
 					<img alt="Book" src="/icons/profile.png" />
 				</div>

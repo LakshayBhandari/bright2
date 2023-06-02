@@ -25,15 +25,10 @@ const Login = () => {
 			navigate('/your-library');
 		} catch (err) {
 			dispatch(setAlert({ text: err.response.data.message, color: '#F75549' }));
+			navigate('/register');
 			console.log(err);
 		}
 	};
-
-	useEffect(() => {
-		if(!mobileNumber)
-			navigate('/');
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<div className="form-container">
@@ -41,7 +36,11 @@ const Login = () => {
 				<h2>Login</h2>
 				<div className="input-field">
 					<label>Mobile Number</label>
-					<input type="text" value={mobileNumber} readOnly={true} />
+					<input 
+						type="text" 
+						value={mobileNumber} 
+						onChange={({ target: { value } }) => dispatch(setRegisterDetails({ mobileNumber: value.trim() }))}
+					/>
 				</div>
 				<div className="input-field password-field">
 					<label>Password</label>
