@@ -68,6 +68,7 @@ const BookSlider = ({
 						:
 						<div className="book-list">
 							{sectionBooks?.map((book, i) => {
+								console.log(book.name, book.stock_available);
 								return (
 									<div 
 										className={`book ${isLoggedIn && !book.stock_available ? 'book-not-available' : ''}`} 
