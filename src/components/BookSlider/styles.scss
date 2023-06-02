@@ -159,6 +159,10 @@
                     width: 100%;
                 }
             }
+            .book-not-available {
+                -webkit-filter: grayscale(100%);
+                filter: grayscale(100%);
+            }
         }
     }
     @media (max-width: 768px) {

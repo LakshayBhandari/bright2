@@ -29,14 +29,6 @@ const MustRead = () => {
 					category_limit: bookSetSize.categoryLimit,
 				},
 			});
-			// const response = await axios.get(urls.getBooks, {
-			// 	params: {
-			// 		start: 0,
-			// 		end: bookSetSize.total,
-			// 		age: age === '12+' ? 13 : age,
-			// 		sort_review_count: 1
-			// 	},
-			// });
 			const {books} = response.data;
 			const _bookSet = [];
 			for(let i = 0; i < books.length; ++i) {

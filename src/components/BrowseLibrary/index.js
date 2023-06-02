@@ -13,7 +13,7 @@ const BrowseLibrary = () => {
 	const loadMoreRef = useRef(null);
 	const ageScrollRef = useRef(null);
 	const dispatch = useDispatch();
-	const { book: { loading, age, bookSet, bookSetLimit } } = useSelector(state => state);
+	const { main: { isLoggedIn }, book: { loading, age, bookSet, bookSetLimit } } = useSelector(state => state);
 
 	const getBookSet = async () => {
 		if(loading) 
@@ -26,6 +26,9 @@ const BrowseLibrary = () => {
 				start: bookSetLimit - 10,
 				end: bookSetLimit
 			}});
+			response.data.book_set = response.data.book_set.map(bookSet => {
+				return {...bookSet, books: bookSet.books.sort((a, b) => b.stock_available - a.stock_available)};
+			});
 			if(bookSetLimit === 10) 
 				dispatch(setBookSet({bookSet: response.data.book_set}));
 			else 
