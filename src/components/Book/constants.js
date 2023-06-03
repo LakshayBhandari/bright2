@@ -4,7 +4,7 @@ export const productDetails = [
 	{ title: 'Pages', name: 'pages', default: '-' },
 	{ title: 'For Ages', name: 'for_age', default: '-' },
 	{ title: 'Language', name: 'language', default: 'English' },
-	{ title: 'Format', name: 'book_format', default: '-' },
+	{ title: 'Format', name: 'book_type', default: '-' },
 	{ title: 'Publisher', name: 'publisher', default: '-' },
 	{ title: 'Edition', name: 'publication_date', default: '-' },
 	{ title: 'Lexile', name: 'lexile_measure', default: '-' },

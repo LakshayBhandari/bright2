@@ -15,6 +15,7 @@ import moment from 'moment';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import devUrls from '../../utils/devUrls';
+import ReadMore from 'react-read-more-read-less';
 
 const Book = () => {
 	const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Book = () => {
 			setBook({
 				...newBook, 
 				stars: Math.round(Number(newBook.rating)),
-				pages: newBook.pages && `${newBook.pages} pages`,
+				pages: newBook.pages && `${newBook.pages}`,
 				price: newBook.price && `₹ ${newBook.price}/-`,
 				for_age: newBook.for_age || `${newBook.min_age} - ${newBook.max_age} years`,
 				publication_date: newBook.publication_date && moment(newBook.publication_date).format("MMM Do YY"),
@@ -111,16 +112,17 @@ const Book = () => {
 							);
 						})}
 					</div>
-					{/* <div className="description">
+					{book.description &&
+					<div className="description">
 						<h4>Description</h4>
 						<ReadMore
 							readMoreText={<b>Read More</b>}
 							readLessText={<b>Read Less</b>}
 							charLimit={150}
 						>
-							At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+							{book.description}
 						</ReadMore>
-					</div> */}
+					</div>}
 				</div>
 				<div className="book-image">
 					<div className="image">

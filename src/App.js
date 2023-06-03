@@ -66,7 +66,7 @@ const App = () => {
 			<Routes>
 				<Route path="/most-popular" element={<MostPopular />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
-				<Route path="/book/:isbn" element={isLoggedIn ? <Book /> : <Navigate to='/'/>} />
+				<Route path="/book/:isbn" element={<Book />} />
 				<Route path="/search-books" element={<SearchBooks />} />
 				<Route path='/your-library' element={isLoggedIn ? <YourLibrary /> : <Navigate to='/'/>}/>
 				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />

@@ -95,14 +95,15 @@ const retain = async (book, dispatch) => {
 };
 
 export const getOverlay = (overlay, sectionBooks, book, i, dispatch, isLoggedIn) => {
-	if (!overlay && isLoggedIn) {
+	if (!overlay) {
 		return (
 			<div className="book-overlay">
+				{isLoggedIn &&
 				<button onClick={() => wishlistAdd(book, dispatch)}>
 					<AiOutlineHeart />
 					<p>Add to Wishlist</p>
-				</button>
-				{/* <Link to={`/book/${book.isbn}`}>View Details</Link> */}
+				</button>}
+				<Link to={`/book/${book.isbn}`}>View Details</Link>
 			</div>
 		);
 	} else if (overlay === 'wishlist') {
