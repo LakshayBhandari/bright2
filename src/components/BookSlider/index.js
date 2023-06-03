@@ -90,7 +90,7 @@ const BookSlider = ({
 												<p>{Number(book.review_count).toLocaleString()}</p>
 											</div>}
 										</div>
-										{isLoggedin && (overlay === 'wishlist' || !overlay) && !book.stock_available &&
+										{isLoggedIn && (overlay === 'wishlist' || !overlay) && !book.stock_available &&
 											<p className='all-copies-booked'>
 												All Copies Booked
 											</p>										
