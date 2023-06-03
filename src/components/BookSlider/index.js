@@ -71,7 +71,7 @@ const BookSlider = ({
 								console.log(book.name, book.stock_available);
 								return (
 									<div 
-										className={`book ${isLoggedIn && !Boolean(book.stock_available) ? 'book-not-available' : ''}`} 
+										className={`book ${isLoggedIn && !book.stock_available ? 'book-not-available' : ''}`} 
 										key={i}
 									>
 										<div className='book-image'>
@@ -90,9 +90,9 @@ const BookSlider = ({
 												<p>{Number(book.review_count).toLocaleString()}</p>
 											</div>}
 										</div>
-										{overlay === 'wishlist' &&
-											<p className='wishlist-delivery-date'>
-												{getWishlistDeliveryDate(i, user.next_delivery_date)}
+										{(overlay === 'wishlist' || !overlay) && !book.stock_available &&
+											<p className='all-copies-booked'>
+												All Copies Booked
 											</p>										
 										}
 										{showOverlay && getOverlay(overlay, sectionBooks, book, i, dispatch, isLoggedIn)}
