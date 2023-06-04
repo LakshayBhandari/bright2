@@ -25,7 +25,8 @@ const Login = () => {
 			navigate('/your-library');
 		} catch (err) {
 			dispatch(setAlert({ text: err.response.data.message, color: '#F75549' }));
-			navigate('/register');
+			if(err.response?.data?.message === 'No User with that mobile number exists!') 
+				navigate('/register');
 			console.log(err);
 		}
 	};
