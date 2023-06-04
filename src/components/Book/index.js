@@ -6,7 +6,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import { productDetails, stats } from './constants';
 import {setAlert} from '../../reducers/mainSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addToWishlist} from '../../reducers/wishlistSlice';
 import axios from 'axios';
 import urls from '../../utils/urls';
@@ -20,6 +20,7 @@ import ReadMore from 'react-read-more-read-less';
 const Book = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { main: {isLoggedIn} } = useSelector(state => state);
 	const { isbn } = useParams();
 	const [ book, setBook ] = useState(null);
 	const [similarBooks, setSimilarBooks] = useState([]);
@@ -141,10 +142,11 @@ const Book = () => {
 							})}
 						</Splide>
 					</div>
+					{isLoggedIn && 
 					<button onClick={() => wishlistAdd(book)}>
 						<AiOutlineHeart />
 						<p>Add to Wishlist</p>
-					</button>
+					</button>}
 				</div>
 			</div>
 			<BookSlider books={similarBooks} title="More Like This" bookBackground="#F1F1F0" />
