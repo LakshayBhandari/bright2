@@ -7,6 +7,7 @@ const initialState = {
 	searchedBookSet: [],
 	searchQuery: '',
 	loading: false,
+	searchAges: [],
 };
 
 export const bookSlice = createSlice({
@@ -42,6 +43,15 @@ export const bookSlice = createSlice({
 		},
 		setSearchedBookSet: (state, action) => {
 			state.searchedBookSet = action.payload.searchedBookSet;
+			const searchAgesSet = new Set();
+			for(const bookSet of action.payload.searchedBookSet) {
+				if(bookSet.max_age === 100) 
+					continue;
+				for(let i = bookSet.min_age; i <= bookSet.max_age; ++i) 
+					searchAgesSet.add(i < 12 ? i : 12);
+			}
+			state.searchAges = Array.from(searchAgesSet).sort((age1, age2) => age1 - age2);
+			state.age = state.searchAges[Math.floor((state.searchAges.length - 1) / 2)];
 		},
 	},
 });

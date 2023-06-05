@@ -10,7 +10,7 @@ const ages = 12;
 const SearchBooks = () => {
 	const dispatch = useDispatch();
 	const ageScrollRef = useRef(null);
-	const { book: {searchedBookSet}, book: {age} } = useSelector(state => state);
+	const { book: {searchAges, searchedBookSet}, book: {age} } = useSelector(state => state);
 
 	const scrollToCenter = () => {
 		if(ageScrollRef.current) 
@@ -23,36 +23,34 @@ const SearchBooks = () => {
 
 	return (
 		<div className="search-books">
-			<div className="filters">
-				<h3>Select By Age</h3>
-				<ScrollContainer vertical={false} ref={ageScrollRef}>
-					<div className="filter-list">
-						{Array(ages).fill(true).map((_, i) => {
-							return (
-								<div 
-									key={i} 
-									className={`filter ${i === age ? 'selected-filter' : ''}`} 
-									onClick={() => dispatch(setAge({age: i}))}
-								>
-									<h2>{i} - {i + 1}</h2>
-									<p>Years</p>
-								</div>
-							);
-						})}
-						<div 
-							className={`filter ${age === '12+' ? 'selected-filter' : ''}`} 
-							onClick={() => dispatch(setAge({age: '12+'}))}
-						>
-							<h2>12+</h2>
-							<p>Years</p>
+			{searchAges.length > 0 &&
+				<div className="filters">
+					<h3>Select By Age</h3>
+					<ScrollContainer vertical={false} ref={ageScrollRef}>
+						<div className="filter-list">
+							{searchAges.map(searchAge => {
+								return (
+									<div 
+										key={searchAge} 
+										onClick={() => dispatch(setAge({age: searchAge}))}
+										className={`filter ${searchAge === age ? 'selected-filter' : ''}`} 
+									>
+										<h2>{searchAge === 12 ? '12+' : `${searchAge} - ${searchAge + 1}`}</h2>
+										<p>Years</p>
+									</div>
+								);
+							})}
 						</div>
-					</div>
-				</ScrollContainer>
-			</div>
+					</ScrollContainer>
+				</div>}
 			{!searchedBookSet?.length && <h3 className="info">Enter a query of atleast 3 characters to search</h3>}
 			{searchedBookSet?.length ? 
 				searchedBookSet.map(books => {
-					if(books.category === 'Best Seller - Most Popular')  
+					if(
+						books.category === 'Best Seller - Most Popular' ||
+						age < books.min_age ||
+						age > books.max_age
+					)  
 						return <Fragment key={books.category}/>
 					return (
 						<BookSlider

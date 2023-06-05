@@ -4,7 +4,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchBarPages } from './constants';
-import { setSearchedBookSet, setSearchQuery } from '../../reducers/bookSlice';
+import { load, stopLoad, setSearchedBookSet, setSearchQuery } from '../../reducers/bookSlice';
 import urls from '../../utils/urls';
 import axios from 'axios'
 import {setAlert} from '../../reducers/mainSlice';
@@ -24,8 +24,10 @@ const Header = () => {
 			dispatch(setSearchedBookSet({searchedBooks: []}));
 			return dispatch(setAlert({text: 'Enter atleast 3 characters', color: '#F75549'}));
 		}
+		dispatch(load());
 		const response = await axios.get(urls.searchBooks, {params: {search_query: searchQuery.trim()}});
 		dispatch(setSearchedBookSet({searchedBookSet: response.data.book_set}));
+		dispatch(stopLoad());
 	};
 
 	const logOut = async () => {
