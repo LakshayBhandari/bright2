@@ -4,7 +4,7 @@ const initialState = {
 	bookSet: [],
 	bookSetLimit: 5,
 	age: 5,
-	searchedBooks: [],
+	searchedBookSet: [],
 	searchQuery: '',
 	loading: false,
 };
@@ -40,8 +40,8 @@ export const bookSlice = createSlice({
 		stopLoad: (state) => {
 			state.loading = false;
 		},
-		setSearchedBooks: (state, action) => {
-			state.searchedBooks = action.payload.searchedBooks;
+		setSearchedBookSet: (state, action) => {
+			state.searchedBookSet = action.payload.searchedBookSet;
 		},
 	},
 });
@@ -55,7 +55,7 @@ export const {
 	appendBookSet,
 	setBookSet,
 	setSearchQuery,
-	setSearchedBooks,
+	setSearchedBookSet,
 } = bookSlice.actions;
 
 export default bookSlice.reducer;

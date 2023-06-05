@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BookSlider from '../BookSlider';
 import './styles.scss';
 import { suggestedCategories, bookArchives } from './constants';
@@ -11,21 +11,36 @@ import {
 	setDumpedBooks,
 	setPreviousBooks,
 	setCurrentBooks,
+	setOrderBucket,
 } from '../../reducers/wishlistSlice';
 import { getAgeGroupColor, getDay, getDate, getFormattedDate } from '../../utils';
 import { FaEdit, FaCalendar } from 'react-icons/fa';
 import axios from 'axios';
 import devUrls from '../../utils/devUrls';
 import { setUser, setAlert } from '../../reducers/mainSlice';
+import { MdClose } from 'react-icons/md';
 
 const YourLibrary = () => {
 	const state = useSelector(state => state);
-	const { main: { user }, wishlist: { bucket, wishlist, suggestedBooks } } = useSelector(state => state);
+	const { main: { user }, wishlist: { orderBucket, bucket, wishlist, suggestedBooks } } = useSelector(state => state);
 	const dispatch = useDispatch();
+	const [ changingBucket, setChangingBucket ] = useState(false);
+
+	const getOrderBucket = async () => {
+		try {
+			const response = await axios.get(devUrls.getOrderBucket, {
+				withCredentials: true,
+				params: { guid: user.guid },
+			});
+			dispatch(setOrderBucket({ orderBucket: response.data.wishlists }));
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	const getBucket = async () => {
 		try {
-			const response = await axios.get(devUrls.getOrderBucket, {
+			const response = await axios.get(devUrls.getBucket, {
 				withCredentials: true,
 				params: { guid: user.guid },
 			});
@@ -101,6 +116,48 @@ const YourLibrary = () => {
 		}
 	};
 
+	const createBucket = async () => {
+		try {
+			await axios.get(devUrls.createBucket, {
+				withCredentials: true,
+			});
+			getBucket();
+		} catch (err) {
+			if(err.response?.data.message)
+				dispatch(setAlert({text: err.response.data.message, color: '#F75549'}))
+		}
+	};
+
+	const placeOrder = async () => {
+		try {
+			await axios.get(devUrls.placeOrder, {
+				withCredentials: true,
+			});
+			getOrderBucket();
+			getBucket();
+			getCurrentBooks();
+			getPreviousBooks();
+			dispatch(setAlert({text: 'Order placed', color: '#33A200'}));
+		} catch (err) {
+			if(err.response?.data.message)
+				dispatch(setAlert({text: err.response.data.message, color: '#F75549'}))
+		}
+	};
+
+	const removeBucket = async (book) => {
+		try {
+			await axios.post(devUrls.removeFromBucket,
+			{isbn: book.isbn},
+			{withCredentials: true});
+			getBucket();
+		} catch (err) {
+			if(err.response?.data.message)
+				dispatch(setAlert({text: err.response.data.message, color: '#F75549'}))
+			console.log(err);
+		}
+		setChangingBucket(false);
+	};
+
 	const updateDeliveryDate = async (event) => {
 		try {
 			const response = await axios.post(devUrls.changeDeliveryDate, {
@@ -117,13 +174,14 @@ const YourLibrary = () => {
 	useEffect(() => {
 		getWishlist();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bucket]);
+	}, [orderBucket, bucket]);
 
 	useEffect(
 		() => {
+			getOrderBucket();
+			getBucket();
 			getSuggestions();
 			getPreviousBooks();
-			getBucket();
 			getDumpedBooks();
 			getCurrentBooks();
 		},
@@ -136,11 +194,10 @@ const YourLibrary = () => {
 			<h3>Your Library</h3>
 			<div className="bucket">
 				<h3>Next Delivery Bucket</h3>
-				{bucket.length
-					?
+				{orderBucket.length > 0 &&
 					<div className="bucket-details">
 						<div className="bucket-list">
-							{bucket.map((book, i) => {
+							{orderBucket.map((book, i) => {
 								return (
 									<div className="bucket-book" key={i}>
 										<img src={book.image} alt="Book" />
@@ -148,10 +205,35 @@ const YourLibrary = () => {
 								);
 							})}
 						</div>
-					</div>
-					:
-					<p className='blue-button create-bucket'>No Bucket Created</p>
-				}
+						<p>Order Placed</p>
+					</div>}
+				{orderBucket.length === 0 && bucket.length > 0 &&
+					<div className="bucket-details">
+						<div className="bucket-list">
+							{bucket.map((book, i) => {
+								return (
+									<div className="bucket-book" key={i}>
+										<img src={book.image} alt="Book" />
+										<div
+											onClick={() => removeBucket(book)}
+											className={`bucket-book-overlay ${changingBucket ? 'show-overlay' : ''}`}
+										>
+											<MdClose />
+											<p>Remove</p>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+						<div className="bucket-actions">
+							<button onClick={() => setChangingBucket(_ => !_)}>
+								{changingBucket ? 'Confirm' : 'Change'}
+							</button>
+							<button onClick={placeOrder}>Place Order</button>
+						</div>
+					</div>}
+				{!orderBucket.length && !bucket.length &&
+					<button className='blue-button create-bucket' onClick={createBucket}>Create Bucket</button>}
 				<button className="blue-button date-button">
 					<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
 					<FaEdit/>

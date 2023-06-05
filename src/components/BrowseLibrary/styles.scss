@@ -1,4 +1,4 @@
-.browse-library {
+.browse-library, .search-books {
     max-width: 100%;
     padding: 3rem 0px;
     margin: auto auto 3rem auto;
@@ -71,7 +71,7 @@
 }
 .search-books {
     min-height: 300px;
-    margin: 3rem auto 5rem auto;
+    margin: 0rem auto 5rem auto;
     .info, > p {
         text-align: center;
     }

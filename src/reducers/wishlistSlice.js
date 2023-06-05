@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	bucket: [],
+	orderBucket: [],
 	wishlist: [],
 	suggestedBooks: [],
 	dumpedBooks: [],
@@ -15,6 +16,9 @@ export const wishlistSlice = createSlice({
 	reducers: {
 		setBucket: (state, action) => {
 			state.bucket = action.payload.bucket;
+		},
+		setOrderBucket: (state, action) => {
+			state.orderBucket = action.payload.orderBucket;
 		},
 		setWishlist: (state, action) => {
 			state.wishlist = action.payload.wishlist;
@@ -98,6 +102,7 @@ export const wishlistSlice = createSlice({
 });
 
 export const {
+	setOrderBucket,
 	setBucket,
 	setWishlist,
 	setPreviousBooks,
