@@ -60,6 +60,7 @@ const urls = {
     getMustReadSet: newDomain + '/get-must-read-set',
     getBooks: newDomain + '/get-new-books',
     searchBooks: newDomain + '/search-new-books',
+    getMostPopularSet: newDomain + '/get-most-popular-set',
 };
 
 export default urls;

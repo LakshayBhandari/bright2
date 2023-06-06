@@ -4,6 +4,7 @@ import Header from './components/Header';
 import BrowseLibrary from './components/BrowseLibrary';
 import YourLibrary from './components/YourLibrary';
 import MostPopular from './components/BrowseLibrary/MostPopular';
+import MustRead from './components/BrowseLibrary/MustRead';
 import Landing from './components/Landing';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -64,6 +65,7 @@ const App = () => {
 			}
 			<Header />
 			<Routes>
+				<Route path="/must-read" element={<MustRead />} />
 				<Route path="/most-popular" element={<MostPopular />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
 				<Route path="/book/:isbn" element={<Book />} />

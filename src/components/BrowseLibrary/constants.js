@@ -6,3 +6,26 @@ export const ageGroups = [
 	{ id: 5, color: '#1596DC', age: '12-14' },
 	{ id: 6, color: '#CB85C2', age: '15+' },
 ];
+
+export const mustReadSections = ['Most Popular Series', 'Best Seller Series', 'Most Searched Tags'];
+
+export const mustReadOptions = {
+	'Most Popular Series': {
+		category_count: 7,
+		book_count: 4,
+		section_name: 'Most Popular Series',
+		randomize_categories: true
+	},
+	'Best Seller Series': {
+		category_count: 4,
+		book_count: 7,
+		section_name: 'Best Seller Series',
+		randomize_books: true
+	},
+	'Most Searched Tags': {
+		category_count: 7,
+		book_count: 4,
+		section_name: 'Most Searched Tags',
+		randomize_categories: true
+	},
+};
