@@ -224,18 +224,6 @@
             }
         }
     }
-    .wish-more-books {
-        margin-top: 5rem;
-        padding: 3rem 0px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        a {
-            padding: 0px 1.5rem;
-            width: auto;
-        }
-    }
     @media (max-width: 1068px) {
         > h3 {
             margin-top: 1rem;

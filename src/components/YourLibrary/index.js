@@ -19,6 +19,7 @@ import axios from 'axios';
 import devUrls from '../../utils/devUrls';
 import { setUser, setAlert } from '../../reducers/mainSlice';
 import { MdClose } from 'react-icons/md';
+import BrowseLibraryLinks from '../Content/BrowseLibraryLinks';
 
 const YourLibrary = () => {
 	const state = useSelector(state => state);
@@ -293,10 +294,7 @@ const YourLibrary = () => {
 					);
 				})}
 			</div>
-			<div className="wish-more-books">
-				<h2>Wish to see more Books!</h2>
-				<Link to="/browse-library" className="blue-button">Browse Library</Link>
-			</div>
+			<BrowseLibraryLinks/>
 		</div>
 	);
 };
