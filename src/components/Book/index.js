@@ -154,6 +154,8 @@ const Book = () => {
 				<h3>Product Details</h3>
 				<div className="product-detail-list">
 					{productDetails.map((detail, i) => {
+						if(!book[detail.name]) 
+							return <Fragment key={i}/>
 						return (
 							<div className="product-detail" key={i}>
 								<b>{detail.title}</b>

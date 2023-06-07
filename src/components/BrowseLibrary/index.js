@@ -4,6 +4,7 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 import BookSlider from '../BookSlider';
 import { useDispatch, useSelector } from 'react-redux';
 import { increaseBookSetLimit, resetBookSet, appendBookSet, setBookSet, setAge, load, stopLoad } from '../../reducers/bookSlice';
+import BrowseLibraryLinks from '../Content/BrowseLibraryLinks';
 import axios from 'axios';
 import urls from '../../utils/urls';
 
@@ -109,6 +110,7 @@ const BrowseLibrary = () => {
 				);
 			})}
 			<div ref={loadMoreRef}></div>
+			<BrowseLibraryLinks/>
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import './styles.scss';
@@ -14,7 +14,7 @@ import {AiOutlineSearch} from 'react-icons/ai';
 const Header = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { main: { isLoggedIn }, book: { searchQuery } } = useSelector(state => state);
+	const { main: { isLoggedIn }, book: { age, searchQuery } } = useSelector(state => state);
 	const [ showDropDown, setShowDropDown ] = useState(false);
 	const location = useLocation();
 
@@ -38,6 +38,10 @@ const Header = () => {
 			console.log(err);
 		}
 	};
+
+	useEffect(() => {
+		setShowDropDown(false);
+	}, [age, location]);
 
 	return (
 		<header>

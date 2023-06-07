@@ -7,7 +7,23 @@ export const ageGroups = [
 	{ id: 6, color: '#CB85C2', age: '15+' },
 ];
 
-export const mustReadSections = ['Most Popular Series', 'Best Seller Series', 'Most Searched Tags'];
+export const mustReadSections = [
+	{
+		title: 'Most Popular Series',
+		largeText: 'Series',
+		smallText: 'Most Popular',
+	},
+	{
+		title: 'Best Seller Series',
+		largeText: 'Bestseller',
+		smallText: 'Series',
+	},
+	{
+		title: 'Most Searched Tags',
+		largeText: 'Tags',
+		smallText: 'Most Searched',
+	}, 
+];
 
 export const mustReadOptions = {
 	'Most Popular Series': {

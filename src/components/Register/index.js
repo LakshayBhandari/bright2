@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import devUrls from '../../utils/devUrls';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import BrowseLibraryLinks from '../Content/BrowseLibraryLinks';
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -76,6 +77,7 @@ const Register = () => {
 			<div className="register" style={paymentDone || registrationDone ? { opacity: '0.1' } : {}}>
 				{registerFlow[registrationStep].element}
 			</div>
+			<BrowseLibraryLinks/>
 		</Fragment>
 	);
 };

@@ -15,7 +15,7 @@ const BookSlider = ({
 	overlay,
 	showOverlay = true
 }) => {
-	const {main: {user, isLoggedIn}, wishlist: {bucket}} = useSelector(state => state);
+	const {main: {user, isLoggedIn}, wishlist: {bucket}, book: {age}} = useSelector(state => state);
 	const dispatch = useDispatch();
 	const [sectionBooks, setSectionBooks] = useState(books.length ? books : ['No books to show']);
 	const [booksScroll, setBooksScroll] = useState(0);
@@ -35,6 +35,11 @@ const BookSlider = ({
 			return getDate(moment(date).add(7 * (Math.round((i + 1) / user.books_per_week)), 'days'));
 		return getDate(moment(date).add(7 * (Math.round((i + 1) / user.books_per_week) - 1), 'days'));
 	};
+
+	useEffect(() => {
+		const element = booksRef.current.container.current;
+		element.scrollTo(0, 0);
+	}, [age]);
 
 	useEffect(() => {
 		if(books.length)
@@ -68,7 +73,6 @@ const BookSlider = ({
 						:
 						<div className="book-list">
 							{sectionBooks?.map((book, i) => {
-								console.log(book.name, book.stock_available);
 								return (
 									<div 
 										className={`book ${isLoggedIn && !book.stock_available ? 'book-not-available' : ''}`} 

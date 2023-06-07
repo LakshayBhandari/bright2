@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetBookSet, setBookSet, setAge, load, stopLoad } from '../../reducers/bookSlice';
 import axios from 'axios';
 import urls from '../../utils/urls';
+import BrowseLibraryLinks from '../Content/BrowseLibraryLinks';
 
 const ages = 12;
 
@@ -131,6 +132,7 @@ const MostPopular = () => {
 					/>
 				);
 			})}
+			<BrowseLibraryLinks/>
 		</div>
 	);
 };

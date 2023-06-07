@@ -7,6 +7,7 @@ import { resetBookSet, setBookSet, setAge, load, stopLoad } from '../../reducers
 import axios from 'axios';
 import urls from '../../utils/urls';
 import { mustReadSections, mustReadOptions } from './constants';
+import BrowseLibraryLinks from '../Content/BrowseLibraryLinks';
 
 const ages = 12;
 
@@ -21,13 +22,10 @@ const MustRead = () => {
 			return;
 		try {
 			dispatch(load());
-			const response = await axios.get(urls.getMustReadSet, {
-				params: {
-					...mustReadOptions[section],
-					age,
-					show_unavailable: !isLoggedIn,
-				},
-			});
+			const params = {...mustReadOptions[section], age};
+			if(!isLoggedIn) 
+				params['show_unavailable'] = true;
+			const response = await axios.get(urls.getMustReadSet, { params });
 			dispatch(setBookSet({bookSet: response.data.book_set}));
 		} catch (err) {
 			console.log(err);
@@ -91,10 +89,11 @@ const MustRead = () => {
 						{mustReadSections.map(mustReadSection => {
 							return (
 								<div 
-									className={`filter ${mustReadSection === section ? 'selected-filter' : ''}`} 
-									onClick={() => setSection(mustReadSection)}
+									className={`filter ${mustReadSection.title === section ? 'selected-filter' : ''}`} 
+									onClick={() => setSection(mustReadSection.title)}
 								>
-									<h3>{mustReadSection}</h3>
+									<h2>{mustReadSection.largeText}</h2>
+									<p>{mustReadSection.smallText}</p>
 								</div>
 							);
 						})}
@@ -113,6 +112,7 @@ const MustRead = () => {
 					/>
 				);
 			})}
+			<BrowseLibraryLinks/>
 		</div>
 	);
 };
