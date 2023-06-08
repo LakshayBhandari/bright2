@@ -72,3 +72,65 @@ export const suggestedCategories = [
 		image: './images/Type of Books/Novel.png',
 	},
 ];
+
+/*
+<div className="bucket">
+	<h3>Next Delivery Bucket</h3>
+	{orderBucket.length > 0 &&
+		<div className="bucket-details">
+			<div className="bucket-list">
+				{orderBucket.map((book, i) => {
+					return (
+						<div className="bucket-book" key={i}>
+							<img src={book.image} alt="Book" />
+						</div>
+					);
+				})}
+			</div>
+			<p>Order Placed</p>
+		</div>}
+	{orderBucket.length === 0 && bucket.length > 0 &&
+		<div className="bucket-details">
+			<div className="bucket-list">
+				{bucket.map((book, i) => {
+					return (
+						<div className="bucket-book" key={i}>
+							<img src={book.image} alt="Book" />
+							<div
+								onClick={() => removeBucket(book)}
+								className={`bucket-book-overlay ${changingBucket ? 'show-overlay' : ''}`}
+							>
+								<MdClose />
+								<p>Remove</p>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+			<div className="bucket-actions">
+				<button onClick={() => setChangingBucket(_ => !_)}>
+					{changingBucket ? 'Confirm' : 'Change'}
+				</button>
+				<button onClick={placeOrder}>Place Order</button>
+			</div>
+		</div>}
+	{!orderBucket.length && !bucket.length &&
+		<button className='blue-button create-bucket' onClick={createBucket}>Create Bucket</button>}
+	<button className="blue-button date-button">
+		<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
+		<FaEdit/>
+		<input type='date' onChange={updateDeliveryDate}/>
+	</button>
+	{user.next_delivery_date && 
+	<div className="time-date">
+		<div className="time-date-column">
+			<img src="/icons/time.png" alt="Time" />
+			<p>Time - {user.delivery_time}</p>
+		</div>
+		<div className="time-date-column">
+			<FaCalendar />
+			<p>Day - {getDay(user.next_delivery_date)}</p>
+		</div>
+	</div>}
+</div>
+*/

@@ -195,7 +195,8 @@ const YourLibrary = () => {
 			<h3>Your Library</h3>
 			<div className="bucket">
 				<h3>Next Delivery Bucket</h3>
-				{orderBucket.length > 0 &&
+				{orderBucket.length
+					?
 					<div className="bucket-details">
 						<div className="bucket-list">
 							{orderBucket.map((book, i) => {
@@ -206,35 +207,10 @@ const YourLibrary = () => {
 								);
 							})}
 						</div>
-						<p>Order Placed</p>
-					</div>}
-				{orderBucket.length === 0 && bucket.length > 0 &&
-					<div className="bucket-details">
-						<div className="bucket-list">
-							{bucket.map((book, i) => {
-								return (
-									<div className="bucket-book" key={i}>
-										<img src={book.image} alt="Book" />
-										<div
-											onClick={() => removeBucket(book)}
-											className={`bucket-book-overlay ${changingBucket ? 'show-overlay' : ''}`}
-										>
-											<MdClose />
-											<p>Remove</p>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-						<div className="bucket-actions">
-							<button onClick={() => setChangingBucket(_ => !_)}>
-								{changingBucket ? 'Confirm' : 'Change'}
-							</button>
-							<button onClick={placeOrder}>Place Order</button>
-						</div>
-					</div>}
-				{!orderBucket.length && !bucket.length &&
-					<button className='blue-button create-bucket' onClick={createBucket}>Create Bucket</button>}
+					</div>
+					:
+					<p className='blue-button create-bucket'>No Bucket Created</p>
+				}
 				<button className="blue-button date-button">
 					<span>Delivery Date{user.next_delivery_date && ` - ${getDate(user.next_delivery_date)}`}</span>
 					<FaEdit/>
