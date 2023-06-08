@@ -35,7 +35,7 @@ const MustRead = () => {
 
 	const scrollToCenter = () => {
 		if(ageScrollRef.current) 
-			ageScrollRef.current.container.current.scrollLeft = (145.5 * (age === '12+' ? 13 : age)) - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
+			ageScrollRef.current.container.current.scrollLeft = (145.5 * age) - (ageScrollRef.current.container.current.clientWidth / 2) + 72;
 	};
 
 	useEffect(() => {
@@ -73,13 +73,6 @@ const MustRead = () => {
 								</div>
 							);
 						})}
-						<div 
-							className={`filter ${age === '12+' ? 'selected-filter' : ''}`} 
-							onClick={() => dispatch(setAge({age: '12+'}))}
-						>
-							<h2>12+</h2>
-							<p>Years</p>
-						</div>
 					</div>
 				</ScrollContainer>
 			</div>
