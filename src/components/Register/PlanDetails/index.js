@@ -110,7 +110,7 @@ const PlanDetails = () => {
 								alt='Plan'
 							/>
 							<p>{plan.title}</p>
-							<span>{plan.bookCount} {plan.bookCount === 1 ? 'Book' : 'Books'} / Week</span>
+							<span>{plan.bookCount} {plan.bookCount === "1" ? 'Book' : 'Books'} / Week</span>
 						</div>
 					);
 				})}
