@@ -39,37 +39,45 @@ export const plans = [
 export const planStats = [
     {
         id: 1,
-        title: "Pay - Monthly",
+        title: "Monthly - Payment",
         items: [
-            { 1: "₹ 449/-", 3: "₹ 399/-", 12: "₹ 358/-"},
-            { 1: "₹ 649/-", 3: "₹ 599/-", 12: "₹ 533/-", strikedText: "₹ 799/-"},
-            { 1: "₹ 849/-", 3: "₹ 799/-", 12: "₹ 716/-", strikedText: "₹ 1199/-"},
-            // { text: "₹ 599/-", strikedText: "₹ 799/-" },
-            // { text: "₹ 799/-", strikedText: "₹ 1199/-" },
+            { 3: "₹ 399/-", 6: "₹ 366/-", 12: "₹ 349/-" },
+            { 3: "₹ 599/-", 6: "₹ 566/-", 12: "₹ 533/-" },
+            { 3: "₹ 799/-", 6: "₹ 749/-", 12: "₹ 716/-" },
+            // { 1: "₹ 849/-", 3: "₹ 799/-", 12: "₹ 716/-", strikedText: "₹ 1199/-"},
         ],
     },
     {
         id: 2,
-        title: "Delivered - Weekly",
+        title: "Number of Books",
         items: [
-            { text: "One Book" },
-            { text: "Two Books" },
-            { text: "Four Books" },
+            { 3: "Twelve", 6: "Twenty-Four", 12: "Fourty-Eight" },
+            { 3: "Twenty-Four", 6: "Fourty-Eight", 12: "Ninety-Six" },
+            { 3: "Fourty-Eight", 6: "Ninety-Six", 12: "One Hundred & Ninety-Two" },
         ],
     },
     {
         id: 3,
-        title: "Total - Monthly",
+        title: "Number of Delivery",
         items: [
-            { text: "Four Books" },
-            { text: "Eight Books" },
-            { text: "Sixteen Books" },
+            { 3: "Twelve", 6: "Twenty-Four", 12: "Fourty-Eight" },
+            { 3: "Twelve", 6: "Twenty-Four", 12: "Fourty-Eight" },
+            { 3: "Twelve", 6: "Twenty-Four", 12: "Fourty-Eight" },
+        ],
+    },
+    {
+        id: 4,
+        title: "Duration",
+        items: [
+            { 3: "12 Weeks", 6: "24 Weeks", 12: "48 Weeks" },
+            { 3: "12 Weeks", 6: "24 Weeks", 12: "48 Weeks" },
+            { 3: "12 Weeks", 6: "24 Weeks", 12: "48 Weeks" },
         ],
     },
 ];
 
 export const planPrices = {
-    1: {1: 449, 3: 1199, 12: 4299},
-    2: {1: 649, 3: 1799, 12: 6399},
-    4: {1: 849, 3: 2399, 12: 8599},
+    1: {3: 1199, 6: 2199, 12: 4199},
+    2: {3: 1799, 6: 3399, 12: 6399},
+    4: {3: 2399, 6: 4499, 12: 8599},
 };

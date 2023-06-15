@@ -15,7 +15,7 @@ const initialState = {
 		contactNumber: '',
 		otp: '',
 		selectedPlan: plans[1],
-		selectedSubscription: 3,
+		selectedSubscription: 6,
 		address: '',
 		pinCode: '',
 		childName: '',

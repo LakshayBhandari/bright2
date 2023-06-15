@@ -126,15 +126,15 @@ const PlanDetails = () => {
 									if(i === 0) {
 										return (
 											<h3 className={className} key={item.text}>
-												{item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/>
+												{/* {item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/> */}
 												{item[selectedSubscription]}
 											</h3>
 										);
 									}
 									return (
 										<p className={className} key={item.text}>
-											{item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/>
-											{item.text}
+											{/* {item.strikedText && <s style={{color: 'red'}}>{item.strikedText}</s>}<br/> */}
+											{item.text || item[selectedSubscription]}
 										</p>
 									);
 								})}
@@ -147,18 +147,18 @@ const PlanDetails = () => {
 				<h3>Select Plan Duration</h3>
 				<div className='plan-duration-list'>
 					<div 
-						className={`plan-duration ${selectedSubscription === 1 ? 'selected-plan-duration' : ''}`}
-						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 1 }))}
-					>
-						<h3>Monthly</h3>
-						<p>₹ {planPrices[selectedPlan.bookCount][1]}/-</p>
-					</div>
-					<div 
 						className={`plan-duration ${selectedSubscription === 3 ? 'selected-plan-duration' : ''}`}
 						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 3 }))}
 					>
-						<h3>Quarterly</h3>
+						<h3>Regular</h3>
 						<p>₹ {planPrices[selectedPlan.bookCount][3]}/-</p>
+					</div>
+					<div 
+						className={`plan-duration ${selectedSubscription === 6 ? 'selected-plan-duration' : ''}`}
+						onClick={() => dispatch(setRegisterDetails({ selectedSubscription: 6 }))}
+					>
+						<h3>Saver</h3>
+						<p>₹ {planPrices[selectedPlan.bookCount][6]}/-</p>
 					</div>
 					<div 
 						className={`plan-duration ${selectedSubscription === 12 ? 'selected-plan-duration' : ''}`}
