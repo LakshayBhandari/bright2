@@ -93,14 +93,7 @@ const BookSlider = ({
             <div className="book-list">
               {sectionBooks?.map((book, i) => {
                 return (
-                  <div
-                    className={`book ${
-                      isLoggedIn && !book.stock_available
-                        ? "book-not-available"
-                        : ""
-                    }`}
-                    key={i}
-                  >
+                  <div className={`book`} key={i}>
                     <div className="book-image">
                       <img src={book.image} alt="Book" />
                     </div>
@@ -119,11 +112,7 @@ const BookSlider = ({
                         </div>
                       )}
                     </div>
-                    {isLoggedIn &&
-                      (overlay === "wishlist" || !overlay) &&
-                      !book.stock_available && (
-                        <p className="all-copies-booked">All Copies Booked</p>
-                      )}
+
                     {showOverlay &&
                       getOverlay(
                         overlay,
