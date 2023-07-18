@@ -231,7 +231,7 @@ const YourLibrary = () => {
 			<div className="wishlist">
 				<h3>Wishlist</h3>
 				{wishlist.length > 0
-					? <BookSlider books={wishlist} showTags={false} overlay="wishlist" />
+					? <BookSlider  books={wishlist} showTags={false} overlay="wishlist" />
 					: <div className="empty-wishlist">
 							<h2><span>Like Books</span> to add<br />them in your wishlist</h2>
 							<img src="/icons/wishlist.png" alt="Wishlist" />
