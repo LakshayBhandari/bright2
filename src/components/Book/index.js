@@ -121,11 +121,11 @@ const Book = () => {
 					  category !== "Learning Times"
                   ).map(category => {
 							return (
-								<Link to={`/author/${category}`}>
+								
 								<div key={category.id} className='category'>
 									{category}
 								</div>
-								</Link>
+								
 							);
 						})}
 					</div>
