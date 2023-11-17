@@ -1,3 +1,8 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
 
@@ -12,10 +17,10 @@ letter-spacing: 0.01075rem;
     -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-//   overflow-x: hidden;
-  min-height: 100vh;
+body { 
+margin: 0;
+overflow-x: hidden;
+min-height: 100vh;
 }
 
 html {
@@ -166,3 +171,4 @@ img {
     font-weight: bold;
     height: 35px;
 }
+

@@ -3,7 +3,7 @@ import './styles.scss';
 import { FaStar } from 'react-icons/fa';
 import BookSlider from '../BookSlider';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { productDetails, stats } from './constants';
 import {setAlert} from '../../reducers/mainSlice';
 import {useDispatch, useSelector} from 'react-redux';
@@ -105,11 +105,27 @@ const Book = () => {
 						<a href="#product-details">View More</a>
 					</div>
 					<div className='categories'>
-						{categories.map(category => {
+						{categories.filter(
+                    (category) =>
+                      category !== "Best Seller - Most Popular" &&
+                      category !== "Global Bestseller" &&
+                      category !== "Most Popular Series" &&
+                      category !== "Editor Pick" &&
+                      category !== "Bedtime Stories" &&
+                      category !== "Family Time" &&
+                      category !== "Book that Inspired Movies" &&
+                      category !== "New York Times Bestseller" &&
+                      category !== "Good Habits" &&
+                      category !== "Teacher Pick" &&
+                      category !== "S.T.E.A.M. Learning" &&
+					  category !== "Learning Times"
+                  ).map(category => {
 							return (
+								<Link to={`/author/${category}`}>
 								<div key={category.id} className='category'>
 									{category}
 								</div>
+								</Link>
 							);
 						})}
 					</div>

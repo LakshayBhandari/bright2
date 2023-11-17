@@ -19,9 +19,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, resetAlert } from './reducers/mainSlice';
 import devUrls from './utils/devUrls';
 import axios from 'axios';
-
+import Author from './components/Author';
+import './index.css'
 const App = () => {
-	const { book: {loading}, main: { alert, user, isLoggedIn } } = useSelector(state => state);
+	const { book: {loading}, main: { alert, isLoggedIn } } = useSelector(state => state);
 	const location = useLocation();
 	const dispatch = useDispatch();
 
@@ -69,6 +70,7 @@ const App = () => {
 				<Route path="/most-popular" element={<MostPopular />} />
 				<Route path="/browse-library" element={<BrowseLibrary />} />
 				<Route path="/book/:isbn" element={<Book />} />
+				<Route path="/author/:author" element={<Author />} />
 				<Route path="/search-books" element={<SearchBooks />} />
 				<Route path='/your-library' element={isLoggedIn ? <YourLibrary /> : <Navigate to='/'/>}/>
 				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />
