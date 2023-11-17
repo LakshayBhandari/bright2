@@ -32,6 +32,7 @@
     "react-slideshow-image": "^4.2.1",
     "react-sticky": "^6.0.3",
     "read-more-react": "^1.0.10",
+    "recoil": "^0.7.7",
     "sass": "^1.54.8",
     "web-vitals": "^2.1.4"
   },

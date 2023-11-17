@@ -120,6 +120,15 @@ img {
     -o-user-select: none;
     user-select: none;
 }
+#book-slider::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari and Opera */
+}
+
+#book-slider {
+  -ms-overflow-style: none; /* for IE and Edge */
+  scrollbar-width: none; /* for Firefox */
+  
+}
 
 .alert {
     font-size: 0.9rem;

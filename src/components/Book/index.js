@@ -144,6 +144,8 @@ const Book = () => {
             })}
             <a href="#product-details">View More</a>
           </div>
+          <div className="flex gap-2 text-[20px] mt-4 font-semibold items-center">
+            Series :
           <div className="categories">
             {categories
               .filter(
@@ -171,6 +173,7 @@ const Book = () => {
                 );
               })}
           </div>
+          </div>
 
           {authorsList && (
             <div className="flex gap-2 text-[20px] mt-4 font-semibold items-center">
@@ -178,7 +181,7 @@ const Book = () => {
               {authorsList.map((author, key) => (
                 <h1
                   key={author.id}
-                  className=" font-medium text-[16px] h-min p-[0.16rem]  bg-[#DBDBDB] rounded"
+                  className="categories"
                 >
                   <Link to={`/author/${author}`}>{author}</Link>
                 </h1>
