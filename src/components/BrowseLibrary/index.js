@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
@@ -10,15 +9,16 @@ import Star from "../../icons/Star";
 import Community from "../../icons/Community";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const ages = 12;
-
+import { useDispatch, useSelector } from "react-redux";
 const BrowseLibrary = () => {
-	const ageRefs = Array(13)
+  const ageRefs = Array(13)
     .fill(null)
     .map(() => React.createRef());
 
   const [loginState, setLoginState] = useRecoilState(LoginState);
- 
+  const {
+    main: { isLoggedIn },
+  } = useSelector((state) => state);
   const [ageFilter, setAgeFilter] = useRecoilState(ageFilterState);
   const [loading, setLoading] = useState(false);
   const [topBooks, setTopBooks] = useState(null);
@@ -159,11 +159,11 @@ const BrowseLibrary = () => {
     const isbnData = {
       isbn: isbn,
     };
-  
+
     try {
       // Check if the book is already in the wishlist
       const isBookInWishlist = wishListBooks.some((book) => book.isbn === isbn);
-  
+
       if (!isBookInWishlist) {
         // If the book is not in the wishlist, make the API call
         const response = await axios.post(
@@ -171,21 +171,21 @@ const BrowseLibrary = () => {
           isbnData,
           { withCredentials: true }
         );
-  
+
         // Update wishListBooks state with the new book
         setWishListBooks((prevBooks) => [...prevBooks, response.data]);
-  
+
         // Update wishClickedMap to mark the book as clicked
         setWishClickedMap((prevMap) => {
           const updatedMap = { ...prevMap };
           updatedMap[isbn] = true;
           return updatedMap;
         });
-  
+
         // Show success toast only if the book is added to the wishlist
-       // toast.success("Added to readlist");
+        // toast.success("Added to readlist");
       } else {
-        // If the book is already in the wishlist, make the API call to remove 
+        // If the book is already in the wishlist, make the API call to remove
 
         try {
           const response = await axios.post(
@@ -193,171 +193,173 @@ const BrowseLibrary = () => {
             isbnData,
             { withCredentials: true }
           );
-  
-        // Update wishListBooks state by removing the book
-        setWishListBooks((prevBooks) => prevBooks.filter((book) => book.isbn !== isbn));
-  
-        // Update wishClickedMap to mark the book as not clicked
-        setWishClickedMap((prevMap) => {
-          const updatedMap = { ...prevMap };
-          updatedMap[isbn] = false;
-          return updatedMap;
-        });
-  
-        // Show an error toast
-     //   toast.error("Removed From Readlist");
-        } catch (error) {
-          console.error(error)
-        }      
 
-        
+          // Update wishListBooks state by removing the book
+          setWishListBooks((prevBooks) =>
+            prevBooks.filter((book) => book.isbn !== isbn)
+          );
+
+          // Update wishClickedMap to mark the book as not clicked
+          setWishClickedMap((prevMap) => {
+            const updatedMap = { ...prevMap };
+            updatedMap[isbn] = false;
+            return updatedMap;
+          });
+
+          // Show an error toast
+          //   toast.error("Removed From Readlist");
+        } catch (error) {
+          console.error(error);
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
-  
-	
-	return (
-		<>
-		<h1 id="book-slider" className="font-semibold w-full items-center text-center xl:text-[32px] md:text-[24px] sm:[20px] text-[#4285f4] mt-4">
-		  Select By Age
-		</h1>
-		<div className="mx-2 md:mx-24">
-		  <div
-			id="book-slider"
-			className="mt-4 w-full flex gap-8 overflow-x-auto"
-		  >
-			{Array(13)
-			  .fill(null)
-			  .map((_, index) => (
-				<div
-				  key={index}
-				  ref={ageRefs[index]}
-				  className={`text-black flex-col font-extrabold text-[24px] flex items-center justify-center h-[128px] min-w-[128px] rounded-[50%] cursor-pointer ${
-					index === selectedAge
-					  ? "bg-[#4285f4] text-white"
-					  : "bg-[#DBDBDB] text-black "
-				  }`}
-				  onClick={() => handleAgeClick(index)}
-				>
-				  <div>{index}+</div>
-				  <div>Age</div>
-				</div>
-			  ))}
-		  </div>
-		</div>
-  
-		<div>
-		  {topBooks && (
-			<>
-			  <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-				{" "}
-				Top Books By Age{" "}
-			  </h1>
-			  <div
-				id="book-slider"
-				className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-				  topBooks.length < 6 ? "justify-center" : ""
-				}`}
-			  >
-				{previousBooks &&
-				  topBooks
-					.sort((a, b) =>
-					  previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-						? 1
-						: -1
-					)
-					.map((book, index) => (
-					  <div
-						key={book.isbn}
-						className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
-					  >
-						<div className="relative">
-						  <div className="absolute bottom-[-20px] left-0">
-							<span className="text-[50px] font-semibold relative">
-							  <span
-								className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
-								style={{
-								  textShadow:
-									"-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
-								}}
-							  >
-								{index + 1}
-							  </span>
-							</span>
-						  </div>
-						  {previousBooks.some(
-							(prevBook) => prevBook.isbn === book.isbn
-						  ) && (
-							<div className="text-white bg-red-600 text-center">
-							  Already Read
-							</div>
-						  )}
-						  <img
-							onClick={() => navigate(`/books/${book.isbn}`)}
-							style={{ maxWidth: "800px" }}
-							className="flex h-[190px] content-center overflow-hidden object-fill"
-							src={book.image}
-							alt={"book_name"}
-						  />
-						</div>
-						<p className="text-[15px] max-h-5 font-semibold overflow-hidden">
-						  {" "}
-						  {book.name.substring(0, 23) +
-							(book.name.length > 23 ? "..." : "")}{" "}
-						</p>
-						<div
-						  className="flex justify-between gap-1 items-center mt-2"
-						  style={{ fontSize: "12px" }}
-						>
-						  <div className="flex items-center gap-1">
-							{" "}
-							{book.rating} <Star /> <div>|</div>{" "}
-							{typeof book.review_count === "string"
-							  ? parseInt(
-								  book.review_count.replace(/,/g, ""),
-								  10
-								) >= 1000
-								? parseFloat(
-									book.review_count
-									  .replace(/,/g, "")
-									  .replace("K", "")
-								  ) >= 1000
-								  ? (
-									  parseFloat(
-										book.review_count
-										  .replace(/,/g, "")
-										  .replace("K", "")
-									  ) / 1000
-									).toFixed(1) + "K"
-								  : book.review_count.replace(/,/g, "")
-								: book.review_count
-							  : book.review_count}{" "}
-							<Community />{" "}
-						  </div>
-						  <div>
-							<button
-							  className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
-								wishClickedMap[book.isbn]
-								  ? "text-gray-500 border-gray-500"
-								  : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
-							  } border`}
-							  style={{ border: "2px solid " }}
-							  onClick={() => addToReadList(book.isbn)}
-							>
-							  {" "}
-							  WISH{" "}
-							</button>
-						  </div>
-						</div>
-					  </div>
-					))}
-			  </div>
-			</>
-		  )}
-		</div>
-		{/*
+
+  return (
+    <>
+      <h1
+        id="book-slider"
+        className="font-semibold w-full items-center text-center xl:text-[32px] md:text-[24px] sm:[20px] text-[#4285f4] mt-4"
+      >
+        Select By Age
+      </h1>
+      <div className="mx-2 md:mx-24">
+        <div
+          id="book-slider"
+          className="mt-4 w-full flex gap-8 overflow-x-auto"
+        >
+          {Array(13)
+            .fill(null)
+            .map((_, index) => (
+              <div
+                key={index}
+                ref={ageRefs[index]}
+                className={`text-black flex-col font-extrabold text-[24px] flex items-center justify-center h-[128px] min-w-[128px] rounded-[50%] cursor-pointer ${
+                  index === selectedAge
+                    ? "bg-[#4285f4] text-white"
+                    : "bg-[#DBDBDB] text-black "
+                }`}
+                onClick={() => handleAgeClick(index)}
+              >
+                <div>{index}+</div>
+                <div>Age</div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div>
+        {topBooks && (
+          <>
+            <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+              {" "}
+              Top Books By Age{" "}
+            </h1>
+            <div
+              id="book-slider"
+              className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+                topBooks.length < 6 ? "justify-center" : ""
+              }`}
+            >
+              {previousBooks &&
+                topBooks
+                  .sort((a, b) =>
+                    previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
+                      ? 1
+                      : -1
+                  )
+                  .map((book, index) => (
+                    <div
+                      key={book.isbn}
+                      className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
+                    >
+                      <div className="relative">
+                        <div className="absolute bottom-[-20px] left-0">
+                          <span className="text-[50px] font-semibold relative">
+                            <span
+                              className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
+                              style={{
+                                textShadow:
+                                  "-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
+                              }}
+                            >
+                              {index + 1}
+                            </span>
+                          </span>
+                        </div>
+                        {previousBooks.some(
+                          (prevBook) => prevBook.isbn === book.isbn
+                        ) && (
+                          <div className="text-white bg-red-600 text-center">
+                            Already Read
+                          </div>
+                        )}
+                        <img
+                          onClick={() => navigate(`/book/${book.isbn}`)}
+                          style={{ maxWidth: "800px" }}
+                          className="flex h-[190px] content-center overflow-hidden object-fill"
+                          src={book.image}
+                          alt={"book_name"}
+                        />
+                      </div>
+                      <p className="text-[15px] max-h-5 font-semibold overflow-hidden">
+                        {" "}
+                        {book.name.substring(0, 23) +
+                          (book.name.length > 23 ? "..." : "")}{" "}
+                      </p>
+                      <div
+                        className="flex justify-between gap-1 items-center mt-2"
+                        style={{ fontSize: "12px" }}
+                      >
+                        <div className="flex items-center gap-1">
+                          {" "}
+                          {book.rating} <Star /> <div>|</div>{" "}
+                          {typeof book.review_count === "string"
+                            ? parseInt(
+                                book.review_count.replace(/,/g, ""),
+                                10
+                              ) >= 1000
+                              ? parseFloat(
+                                  book.review_count
+                                    .replace(/,/g, "")
+                                    .replace("K", "")
+                                ) >= 1000
+                                ? (
+                                    parseFloat(
+                                      book.review_count
+                                        .replace(/,/g, "")
+                                        .replace("K", "")
+                                    ) / 1000
+                                  ).toFixed(1) + "K"
+                                : book.review_count.replace(/,/g, "")
+                              : book.review_count
+                            : book.review_count}{" "}
+                          <Community />{" "}
+                        </div>
+                        <div>
+                          {isLoggedIn &&<button
+                            className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                              wishClickedMap[book.isbn]
+                                ? "text-gray-500 border-gray-500"
+                                : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                            } border`}
+                            style={{ border: "2px solid " }}
+                            onClick={() => addToReadList(book.isbn)}
+                          >
+                            {" "}
+                            WISH{" "}
+                          </button>}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+            </div>
+          </>
+        )}
+      </div>
+      {/*
 		<div>
 		  <div
 			id="book-slider"
@@ -374,8 +376,8 @@ const BrowseLibrary = () => {
 		  </div>
 		</div>
 		*/}
-  
-		{/* <div>
+
+      {/* <div>
 		  {tags && 
 			tags.book_set.map((bookSeries) => (
 			  <div key={bookSeries.category}>
@@ -396,7 +398,7 @@ const BrowseLibrary = () => {
 					>
 					  <img
 						style={{ maxWidth: "800px" }}
-						onClick={() => navigate(`/books/${book.isbn}`)}
+						onClick={() => navigate(`/book/${book.isbn}`)}
 						className="flex   h-[190px] content-center overflow-hidden object-fill"
 						src={book.image}
 						alt={book.name}
@@ -447,537 +449,536 @@ const BrowseLibrary = () => {
 			  </div>
 			))}
 		</div>*/}
-		{bestSeller && !genre && previousBooks && (
-		  <>
-			<h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-			  Global Best Sellers
-			</h1>
-  
-			<div
-			  id="book-slider"
-			  className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-				bestSeller.length < 6 ? "justify-center" : ""
-			  }`}
-			>
-			  {bestSeller
-				.sort((a, b) =>
-				  previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-					? 1
-					: -1
-				)
-				.map((book, index) => (
-				  <div
-					key={book.isbn}
-					className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
-				  >
-					<div className="relative">
-					  <div className="absolute bottom-[-20px] left-0">
-						<span className="text-[50px] font-semibold relative">
-						  <span
-							className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
-							style={{
-							  textShadow:
-								"-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
-							}}
-						  >
-							{index + 1}
-						  </span>
-						</span>
-					  </div>
-					  {previousBooks.some(
-						(prevBook) => prevBook.isbn === book.isbn
-					  ) && (
-						<div className="text-white bg-red-600 text-center">
-						  Already Read
-						</div>
-					  )}
-  
-					  <img
-						onClick={() => navigate(`/books/${book.isbn}`)}
-						style={{ maxWidth: "800px" }}
-						className="flex h-[190px] content-center overflow-hidden object-fill"
-						src={book.image}
-						alt={"book_name"}
-					  />
-					</div>
-					<p className="text-[15px] max-h-5 font-semibold overflow-hidden">
-					  {book.name.substring(0, 23) +
-						(book.name.length > 23 ? "..." : "")}
-					</p>
-					<div
-					  className="flex justify-between gap-1 items-center mt-2"
-					  style={{ fontSize: "12px" }}
-					>
-					  <div className="flex items-center gap-1">
-						{book.rating} <Star />
-						<div>|</div>
-						{typeof book.review_count === "string"
-						  ? parseInt(book.review_count.replace(/,/g, ""), 10) >=
-							1000
-							? parseFloat(
-								book.review_count
-								  .replace(/,/g, "")
-								  .replace("K", "")
-							  ) >= 1000
-							  ? (
-								  parseFloat(
-									book.review_count
-									  .replace(/,/g, "")
-									  .replace("K", "")
-								  ) / 1000
-								).toFixed(1) + "K"
-							  : book.review_count.replace(/,/g, "")
-							: book.review_count
-						  : book.review_count}{" "}
-						<Community />
-					  </div>
-					  <div>
-						<button
-						  className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-						  style={{ border: "2px solid " }}
-						  onClick={() => addToReadList(book.isbn)}
-						>
-						  WISH
-						</button>
-					  </div>
-					</div>
-				  </div>
-				))}
-			</div>
-		  </>
-		)}
-  
-		{teachersPick && previousBooks && !genre && teachersPick.length > 0 && (
-		  <>
-			<h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-			  Teachers Pick
-			</h1>
-  
-			<div
-			  id="book-slider"
-			  className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-				topBooks.length < 6 ? "justify-center" : ""
-			  }`}
-			>
-			  {teachersPick
-				.sort((a, b) =>
-				  previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-					? 1
-					: -1
-				)
-				.map((book, index) => (
-				  <div
-					key={book.isbn}
-					className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
-				  >
-					<div className="relative">
-					  <div className="absolute bottom-[-20px] left-0">
-						<span className="text-[50px] font-semibold relative">
-						  <span
-							className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
-							style={{
-							  textShadow:
-								"-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
-							}}
-						  >
-							{index + 1}
-						  </span>
-						</span>
-					  </div>
-					  {previousBooks.some(
-						(prevBook) => prevBook.isbn === book.isbn
-					  ) && (
-						<div className="text-white bg-red-600 text-center">
-						  Already Read
-						</div>
-					  )}
-					  <img
-						onClick={() => navigate(`/books/${book.isbn}`)}
-						style={{ maxWidth: "800px" }}
-						className="flex h-[190px] content-center overflow-hidden object-fill"
-						src={book.image}
-						alt={"book_name"}
-					  />
-					</div>
-					<p className="text-[15px] max-h-5 font-semibold overflow-hidden">
-					  {book.name.substring(0, 23) +
-						(book.name.length > 23 ? "..." : "")}
-					</p>
-					<div
-					  className="flex justify-between gap-1 items-center mt-2"
-					  style={{ fontSize: "12px" }}
-					>
-					  <div className="flex items-center gap-1">
-						{book.rating} <Star />
-						<div>|</div>
-						{typeof book.review_count === "string"
-						  ? parseInt(book.review_count.replace(/,/g, ""), 10) >=
-							1000
-							? parseFloat(
-								book.review_count
-								  .replace(/,/g, "")
-								  .replace("K", "")
-							  ) >= 1000
-							  ? (
-								  parseFloat(
-									book.review_count
-									  .replace(/,/g, "")
-									  .replace("K", "")
-								  ) / 1000
-								).toFixed(1) + "K"
-							  : book.review_count.replace(/,/g, "")
-							: book.review_count
-						  : book.review_count}{" "}
-						<Community />
-					  </div>
-					  <div>
-						<button
-						  className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-						  style={{ border: "2px solid " }}
-						  onClick={() => addToReadList(book.isbn)}
-						>
-						  WISH
-						</button>
-					  </div>
-					</div>
-				  </div>
-				))}
-			</div>
-		  </>
-		)}
-  
-		<div>
-		  {genre &&
-			previousBooks &&
-			genre.map((bookSeries, genreIndex) => (
-			  <div key={bookSeries.genre}>
-				{bookSeries.books.length > 6 && bookSeries.genre !== "" && (
-				  <>
-					<h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-					  {bookSeries.genre}
-					</h1>
-					<div
-					  id="book-slider"
-					  className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-						bookSeries.books.length < 6 ? "justify-center" : ""
-					  }`}
-					>
-					  {bookSeries.books
-						.reduce((uniqueBooks, book) => {
-						  return uniqueBooks.findIndex(
-							(uniqueBook) => uniqueBook.isbn === book.isbn
-						  ) < 0
-							? [...uniqueBooks, book]
-							: uniqueBooks;
-						}, [])
-						.sort((a, b) =>
-						  previousBooks.some(
-							(prevBook) => prevBook.isbn === a.isbn
-						  )
-							? 1
-							: -1
-						)
-						.sort(
-						  (bookA, bookB) =>
-							bookB.stock_available - bookA.stock_available
-						)
-						.map((book) => (
-						  <div
-							key={book.isbn}
-							className={`cursor-pointer bg-white flex flex-col max-w-[250px]  p-[1rem] relative ${
-							  book.stock_available === 0 && loginState
-								? "filter grayscale"
-								: ""
-							}`}
-						  >
-							{previousBooks.some(
-							  (prevBook) => prevBook.isbn === book.isbn
-							) && (
-							  <div className="text-white bg-red-600 text-center">
-								Already Read
-							  </div>
-							)}
-							<img
-							  className={`flex h-[190px] content-center overflow-hidden object-fill ${
-								book.stock_available === 0 && loginState
-								  ? "filter grayscale"
-								  : ""
-							  }`}
-							  onClick={() => navigate(`/books/${book.isbn}`)}
-							  src={book.image}
-							  alt={book.name}
-							/>
-							<p className="text-[15px]  max-h-5 font-semibold overflow-hidden ">
-							  {book.name.substring(0, 23) +
-								(book.name.length > 23 ? "..." : "")}
-							</p>
-							<div
-							  className="flex justify-between gap-1 items-center mt-2 "
-							  style={{ fontSize: "12px" }}
-							>
-							  <div className="flex items-center gap-1 ">
-								{book.rating} <Star /> <div>| </div>
-								{typeof book.review_count === "string"
-								  ? parseInt(
-									  book.review_count.replace(/,/g, ""),
-									  10
-									) >= 1000
-									? parseFloat(
-										book.review_count
-										  .replace(/,/g, "")
-										  .replace("K", "")
-									  ) >= 1000
-									  ? (
-										  parseFloat(
-											book.review_count
-											  .replace(/,/g, "")
-											  .replace("K", "")
-										  ) / 1000
-										).toFixed(1) + "K"
-									  : book.review_count.replace(/,/g, "")
-									: book.review_count
-								  : book.review_count}{" "}
-								<Community />
-							  </div>
-							  <div>
-								<button
-								  className=" font-bold  tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-								  style={{ border: "2px solid " }}
-								  onClick={() => addToReadList(book.isbn)}
-								>
-								  WISH
-								</button>
-							  </div>
-							</div>
-						  </div>
-						))}
-					</div>
-				  </>
-				)}
-  
-				{genreIndex === 3 && (
-				  <>
-					{bestSeller && previousBooks && (
-					  <>
-						<h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-						  Global Best Sellers
-						</h1>
-  
-						<div
-						  id="book-slider"
-						  className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-							bestSeller.length < 6 ? "justify-center" : ""
-						  }`}
-						>
-						  {bestSeller
-							.sort((a, b) =>
-							  previousBooks.some(
-								(prevBook) => prevBook.isbn === a.isbn
-							  )
-								? 1
-								: -1
-							)
-							.map((book, index) => (
-							  <div
-								key={book.isbn}
-								className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
-							  >
-								<div className="relative">
-								  <div className="absolute bottom-[-20px] left-0">
-									<span className="text-[50px] font-semibold relative">
-									  <span
-										className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
-										style={{
-										  textShadow:
-											"-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
-										}}
-									  >
-										{index + 1}
-									  </span>
-									</span>
-								  </div>
-								  {previousBooks.some(
-									(prevBook) => prevBook.isbn === book.isbn
-								  ) && (
-									<div className="text-white bg-red-600 text-center">
-									  Already Read
-									</div>
-								  )}
-								  <img
-									onClick={() =>
-									  navigate(`/books/${book.isbn}`)
-									}
-									style={{ maxWidth: "800px" }}
-									className="flex h-[190px] content-center overflow-hidden object-fill"
-									src={book.image}
-									alt={"book_name"}
-								  />
-								</div>
-								<p className="text-[15px] max-h-5 font-semibold overflow-hidden">
-								  {book.name.substring(0, 23) +
-									(book.name.length > 23 ? "..." : "")}
-								</p>
-								<div
-								  className="flex justify-between gap-1 items-center mt-2"
-								  style={{ fontSize: "12px" }}
-								>
-								  <div className="flex items-center gap-1">
-									{book.rating} <Star />
-									<div>|</div>
-									{typeof book.review_count === "string"
-									  ? parseInt(
-										  book.review_count.replace(/,/g, ""),
-										  10
-										) >= 1000
-										? parseFloat(
-											book.review_count
-											  .replace(/,/g, "")
-											  .replace("K", "")
-										  ) >= 1000
-										  ? (
-											  parseFloat(
-												book.review_count
-												  .replace(/,/g, "")
-												  .replace("K", "")
-											  ) / 1000
-											).toFixed(1) + "K"
-										  : book.review_count.replace(/,/g, "")
-										: book.review_count
-									  : book.review_count}{" "}
-									<Community />
-								  </div>
-								  <div>
-									<button
-									  className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-									  style={{ border: "2px solid " }}
-									  onClick={() => addToReadList(book.isbn)}
-									>
-									  WISH
-									</button>
-								  </div>
-								</div>
-							  </div>
-							))}
-						</div>
-					  </>
-					)}
-				  </>
-				)}
-  
-				{genreIndex === 5 && (
-				  <>
-					{teachersPick && previousBooks && teachersPick.length > 0 && (
-					  <>
-						<h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
-						  Teachers Pick
-						</h1>
-  
-						<div
-						  id="book-slider"
-						  className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
-							topBooks.length < 6 ? "justify-center" : ""
-						  }`}
-						>
-						  {teachersPick
-							.sort((a, b) =>
-							  previousBooks.some(
-								(prevBook) => prevBook.isbn === a.isbn
-							  )
-								? 1
-								: -1
-							)
-							.map((book, index) => (
-							  <div
-								key={book.isbn}
-								className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
-							  >
-								<div className="relative">
-								  <div className="absolute bottom-[-20px] left-0">
-									<span className="text-[50px] font-semibold relative">
-									  <span
-										className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
-										style={{
-										  textShadow:
-											"-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
-										}}
-									  >
-										{index + 1}
-									  </span>
-									</span>
-								  </div>
-								  {previousBooks.some(
-									(prevBook) => prevBook.isbn === book.isbn
-								  ) && (
-									<div className="text-white bg-red-600 text-center">
-									  Already Read
-									</div>
-								  )}
-								  <img
-									onClick={() =>
-									  navigate(`/books/${book.isbn}`)
-									}
-									style={{ maxWidth: "800px" }}
-									className="flex h-[190px] content-center overflow-hidden object-fill"
-									src={book.image}
-									alt={"book_name"}
-								  />
-								</div>
-								<p className="text-[15px] max-h-5 font-semibold overflow-hidden">
-								  {book.name.substring(0, 23) +
-									(book.name.length > 23 ? "..." : "")}
-								</p>
-								<div
-								  className="flex justify-between gap-1 items-center mt-2"
-								  style={{ fontSize: "12px" }}
-								>
-								  <div className="flex items-center gap-1">
-									{book.rating} <Star />
-									<div>|</div>
-									{typeof book.review_count === "string"
-									  ? parseInt(
-										  book.review_count.replace(/,/g, ""),
-										  10
-										) >= 1000
-										? parseFloat(
-											book.review_count
-											  .replace(/,/g, "")
-											  .replace("K", "")
-										  ) >= 1000
-										  ? (
-											  parseFloat(
-												book.review_count
-												  .replace(/,/g, "")
-												  .replace("K", "")
-											  ) / 1000
-											).toFixed(1) + "K"
-										  : book.review_count.replace(/,/g, "")
-										: book.review_count
-									  : book.review_count}{" "}
-									<Community />
-								  </div>
-								  <div>
-									<button
-									  className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-									  style={{ border: "2px solid " }}
-									  onClick={() => addToReadList(book.isbn)}
-									>
-									  WISH
-									</button>
-								  </div>
-								</div>
-							  </div>
-							))}
-						</div>
-					  </>
-					)}
-				  </>
-				)}
-			  </div>
-			))}
-		</div>
-		
-	  </>
-	);
+      {bestSeller && !genre && previousBooks && (
+        <>
+          <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+            Global Best Sellers
+          </h1>
+
+          <div
+            id="book-slider"
+            className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+              bestSeller.length < 6 ? "justify-center" : ""
+            }`}
+          >
+            {bestSeller
+              .sort((a, b) =>
+                previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
+                  ? 1
+                  : -1
+              )
+              .map((book, index) => (
+                <div
+                  key={book.isbn}
+                  className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
+                >
+                  <div className="relative">
+                    <div className="absolute bottom-[-20px] left-0">
+                      <span className="text-[50px] font-semibold relative">
+                        <span
+                          className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
+                          style={{
+                            textShadow:
+                              "-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
+                          }}
+                        >
+                          {index + 1}
+                        </span>
+                      </span>
+                    </div>
+                    {previousBooks.some(
+                      (prevBook) => prevBook.isbn === book.isbn
+                    ) && (
+                      <div className="text-white bg-red-600 text-center">
+                        Already Read
+                      </div>
+                    )}
+
+                    <img
+                      onClick={() => navigate(`/book/${book.isbn}`)}
+                      style={{ maxWidth: "800px" }}
+                      className="flex h-[190px] content-center overflow-hidden object-fill"
+                      src={book.image}
+                      alt={"book_name"}
+                    />
+                  </div>
+                  <p className="text-[15px] max-h-5 font-semibold overflow-hidden">
+                    {book.name.substring(0, 23) +
+                      (book.name.length > 23 ? "..." : "")}
+                  </p>
+                  <div
+                    className="flex justify-between gap-1 items-center mt-2"
+                    style={{ fontSize: "12px" }}
+                  >
+                    <div className="flex items-center gap-1">
+                      {book.rating} <Star />
+                      <div>|</div>
+                      {typeof book.review_count === "string"
+                        ? parseInt(book.review_count.replace(/,/g, ""), 10) >=
+                          1000
+                          ? parseFloat(
+                              book.review_count
+                                .replace(/,/g, "")
+                                .replace("K", "")
+                            ) >= 1000
+                            ? (
+                                parseFloat(
+                                  book.review_count
+                                    .replace(/,/g, "")
+                                    .replace("K", "")
+                                ) / 1000
+                              ).toFixed(1) + "K"
+                            : book.review_count.replace(/,/g, "")
+                          : book.review_count
+                        : book.review_count}{" "}
+                      <Community />
+                    </div>
+                    <div>
+                     {isLoggedIn && <button
+                        className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                        style={{ border: "2px solid " }}
+                        onClick={() => addToReadList(book.isbn)}
+                      >
+                        WISH
+                      </button>}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
+
+      {teachersPick && previousBooks && !genre && teachersPick.length > 0 && (
+        <>
+          <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+            Teachers Pick
+          </h1>
+
+          <div
+            id="book-slider"
+            className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+              topBooks.length < 6 ? "justify-center" : ""
+            }`}
+          >
+            {teachersPick
+              .sort((a, b) =>
+                previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
+                  ? 1
+                  : -1
+              )
+              .map((book, index) => (
+                <div
+                  key={book.isbn}
+                  className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
+                >
+                  <div className="relative">
+                    <div className="absolute bottom-[-20px] left-0">
+                      <span className="text-[50px] font-semibold relative">
+                        <span
+                          className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
+                          style={{
+                            textShadow:
+                              "-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
+                          }}
+                        >
+                          {index + 1}
+                        </span>
+                      </span>
+                    </div>
+                    {previousBooks.some(
+                      (prevBook) => prevBook.isbn === book.isbn
+                    ) && (
+                      <div className="text-white bg-red-600 text-center">
+                        Already Read
+                      </div>
+                    )}
+                    <img
+                      onClick={() => navigate(`/book/${book.isbn}`)}
+                      style={{ maxWidth: "800px" }}
+                      className="flex h-[190px] content-center overflow-hidden object-fill"
+                      src={book.image}
+                      alt={"book_name"}
+                    />
+                  </div>
+                  <p className="text-[15px] max-h-5 font-semibold overflow-hidden">
+                    {book.name.substring(0, 23) +
+                      (book.name.length > 23 ? "..." : "")}
+                  </p>
+                  <div
+                    className="flex justify-between gap-1 items-center mt-2"
+                    style={{ fontSize: "12px" }}
+                  >
+                    <div className="flex items-center gap-1">
+                      {book.rating} <Star />
+                      <div>|</div>
+                      {typeof book.review_count === "string"
+                        ? parseInt(book.review_count.replace(/,/g, ""), 10) >=
+                          1000
+                          ? parseFloat(
+                              book.review_count
+                                .replace(/,/g, "")
+                                .replace("K", "")
+                            ) >= 1000
+                            ? (
+                                parseFloat(
+                                  book.review_count
+                                    .replace(/,/g, "")
+                                    .replace("K", "")
+                                ) / 1000
+                              ).toFixed(1) + "K"
+                            : book.review_count.replace(/,/g, "")
+                          : book.review_count
+                        : book.review_count}{" "}
+                      <Community />
+                    </div>
+                    <div>
+                      {isLoggedIn && <button
+                        className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                        style={{ border: "2px solid " }}
+                        onClick={() => addToReadList(book.isbn)}
+                      >
+                        WISH
+                      </button>}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
+
+      <div>
+        {genre &&
+          previousBooks &&
+          genre.map((bookSeries, genreIndex) => (
+            <div key={bookSeries.genre}>
+              {bookSeries.books.length > 6 && bookSeries.genre !== "" && (
+                <>
+                  <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+                    {bookSeries.genre}
+                  </h1>
+                  <div
+                    id="book-slider"
+                    className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+                      bookSeries.books.length < 6 ? "justify-center" : ""
+                    }`}
+                  >
+                    {bookSeries.books
+                      .reduce((uniqueBooks, book) => {
+                        return uniqueBooks.findIndex(
+                          (uniqueBook) => uniqueBook.isbn === book.isbn
+                        ) < 0
+                          ? [...uniqueBooks, book]
+                          : uniqueBooks;
+                      }, [])
+                      .sort((a, b) =>
+                        previousBooks.some(
+                          (prevBook) => prevBook.isbn === a.isbn
+                        )
+                          ? 1
+                          : -1
+                      )
+                      .sort(
+                        (bookA, bookB) =>
+                          bookB.stock_available - bookA.stock_available
+                      )
+                      .map((book) => (
+                        <div
+                          key={book.isbn}
+                          className={`cursor-pointer bg-white flex flex-col max-w-[250px]  p-[1rem] relative ${
+                            book.stock_available === 0 && loginState
+                              ? "filter grayscale"
+                              : ""
+                          }`}
+                        >
+                          {previousBooks.some(
+                            (prevBook) => prevBook.isbn === book.isbn
+                          ) && (
+                            <div className="text-white bg-red-600 text-center">
+                              Already Read
+                            </div>
+                          )}
+                          <img
+                            className={`flex h-[190px] content-center overflow-hidden object-fill ${
+                              book.stock_available === 0 && loginState
+                                ? "filter grayscale"
+                                : ""
+                            }`}
+                            onClick={() => navigate(`/book/${book.isbn}`)}
+                            src={book.image}
+                            alt={book.name}
+                          />
+                          <p className="text-[15px]  max-h-5 font-semibold overflow-hidden ">
+                            {book.name.substring(0, 23) +
+                              (book.name.length > 23 ? "..." : "")}
+                          </p>
+                          <div
+                            className="flex justify-between gap-1 items-center mt-2 "
+                            style={{ fontSize: "12px" }}
+                          >
+                            <div className="flex items-center gap-1 ">
+                              {book.rating} <Star /> <div>| </div>
+                              {typeof book.review_count === "string"
+                                ? parseInt(
+                                    book.review_count.replace(/,/g, ""),
+                                    10
+                                  ) >= 1000
+                                  ? parseFloat(
+                                      book.review_count
+                                        .replace(/,/g, "")
+                                        .replace("K", "")
+                                    ) >= 1000
+                                    ? (
+                                        parseFloat(
+                                          book.review_count
+                                            .replace(/,/g, "")
+                                            .replace("K", "")
+                                        ) / 1000
+                                      ).toFixed(1) + "K"
+                                    : book.review_count.replace(/,/g, "")
+                                  : book.review_count
+                                : book.review_count}{" "}
+                              <Community />
+                            </div>
+                            <div>
+                             {isLoggedIn && <button
+                                className=" font-bold  tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                                style={{ border: "2px solid " }}
+                                onClick={() => addToReadList(book.isbn)}
+                              >
+                                WISH
+                              </button>}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </>
+              )}
+
+              {genreIndex === 3 && (
+                <>
+                  {bestSeller && previousBooks && (
+                    <>
+                      <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+                        Global Best Sellers
+                      </h1>
+
+                      <div
+                        id="book-slider"
+                        className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+                          bestSeller.length < 6 ? "justify-center" : ""
+                        }`}
+                      >
+                        {bestSeller
+                          .sort((a, b) =>
+                            previousBooks.some(
+                              (prevBook) => prevBook.isbn === a.isbn
+                            )
+                              ? 1
+                              : -1
+                          )
+                          .map((book, index) => (
+                            <div
+                              key={book.isbn}
+                              className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
+                            >
+                              <div className="relative">
+                                <div className="absolute bottom-[-20px] left-0">
+                                  <span className="text-[50px] font-semibold relative">
+                                    <span
+                                      className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
+                                      style={{
+                                        textShadow:
+                                          "-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
+                                      }}
+                                    >
+                                      {index + 1}
+                                    </span>
+                                  </span>
+                                </div>
+                                {previousBooks.some(
+                                  (prevBook) => prevBook.isbn === book.isbn
+                                ) && (
+                                  <div className="text-white bg-red-600 text-center">
+                                    Already Read
+                                  </div>
+                                )}
+                                <img
+                                  onClick={() =>
+                                    navigate(`/book/${book.isbn}`)
+                                  }
+                                  style={{ maxWidth: "800px" }}
+                                  className="flex h-[190px] content-center overflow-hidden object-fill"
+                                  src={book.image}
+                                  alt={"book_name"}
+                                />
+                              </div>
+                              <p className="text-[15px] max-h-5 font-semibold overflow-hidden">
+                                {book.name.substring(0, 23) +
+                                  (book.name.length > 23 ? "..." : "")}
+                              </p>
+                              <div
+                                className="flex justify-between gap-1 items-center mt-2"
+                                style={{ fontSize: "12px" }}
+                              >
+                                <div className="flex items-center gap-1">
+                                  {book.rating} <Star />
+                                  <div>|</div>
+                                  {typeof book.review_count === "string"
+                                    ? parseInt(
+                                        book.review_count.replace(/,/g, ""),
+                                        10
+                                      ) >= 1000
+                                      ? parseFloat(
+                                          book.review_count
+                                            .replace(/,/g, "")
+                                            .replace("K", "")
+                                        ) >= 1000
+                                        ? (
+                                            parseFloat(
+                                              book.review_count
+                                                .replace(/,/g, "")
+                                                .replace("K", "")
+                                            ) / 1000
+                                          ).toFixed(1) + "K"
+                                        : book.review_count.replace(/,/g, "")
+                                      : book.review_count
+                                    : book.review_count}{" "}
+                                  <Community />
+                                </div>
+                                <div>
+                                 {isLoggedIn && <button
+                                    className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                                    style={{ border: "2px solid " }}
+                                    onClick={() => addToReadList(book.isbn)}
+                                  >
+                                    WISH
+                                  </button>}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+
+              {genreIndex === 5 && (
+                <>
+                  {teachersPick && previousBooks && teachersPick.length > 0 && (
+                    <>
+                      <h1 className="mt-4 mb-4 ml-[1rem] md:ml-[3rem] text-[20px] font-extrabold text-[#4285f4]">
+                        Teachers Pick
+                      </h1>
+
+                      <div
+                        id="book-slider"
+                        className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
+                          topBooks.length < 6 ? "justify-center" : ""
+                        }`}
+                      >
+                        {teachersPick
+                          .sort((a, b) =>
+                            previousBooks.some(
+                              (prevBook) => prevBook.isbn === a.isbn
+                            )
+                              ? 1
+                              : -1
+                          )
+                          .map((book, index) => (
+                            <div
+                              key={book.isbn}
+                              className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
+                            >
+                              <div className="relative">
+                                <div className="absolute bottom-[-20px] left-0">
+                                  <span className="text-[50px] font-semibold relative">
+                                    <span
+                                      className="text-[white] bg-transparent rounded-full m-0 p-0 leading-none"
+                                      style={{
+                                        textShadow:
+                                          "-2px 0 #4285f4, 0 2px #4285f4, 2px 0 #4285f4, 0 -2px #4285f4",
+                                      }}
+                                    >
+                                      {index + 1}
+                                    </span>
+                                  </span>
+                                </div>
+                                {previousBooks.some(
+                                  (prevBook) => prevBook.isbn === book.isbn
+                                ) && (
+                                  <div className="text-white bg-red-600 text-center">
+                                    Already Read
+                                  </div>
+                                )}
+                                <img
+                                  onClick={() =>
+                                    navigate(`/books/${book.isbn}`)
+                                  }
+                                  style={{ maxWidth: "800px" }}
+                                  className="flex h-[190px] content-center overflow-hidden object-fill"
+                                  src={book.image}
+                                  alt={"book_name"}
+                                />
+                              </div>
+                              <p className="text-[15px] max-h-5 font-semibold overflow-hidden">
+                                {book.name.substring(0, 23) +
+                                  (book.name.length > 23 ? "..." : "")}
+                              </p>
+                              <div
+                                className="flex justify-between gap-1 items-center mt-2"
+                                style={{ fontSize: "12px" }}
+                              >
+                                <div className="flex items-center gap-1">
+                                  {book.rating} <Star />
+                                  <div>|</div>
+                                  {typeof book.review_count === "string"
+                                    ? parseInt(
+                                        book.review_count.replace(/,/g, ""),
+                                        10
+                                      ) >= 1000
+                                      ? parseFloat(
+                                          book.review_count
+                                            .replace(/,/g, "")
+                                            .replace("K", "")
+                                        ) >= 1000
+                                        ? (
+                                            parseFloat(
+                                              book.review_count
+                                                .replace(/,/g, "")
+                                                .replace("K", "")
+                                            ) / 1000
+                                          ).toFixed(1) + "K"
+                                        : book.review_count.replace(/,/g, "")
+                                      : book.review_count
+                                    : book.review_count}{" "}
+                                  <Community />
+                                </div>
+                                <div>
+                                 {isLoggedIn && <button
+                                    className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                                    style={{ border: "2px solid " }}
+                                    onClick={() => addToReadList(book.isbn)}
+                                  >
+                                    WISH
+                                  </button>}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          ))}
+      </div>
+    </>
+  );
 };
 
 export default BrowseLibrary;

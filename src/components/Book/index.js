@@ -17,7 +17,10 @@ import "@splidejs/react-splide/css";
 import devUrls from "../../utils/devUrls";
 import ReadMore from "react-read-more-read-less";
 
+import price from "../../csvjson.json";
 const Book = () => {
+
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -28,7 +31,7 @@ const Book = () => {
   const [similarBooks, setSimilarBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [authorsList, setAuthorsList] = useState(null);
-
+  const prices = price.filter((item) => item.ISBN == isbn);
   const getBook = async () => {
     try {
       const response = await axios.get(urls.getBooks, {
@@ -176,18 +179,37 @@ const Book = () => {
           </div>
 
           {authorsList && (
-            <div className="flex gap-2 text-[20px] mt-4 font-semibold items-center">
+            <div className="flex gap-2 categories text-[20px] mt-4 font-semibold items-center">
               Authors:
               {authorsList.map((author, key) => (
                 <h1
                   key={author.id}
-                  className="categories"
+                  className="category "
                 >
                   <Link to={`/author/${author}`}>{author}</Link>
                 </h1>
               ))}
             </div>
           )}
+         {
+          <div className=" flex flex-col category">
+                  {prices[0].BoardBook >2 && (
+                    <div className="  font-bold  category">
+                     Amazon BoardBook Price ₹ {prices[0].BoardBook}
+                    </div>
+                  )}
+                  {prices[0].Paperback > 2 && (
+                    <div className=" font-bold  category">
+                      Amazon PaperBack Price ₹ {prices[0].Paperback}
+                    </div>
+                  )}
+                  {prices[0].Hardcover >2 && (
+                    <div className="  font-bold categories">
+                      Amazon HardCover Price ₹ {prices[0].Hardcover}
+                    </div>
+                  )}
+                </div>
+ } 
 
           {book.description && (
             <div className="description">

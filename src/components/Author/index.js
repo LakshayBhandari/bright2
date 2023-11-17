@@ -1,16 +1,21 @@
 import React ,{useState,useEffect}from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Star from '../../icons/Star';
 import price from "../../csvjson.json";
 import data from "../../data.json";
+import {  useSelector } from "react-redux";
+
 const Author = () => {
+  const navigate = useNavigate();
     const params = useParams();
     console.log(params.author);
     const decodedAuthor = decodeURIComponent(params.author);
     const seriesBook = data.filter((item) => item.Author === decodedAuthor + " ");
-  
+    const {
+      main: { isLoggedIn },
+    } = useSelector((state) => state);
     const initialExpandedState = Array(seriesBook.length).fill(false);
     const [expanded, setExpanded] = useState(initialExpandedState);
     const [authorBooks, setAuthorBooks] = useState(null);
@@ -111,7 +116,7 @@ const Author = () => {
                 <>
                   <div className="flex gap-4 md:gap-32 lg:gap-44">
                     <img
-                     // onClick={() => router.push(`/books/${book.isbn}`)}
+                     onClick={() => navigate(`/book/${book.isbn}`)}
                       className="h-36 md:h-64  cursor-pointer"
                       src={book.image}
                     />
@@ -136,11 +141,12 @@ const Author = () => {
                           <> ({book.review_count}) Reviews</>
                         </h1>
                       </div>
-                      <button 
+                     {isLoggedIn && <button 
                       onClick={()=>addToReadList(book.isbn)}
-                      className=" font-bold  tracking-widest p-[0.1rem] w-48 rounded text-[#FFD700] border-[#FFD700] text-[16px] border">
+                      style={{border:"1px solid #ffd700"}}
+                      className=" font-bold  tracking-widest p-[0.1rem] w-48 rounded text-[#FFD700] border-[#FFD700] text-[16px] border" >
                         ADD TO Wishlist
-                      </button>
+                      </button>}
                       <div
                         className={`text-[12px] md:text-[16px] md:w-[30vw] lg:w-[50vw] ${
                           expanded[index] ? "" : "line-clamp-3"
@@ -161,8 +167,8 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .BoardBook >2500 && (
-                          <div className="text-[16px] ">
+                          .BoardBook > 2&& (
+                          <div className="text-[16px] font-bold" >
                             Amazon Price (BoardBook):{" "}₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
@@ -173,8 +179,8 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .Hardcover >2500&& (
-                          <div className="text-[16px] ">
+                          .Hardcover >2&& (
+                          <div className="text-[16px] font-bold">
                             Amazon Price (Hardcover):{" "}₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
@@ -185,8 +191,8 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .Paperback >2500&& (
-                          <div className="text-[16px] ">
+                          .Paperback >2&& (
+                          <div className="text-[16px] font-bold">
                             Amazon Price (Paperback):{" "}₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
