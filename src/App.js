@@ -21,6 +21,7 @@ import devUrls from './utils/devUrls';
 import axios from 'axios';
 import Author from './components/Author';
 import './index.css'
+import Series from './components/Series';
 const App = () => {
 	const { book: {loading}, main: { alert, isLoggedIn } } = useSelector(state => state);
 	const location = useLocation();
@@ -71,6 +72,7 @@ const App = () => {
 				<Route path="/browse-library" element={<BrowseLibrary />} />
 				<Route path="/book/:isbn" element={<Book />} />
 				<Route path="/author/:author" element={<Author />} />
+				<Route path="/series/:series" element={<Series />} />
 				<Route path="/search-books" element={<SearchBooks />} />
 				<Route path='/your-library' element={isLoggedIn ? <YourLibrary /> : <Navigate to='/'/>}/>
 				<Route path="/forgot-password" element={isLoggedIn ? <Navigate to='/'/> : <ForgotPassword />} />
