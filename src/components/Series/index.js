@@ -7,6 +7,7 @@ import price from "../../csvjson.json";
 import data from "../../data.json";
 
 import {  useSelector } from "react-redux";
+import { Toaster, toast } from 'react-hot-toast';
 const Series = () => {
   const navigate = useNavigate();
     console.log(1)
@@ -73,7 +74,7 @@ const Series = () => {
           isbnData,
           { withCredentials: true }
         );
-      //  toast.success('Added to WishList')
+      toast.success('Added to WishList')
         
       } catch (error) {
         console.error()
@@ -223,7 +224,8 @@ const Series = () => {
           </div>
         </div>
       )}
-     
+     <Toaster
+/>
     </div>
   )
 }

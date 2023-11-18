@@ -6,6 +6,7 @@ import Star from '../../icons/Star';
 import price from "../../csvjson.json";
 import data from "../../data.json";
 import {  useSelector } from "react-redux";
+import { Toaster ,toast} from 'react-hot-toast';
 
 const Author = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const Author = () => {
             isbnData,
             { withCredentials: true }
           );
-         // toast.success('Added to WishList')
+          toast.success('Added to WishList')
           
         } catch (error) {
           console.error()
@@ -210,6 +211,7 @@ const Author = () => {
           </div>
         </div>
       )}
+      <Toaster/>
      
     </div>
   )

@@ -10,6 +10,7 @@ import Community from "../../icons/Community";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast ,Toaster} from "react-hot-toast";
 const BrowseLibrary = () => {
   const ageRefs = Array(13)
     .fill(null)
@@ -182,8 +183,8 @@ const BrowseLibrary = () => {
           return updatedMap;
         });
 
-        // Show success toast only if the book is added to the wishlist
-        // toast.success("Added to readlist");
+       
+        toast.success("Added to readlist");
       } else {
         // If the book is already in the wishlist, make the API call to remove
 
@@ -206,8 +207,8 @@ const BrowseLibrary = () => {
             return updatedMap;
           });
 
-          // Show an error toast
-          //   toast.error("Removed From Readlist");
+           
+          toast.error("Removed From Readlist");
         } catch (error) {
           console.error(error);
         }
@@ -977,6 +978,7 @@ const BrowseLibrary = () => {
             </div>
           ))}
       </div>
+      <Toaster/>
     </>
   );
 };
