@@ -40,7 +40,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       try {
         const response = await axios.get(
-          `https://server.brightr.club/api_v2/get-wishlists?guid=${userIdState}`,
+          `http://localhost:5000//api_v2/get-wishlists?guid=${userIdState}`,
           { withCredentials: true }
         );
         setWishListBooks(response.data.wishlists);
@@ -62,7 +62,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       try {
         const response = await axios.get(
-          `https://server.brightr.club/api_v2/get-previous-books?guid=${userIdState}`,
+          `http://localhost:5000//api_v2/get-previous-books?guid=${userIdState}`,
           { withCredentials: true }
         );
         setpreviousBooks(response.data.books);
@@ -87,7 +87,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `https://server.brightr.club/api_v2_books/getTopBooksByReviewCount?age=${ageFilter}`,
+        `http://localhost:5000//api_v2_books/getTopBooksByReviewCount?age=${ageFilter}`,
         { withCredentials: true }
       );
       setTopBooks(response.data.top_books_by_review_count);
@@ -100,7 +100,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `https://server.brightr.club/api_v2_books/getGlobalBestsellersByAge?age=${ageFilter}`,
+        `http://localhost:5000//api_v2_books/getGlobalBestsellersByAge?age=${ageFilter}`,
         { withCredentials: true }
       );
       setBestSellers(response.data.global_bestsellers_by_age);
@@ -113,7 +113,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `https://server.brightr.club/api_v2_books/getTeacherPicksByAge?age=${ageFilter}`,
+        `http://localhost:5000//api_v2_books/getTeacherPicksByAge?age=${ageFilter}`,
         { withCredentials: true }
       );
       setTeachersPick(response.data.teacher_picks_by_age);
@@ -125,7 +125,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `https://server.brightr.club/api_v2_books/get-must-read-set?category_count=7&book_count=6&section_name=Most+Searched+Tags&randomize_categories=true&age=${ageFilter}&show_unavailable=true`,
+        `http://localhost:5000//api_v2_books/get-must-read-set?category_count=7&book_count=6&section_name=Most+Searched+Tags&randomize_categories=true&age=${ageFilter}&show_unavailable=true`,
         { withCredentials: true }
       );
       setTags(response.data);
@@ -138,7 +138,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `https://server.brightr.club/api_v2_books/get-books-by-genre?age=${ageFilter}&start=0&end=3`,
+        `http://localhost:5000//api_v2_books/get-books-by-genre?age=${ageFilter}&start=0&end=3`,
         { withCredentials: true }
       );
       setGenre(response.data.book_set);
@@ -266,11 +266,8 @@ const BrowseLibrary = () => {
             >
               {previousBooks &&
                 topBooks
-                  .sort((a, b) =>
-                    previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-                      ? 1
-                      : -1
-                  )
+                .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn))
+                .slice(0,10)
                   .map((book, index) => (
                     <div
                       key={book.isbn}
@@ -360,6 +357,7 @@ const BrowseLibrary = () => {
           </>
         )}
       </div>
+
       {/*
 		<div>
 		  <div
@@ -463,17 +461,15 @@ const BrowseLibrary = () => {
             }`}
           >
             {bestSeller
-              .sort((a, b) =>
-                previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-                  ? 1
-                  : -1
-              )
+               .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn))
+               .slice(0,10)
               .map((book, index) => (
                 <div
                   key={book.isbn}
                   className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
                 >
                   <div className="relative">
+                    ueufi
                     <div className="absolute bottom-[-20px] left-0">
                       <span className="text-[50px] font-semibold relative">
                         <span
@@ -563,11 +559,7 @@ const BrowseLibrary = () => {
             }`}
           >
             {teachersPick
-              .sort((a, b) =>
-                previousBooks.some((prevBook) => prevBook.isbn === a.isbn)
-                  ? 1
-                  : -1
-              )
+              .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
               .map((book, index) => (
                 <div
                   key={book.isbn}
@@ -701,7 +693,7 @@ const BrowseLibrary = () => {
                             </div>
                           )}
                           <img
-                            className={`flex h-[190px] content-center overflow-hidden object-fill ${
+                            className={`flex h-[190px] min-w-[12vw] content-center overflow-hidden object-fill ${
                               book.stock_available === 0 && loginState
                                 ? "filter grayscale"
                                 : ""
@@ -773,13 +765,7 @@ const BrowseLibrary = () => {
                         }`}
                       >
                         {bestSeller
-                          .sort((a, b) =>
-                            previousBooks.some(
-                              (prevBook) => prevBook.isbn === a.isbn
-                            )
-                              ? 1
-                              : -1
-                          )
+                          .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
                           .map((book, index) => (
                             <div
                               key={book.isbn}
@@ -882,13 +868,7 @@ const BrowseLibrary = () => {
                         }`}
                       >
                         {teachersPick
-                          .sort((a, b) =>
-                            previousBooks.some(
-                              (prevBook) => prevBook.isbn === a.isbn
-                            )
-                              ? 1
-                              : -1
-                          )
+                          .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
                           .map((book, index) => (
                             <div
                               key={book.isbn}
