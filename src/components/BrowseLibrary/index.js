@@ -40,7 +40,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       try {
         const response = await axios.get(
-          `http://localhost:5000//api_v2/get-wishlists?guid=${userIdState}`,
+          `https://server.brightr.club/api_v2/get-wishlists?guid=${userIdState}`,
           { withCredentials: true }
         );
         setWishListBooks(response.data.wishlists);
@@ -62,7 +62,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       try {
         const response = await axios.get(
-          `http://localhost:5000//api_v2/get-previous-books?guid=${userIdState}`,
+          `https://server.brightr.club/api_v2/get-previous-books?guid=${userIdState}`,
           { withCredentials: true }
         );
         setpreviousBooks(response.data.books);
@@ -87,7 +87,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000//api_v2_books/getTopBooksByReviewCount?age=${ageFilter}`,
+        `https://server.brightr.club/api_v2_books/getTopBooksByReviewCount?age=${ageFilter}`,
         { withCredentials: true }
       );
       setTopBooks(response.data.top_books_by_review_count);
@@ -100,7 +100,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000//api_v2_books/getGlobalBestsellersByAge?age=${ageFilter}`,
+        `https://server.brightr.club/api_v2_books/getGlobalBestsellersByAge?age=${ageFilter}`,
         { withCredentials: true }
       );
       setBestSellers(response.data.global_bestsellers_by_age);
@@ -113,7 +113,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000//api_v2_books/getTeacherPicksByAge?age=${ageFilter}`,
+        `https://server.brightr.club/api_v2_books/getTeacherPicksByAge?age=${ageFilter}`,
         { withCredentials: true }
       );
       setTeachersPick(response.data.teacher_picks_by_age);
@@ -125,7 +125,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000//api_v2_books/get-must-read-set?category_count=7&book_count=6&section_name=Most+Searched+Tags&randomize_categories=true&age=${ageFilter}&show_unavailable=true`,
+        `https://server.brightr.club/api_v2_books/get-must-read-set?category_count=7&book_count=6&section_name=Most+Searched+Tags&randomize_categories=true&age=${ageFilter}&show_unavailable=true`,
         { withCredentials: true }
       );
       setTags(response.data);
@@ -138,7 +138,7 @@ const BrowseLibrary = () => {
     async function fetchBookSet() {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000//api_v2_books/get-books-by-genre?age=${ageFilter}&start=0&end=3`,
+        `https://server.brightr.club/api_v2_books/get-books-by-genre?age=${ageFilter}&start=0&end=3`,
         { withCredentials: true }
       );
       setGenre(response.data.book_set);
