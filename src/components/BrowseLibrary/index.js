@@ -469,7 +469,7 @@ const BrowseLibrary = () => {
                   className="cursor-pointer bg-white flex flex-col max-w-[250px] p-[1rem] relative"
                 >
                   <div className="relative">
-                    ueufi
+                   
                     <div className="absolute bottom-[-20px] left-0">
                       <span className="text-[50px] font-semibold relative">
                         <span
