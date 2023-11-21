@@ -47,7 +47,7 @@ const BrowseLibrary = () => {
 
 	const loadMore = () => {
 		if (loadMoreRef.current) 
-			if (window.innerHeight + window.scrollY >= loadMoreRef.current.offsetTop) dispatch(increaseBookSetLimit());
+		if (window.innerHeight + window.scrollY >= loadMoreRef.current.offsetTop) dispatch(increaseBookSetLimit());
 	};
 
 	useEffect(() => {

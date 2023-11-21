@@ -1,22 +1,21 @@
 .book-slider {
-  
   margin: 1.5rem auto;
-  max-width: 100%;
-  cursor: grab;
-  > h3 {
+max-width: 100%;cursor: grab;  >h3 {
     font-family: Ubuntu;
     text-align: center;
     padding: 0.5rem 0px 2rem 0px;
   }
-  * {
+
+  *{
     scroll-behavior: smooth !important;
   }
+
   .books {
-    
     background: rgba(66, 133, 244, 0.1);
     position: relative;
     padding: 1rem 3rem;
-    > svg {
+
+    >svg {
       position: absolute;
       font-size: 1.5rem;
       top: calc(50% - 0.75rem);
@@ -30,10 +29,12 @@
       color: black;
       left: 0.5rem;
     }
+
     .right-arrow {
       color: black;
       right: 0.5rem;
     }
+
     .book-list {
       display: inline-flex;
       margin: 0.5rem auto;
@@ -43,11 +44,13 @@
       padding-top: 1rem;
       min-width: 100%;
       max-width: auto;
+
       .loading {
         border-color: #4285f4 #4285f4 transparent transparent;
         margin: 1rem 0px;
         align-self: center;
       }
+
       .book {
         width: 220px;
         position: relative;
@@ -58,7 +61,8 @@
         flex-direction: column;
         gap: 0.5rem;
         max-width: 250px;
-        > p {
+
+        >p {
           display: -webkit-box;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -66,32 +70,38 @@
           -webkit-box-orient: vertical;
           font-size: 1rem;
         }
+
         .book-image {
           overflow: hidden;
           display: flex;
           justify-content: center;
           height: 190px;
-          > img {
+
+          >img {
             height: 190px;
           }
         }
+
         .book-details {
           margin-top: auto;
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: 1rem;
+
           .book-detail {
             display: flex;
             align-items: center;
             gap: 0.5rem;
           }
+
           &:nth-child(2) {
             p {
               color: #4285f4;
             }
           }
         }
+
         .book-overlay {
           transition: 0.3s all ease;
           opacity: 0;
@@ -106,17 +116,14 @@
           gap: 1rem;
           left: 0px;
           top: 0px;
-          font-size: 0.8rem;
+          font-size: 0.8rem;         
           .book-overlay-action {
             background-color: green;
             display: flex;
             gap: 5px;
             padding: 5%;
             border-radius: 12px;
-            align-items: center;
-            justify-content: center;
-          }
-          > * {
+            align-items: center;justify-content: center;}          >* {
             color: #ffffff;
           }
           .vertical-button {

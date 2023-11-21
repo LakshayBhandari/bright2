@@ -6,7 +6,6 @@ import {
   UserIdState,
 } from "../../recoilContextProvider";
 import Star from "../../icons/Star";
-import Community from "../../icons/Community";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -224,7 +223,7 @@ const BrowseLibraryByGenre = () => {
       >
         Select By Age
       </h1>
-      <div className="mx-2 md:mx-24">
+      <div className="mx-2 md:mx-20">
         <div
           id="book-slider"
           className="mt-4 w-full h-[150px] flex gap-8 overflow-x-auto"
@@ -248,8 +247,10 @@ const BrowseLibraryByGenre = () => {
                 }}
                 onClick={() => handleAgeClick(index)}
               >
-                <div>{index}+</div>
-                <div>Age</div>
+                <div className=" text-[24px]">
+                  {index} - {index + 1}
+                </div>
+                <div className=" text-[14.4px]">Years</div>
               </div>
             ))}
         </div>
@@ -368,7 +369,7 @@ const BrowseLibraryByGenre = () => {
         )}
       </div>
 
-      {/*
+  {/*
 		<div>
 		  <div
 			id="book-slider"
@@ -399,14 +400,7 @@ const BrowseLibraryByGenre = () => {
 					bookSeries.books.length < 6 ? "justify-center" : ""
 				  }`}
 				>
-				  {bookSeries.books.map((book) => (
-					<div
-					  key={book.isbn}
-					  className="cursor-pointer bg-white flex flex-col min-w-[220px]  p-[1rem] relative "
-					  
-					>
-					  <img
-						
+				  {bookSeries.books.map((book) => (<div  key={book.isbn}className="cursor-pointer bg-white flex flex-col min-w-[220px]  p-[1rem] relative ">            <img	
 						onClick={() => navigate(`/book/${book.isbn}`)}
 						className="flex   h-[190px] content-center overflow-hidden object-fill"
 						src={book.image}
@@ -902,7 +896,7 @@ const BrowseLibraryByGenre = () => {
                       </h1>
 
                       <div
-                        id="book-slider"
+                      id="book-slider"
                         className={`scrollbar-hide md:w-98 overflow-auto gap-4 flex px-1 md:px-[3rem] py-[1rem] bg-[#ecf3fe] ${
                           topBooks.length < 6 ? "justify-center" : ""
                         }`}
