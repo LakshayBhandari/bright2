@@ -10,7 +10,7 @@ import Community from "../../icons/Community";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast ,Toaster} from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 const BrowseLibraryByGenre = () => {
   const ageRefs = Array(13)
     .fill(null)
@@ -183,7 +183,6 @@ const BrowseLibraryByGenre = () => {
           return updatedMap;
         });
 
-       
         toast.success("Added to readlist");
       } else {
         // If the book is already in the wishlist, make the API call to remove
@@ -207,7 +206,6 @@ const BrowseLibraryByGenre = () => {
             return updatedMap;
           });
 
-           
           toast.error("Removed From Readlist");
         } catch (error) {
           console.error(error);
@@ -242,9 +240,12 @@ const BrowseLibraryByGenre = () => {
                     ? "bg-[#4285f4] text-white"
                     : "bg-[#DBDBDB] text-black "
                 }`}
-               
-                style={{boxShadow:"0px 3px 3px rgba(0, 0, 0, 0.2)",border:`1px solid ${index === selectedAge ? "#2a6ddc" :"c5c5c5"}`}}
-                
+                style={{
+                  boxShadow: "0px 3px 3px rgba(0, 0, 0, 0.2)",
+                  border: `1px solid ${
+                    index === selectedAge ? "#2a6ddc" : "c5c5c5"
+                  }`,
+                }}
                 onClick={() => handleAgeClick(index)}
               >
                 <div>{index}+</div>
@@ -252,8 +253,6 @@ const BrowseLibraryByGenre = () => {
               </div>
             ))}
         </div>
-
-        
       </div>
 
       <div>
@@ -271,12 +270,17 @@ const BrowseLibraryByGenre = () => {
             >
               {previousBooks &&
                 topBooks
-                .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn))
-                .slice(0,10)
+                  .filter(
+                    (book) =>
+                      !previousBooks.some(
+                        (prevBook) => prevBook.isbn === book.isbn
+                      )
+                  )
+                  .slice(0, 10)
                   .map((book, index) => (
                     <div
                       key={book.isbn}
-                      className="cursor-pointer bg-white flex flex-col min-w-[15vw] p-[1rem] relative"
+                      className="cursor-pointer bg-white flex flex-col min-w-[220px] p-[1rem] relative"
                     >
                       <div className="relative">
                         <div className="absolute bottom-[-20px] left-0">
@@ -301,7 +305,6 @@ const BrowseLibraryByGenre = () => {
                         )}
                         <img
                           onClick={() => navigate(`/book/${book.isbn}`)}
-                          style={{ maxWidth: "800px" }}
                           className="flex h-[190px] content-center overflow-hidden object-fill"
                           src={book.image}
                           alt={"book_name"}
@@ -339,21 +342,23 @@ const BrowseLibraryByGenre = () => {
                                 : book.review_count.replace(/,/g, "")
                               : book.review_count
                             : book.review_count}{" "}
-                          <Community />{" "}
+                          <img src="/icons/reviews.png" alt="Reviews" />{" "}
                         </div>
                         <div>
-                          {isLoggedIn &&<button
-                            className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
-                              wishClickedMap[book.isbn]
-                                ? "text-gray-500 border-gray-500"
-                                : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
-                            } border`}
-                            style={{ border: "2px solid " }}
-                            onClick={() => addToReadList(book.isbn)}
-                          >
-                            {" "}
-                            WISH{" "}
-                          </button>}
+                          {isLoggedIn && (
+                            <button
+                              className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                                wishClickedMap[book.isbn]
+                                  ? "text-gray-500 border-gray-500"
+                                  : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                              } border`}
+                              style={{ border: "2px solid " }}
+                              onClick={() => addToReadList(book.isbn)}
+                            >
+                              {" "}
+                              WISH{" "}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -397,11 +402,11 @@ const BrowseLibraryByGenre = () => {
 				  {bookSeries.books.map((book) => (
 					<div
 					  key={book.isbn}
-					  className="cursor-pointer bg-white flex flex-col min-w-[15vw]  p-[1rem] relative "
+					  className="cursor-pointer bg-white flex flex-col min-w-[220px]  p-[1rem] relative "
 					  
 					>
 					  <img
-						style={{ maxWidth: "800px" }}
+						
 						onClick={() => navigate(`/book/${book.isbn}`)}
 						className="flex   h-[190px] content-center overflow-hidden object-fill"
 						src={book.image}
@@ -435,7 +440,7 @@ const BrowseLibraryByGenre = () => {
 								: book.review_count.replace(/,/g, "")
 							  : book.review_count
 							: book.review_count}{" "}
-						  <Community />
+						  <img src='/icons/reviews.png' alt='Reviews' />
 						</div>
 						<div>
 						  <button
@@ -466,15 +471,17 @@ const BrowseLibraryByGenre = () => {
             }`}
           >
             {bestSeller
-               .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn))
-               .slice(0,10)
+              .filter(
+                (book) =>
+                  !previousBooks.some((prevBook) => prevBook.isbn === book.isbn)
+              )
+              .slice(0, 10)
               .map((book, index) => (
                 <div
                   key={book.isbn}
-                  className="cursor-pointer bg-white flex flex-col min-w-[15vw] p-[1rem] relative"
+                  className="cursor-pointer bg-white flex flex-col min-w-[220px] p-[1rem] relative"
                 >
                   <div className="relative">
-                   
                     <div className="absolute bottom-[-20px] left-0">
                       <span className="text-[50px] font-semibold relative">
                         <span
@@ -498,7 +505,6 @@ const BrowseLibraryByGenre = () => {
 
                     <img
                       onClick={() => navigate(`/book/${book.isbn}`)}
-                      style={{ maxWidth: "800px" }}
                       className="flex h-[190px] content-center overflow-hidden object-fill"
                       src={book.image}
                       alt={"book_name"}
@@ -533,16 +539,23 @@ const BrowseLibraryByGenre = () => {
                             : book.review_count.replace(/,/g, "")
                           : book.review_count
                         : book.review_count}{" "}
-                      <Community />
+                      <img src="/icons/reviews.png" alt="Reviews" />
                     </div>
                     <div>
-                     {isLoggedIn && <button
-                        className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-                        style={{ border: "2px solid " }}
-                        onClick={() => addToReadList(book.isbn)}
-                      >
-                        WISH
-                      </button>}
+                      {isLoggedIn && (
+                        <button
+                          className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                            wishClickedMap[book.isbn]
+                              ? "text-gray-500 border-gray-500"
+                              : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                          } border`}
+                          style={{ border: "2px solid " }}
+                          onClick={() => addToReadList(book.isbn)}
+                        >
+                          {" "}
+                          WISH{" "}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -564,11 +577,15 @@ const BrowseLibraryByGenre = () => {
             }`}
           >
             {teachersPick
-              .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
+              .filter(
+                (book) =>
+                  !previousBooks.some((prevBook) => prevBook.isbn === book.isbn)
+              )
+              .slice(0, 10)
               .map((book, index) => (
                 <div
                   key={book.isbn}
-                  className="cursor-pointer bg-white flex flex-col min-w-[15vw] p-[1rem] relative"
+                  className="cursor-pointer bg-white flex flex-col min-w-[220px] p-[1rem] relative"
                 >
                   <div className="relative">
                     <div className="absolute bottom-[-20px] left-0">
@@ -593,7 +610,6 @@ const BrowseLibraryByGenre = () => {
                     )}
                     <img
                       onClick={() => navigate(`/book/${book.isbn}`)}
-                      style={{ maxWidth: "800px" }}
                       className="flex h-[190px] content-center overflow-hidden object-fill"
                       src={book.image}
                       alt={"book_name"}
@@ -628,16 +644,18 @@ const BrowseLibraryByGenre = () => {
                             : book.review_count.replace(/,/g, "")
                           : book.review_count
                         : book.review_count}{" "}
-                      <Community />
+                      <img src="/icons/reviews.png" alt="Reviews" />
                     </div>
                     <div>
-                      {isLoggedIn && <button
-                        className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-                        style={{ border: "2px solid " }}
-                        onClick={() => addToReadList(book.isbn)}
-                      >
-                        WISH
-                      </button>}
+                      {isLoggedIn && (
+                        <button
+                          className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
+                          style={{ border: "2px solid " }}
+                          onClick={() => addToReadList(book.isbn)}
+                        >
+                          WISH
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -684,7 +702,7 @@ const BrowseLibraryByGenre = () => {
                       .map((book) => (
                         <div
                           key={book.isbn}
-                          className={`cursor-pointer bg-white flex flex-col min-w-[15vw]  p-[1rem] relative ${
+                          className={`cursor-pointer bg-white flex flex-col min-w-[220px]  p-[1rem] relative ${
                             book.stock_available === 0 && loginState
                               ? "filter grayscale"
                               : ""
@@ -737,16 +755,23 @@ const BrowseLibraryByGenre = () => {
                                     : book.review_count.replace(/,/g, "")
                                   : book.review_count
                                 : book.review_count}{" "}
-                              <Community />
+                              <img src="/icons/reviews.png" alt="Reviews" />
                             </div>
                             <div>
-                             {isLoggedIn && <button
-                                className=" font-bold  tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-                                style={{ border: "2px solid " }}
-                                onClick={() => addToReadList(book.isbn)}
-                              >
-                                WISH
-                              </button>}
+                              {isLoggedIn && (
+                                <button
+                                  className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                                    wishClickedMap[book.isbn]
+                                      ? "text-gray-500 border-gray-500"
+                                      : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                                  } border`}
+                                  style={{ border: "2px solid " }}
+                                  onClick={() => addToReadList(book.isbn)}
+                                >
+                                  {" "}
+                                  WISH{" "}
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -770,11 +795,17 @@ const BrowseLibraryByGenre = () => {
                         }`}
                       >
                         {bestSeller
-                          .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
+                          .filter(
+                            (book) =>
+                              !previousBooks.some(
+                                (prevBook) => prevBook.isbn === book.isbn
+                              )
+                          )
+                          .slice(0, 10)
                           .map((book, index) => (
                             <div
                               key={book.isbn}
-                              className="cursor-pointer bg-white flex flex-col min-w-[15vw] p-[1rem] relative"
+                              className="cursor-pointer bg-white flex flex-col min-w-[220px] p-[1rem] relative"
                             >
                               <div className="relative">
                                 <div className="absolute bottom-[-20px] left-0">
@@ -798,10 +829,7 @@ const BrowseLibraryByGenre = () => {
                                   </div>
                                 )}
                                 <img
-                                  onClick={() =>
-                                    navigate(`/book/${book.isbn}`)
-                                  }
-                                  style={{ maxWidth: "800px" }}
+                                  onClick={() => navigate(`/book/${book.isbn}`)}
                                   className="flex h-[190px] content-center overflow-hidden object-fill"
                                   src={book.image}
                                   alt={"book_name"}
@@ -838,16 +866,23 @@ const BrowseLibraryByGenre = () => {
                                         : book.review_count.replace(/,/g, "")
                                       : book.review_count
                                     : book.review_count}{" "}
-                                  <Community />
+                                  <img src="/icons/reviews.png" alt="Reviews" />
                                 </div>
                                 <div>
-                                 {isLoggedIn && <button
-                                    className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-                                    style={{ border: "2px solid " }}
-                                    onClick={() => addToReadList(book.isbn)}
-                                  >
-                                    WISH
-                                  </button>}
+                                  {isLoggedIn && (
+                                    <button
+                                      className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                                        wishClickedMap[book.isbn]
+                                          ? "text-gray-500 border-gray-500"
+                                          : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                                      } border`}
+                                      style={{ border: "2px solid " }}
+                                      onClick={() => addToReadList(book.isbn)}
+                                    >
+                                      {" "}
+                                      WISH{" "}
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -873,11 +908,17 @@ const BrowseLibraryByGenre = () => {
                         }`}
                       >
                         {teachersPick
-                          .filter(book => !previousBooks.some(prevBook => prevBook.isbn === book.isbn)).slice(0,10)
+                          .filter(
+                            (book) =>
+                              !previousBooks.some(
+                                (prevBook) => prevBook.isbn === book.isbn
+                              )
+                          )
+                          .slice(0, 10)
                           .map((book, index) => (
                             <div
                               key={book.isbn}
-                              className="cursor-pointer bg-white flex flex-col min-w-[15vw] p-[1rem] relative"
+                              className="cursor-pointer bg-white flex flex-col min-w-[220px] p-[1rem] relative"
                             >
                               <div className="relative">
                                 <div className="absolute bottom-[-20px] left-0">
@@ -904,7 +945,6 @@ const BrowseLibraryByGenre = () => {
                                   onClick={() =>
                                     navigate(`/books/${book.isbn}`)
                                   }
-                                  style={{ maxWidth: "800px" }}
                                   className="flex h-[190px] content-center overflow-hidden object-fill"
                                   src={book.image}
                                   alt={"book_name"}
@@ -941,16 +981,23 @@ const BrowseLibraryByGenre = () => {
                                         : book.review_count.replace(/,/g, "")
                                       : book.review_count
                                     : book.review_count}{" "}
-                                  <Community />
+                                  <img src="/icons/reviews.png" alt="Reviews" />
                                 </div>
                                 <div>
-                                 {isLoggedIn && <button
-                                    className="font-bold tracking-widest p-[0.1rem] w-16 rounded text-[#FFCE44] border-[#FFCE44] text-[12px] border"
-                                    style={{ border: "2px solid " }}
-                                    onClick={() => addToReadList(book.isbn)}
-                                  >
-                                    WISH
-                                  </button>}
+                                  {isLoggedIn && (
+                                    <button
+                                      className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
+                                        wishClickedMap[book.isbn]
+                                          ? "text-gray-500 border-gray-500"
+                                          : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                                      } border`}
+                                      style={{ border: "2px solid " }}
+                                      onClick={() => addToReadList(book.isbn)}
+                                    >
+                                      {" "}
+                                      WISH{" "}
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -963,7 +1010,7 @@ const BrowseLibraryByGenre = () => {
             </div>
           ))}
       </div>
-      <Toaster/>
+      <Toaster />
     </>
   );
 };
