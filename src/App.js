@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
+import BrowseLibraryByGenre from './components/BrowseLibrary/BrowseLibraryGenre';
 import BrowseLibrary from './components/BrowseLibrary';
 import YourLibrary from './components/YourLibrary';
 import MostPopular from './components/BrowseLibrary/MostPopular';
@@ -69,7 +70,8 @@ const App = () => {
 			<Routes>
 				<Route path="/must-read" element={<MustRead />} />
 				<Route path="/most-popular" element={<MostPopular />} />
-				<Route path="/browse-library" element={<BrowseLibrary />} />
+				<Route path="/browse-library-byseries" element={<BrowseLibrary />} /> 
+				<Route path="/browse-library-bygenre" element={<BrowseLibraryByGenre/>} />
 				<Route path="/book/:isbn" element={<Book />} />
 				<Route path="/author/:author" element={<Author />} />
 				<Route path="/series/:series" element={<Series />} />
