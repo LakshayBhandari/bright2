@@ -710,7 +710,7 @@ const BrowseLibraryByGenre = () => {
                             </div>
                           )}
                           <img
-                            className={`flex h-[190px] min-w-[12vw] content-center overflow-hidden object-fill ${
+                            className={`flex h-[190px]  content-center overflow-hidden object-fill ${
                               book.stock_available === 0 && loginState
                                 ? "filter grayscale"
                                 : ""
