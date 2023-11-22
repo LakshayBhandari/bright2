@@ -152,7 +152,7 @@ const Series = () => {
       }
     }
     fetchBookSet();
-  }, []);
+  }, [wishListBooks]);
   return (
     <div>
       {seriesBooks && (

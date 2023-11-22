@@ -72,7 +72,7 @@ const BookSlider = ({
       }
     }
     fetchBookSet();
-  }, []);
+  }, [wishListBooks]);
   const getWishlistDeliveryDate = (i, date) => {
     if (bucket.length)
       return getDate(
@@ -98,64 +98,47 @@ const BookSlider = ({
   }, [books]);
 
   const addToReadList = async (isbn) => {
-    const isbnData = {
-      isbn: isbn,
-    };
 
+    console.log(wishClickedMap)
+    console.log(wishListBooks)
+
+    const isbnData = { isbn: isbn };
     try {
-      // Check if the book is already in the wishlist
       const isBookInWishlist = wishListBooks.some((book) => book.isbn === isbn);
-
       if (!isBookInWishlist) {
-        // If the book is not in the wishlist, make the API call
         const response = await axios.post(
           `https://server.brightr.club/api_v2/add-to-wishlist`,
           isbnData,
           { withCredentials: true }
         );
-
-        // Update wishListBooks state with the new book
         setWishListBooks((prevBooks) => [...prevBooks, response.data]);
-
-        // Update wishClickedMap to mark the book as clicked
         setWishClickedMap((prevMap) => {
           const updatedMap = { ...prevMap };
           updatedMap[isbn] = true;
           return updatedMap;
         });
-
         toast.success("Added to readlist");
       } else {
-        // If the book is already in the wishlist, make the API call to remove
-
-        try {
-          const response = await axios.post(
-            `https://server.brightr.club/api_v2/wishlist-remove`,
-            isbnData,
-            { withCredentials: true }
-          );
-
-          // Update wishListBooks state by removing the book
-          setWishListBooks((prevBooks) =>
-            prevBooks.filter((book) => book.isbn !== isbn)
-          );
-
-          // Update wishClickedMap to mark the book as not clicked
-          setWishClickedMap((prevMap) => {
-            const updatedMap = { ...prevMap };
-            updatedMap[isbn] = false;
-            return updatedMap;
-          });
-
-          toast.error("Removed From Readlist");
-        } catch (error) {
-          console.error(error);
-        }
+        const response = await axios.post(
+          `https://server.brightr.club/api_v2/wishlist-remove`,
+          isbnData,
+          { withCredentials: true }
+        );
+        setWishListBooks((prevBooks) =>
+          prevBooks.filter((book) => book.isbn !== isbn)
+        );
+        setWishClickedMap((prevMap) => {
+          const updatedMap = { ...prevMap };
+          updatedMap[isbn] = false;
+          return updatedMap;
+        });
+        toast.error("Removed From Readlist");
       }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   return (
     <div className="book-slider">
@@ -226,11 +209,11 @@ const BookSlider = ({
                         )}
                       </div>
                       <div>
-                        {!isLoggedIn && (
+                        {isLoggedIn && (
                           <button
                             className={`font-bold tracking-widest p-[0.1rem] w-16 rounded ${
                               wishClickedMap[book.isbn]
-                                ? "text-gray-500 border-gray-500"
+                                ? "text-gray-500 border-gray-500 text-[12px]"
                                 : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
                             } border`}
                             style={{ border: "2px solid " }}
@@ -264,6 +247,7 @@ const BookSlider = ({
           )}
         </ScrollContainer>
       </div>
+      <Toaster/>
     </div>
   );
 };
