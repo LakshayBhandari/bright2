@@ -10,7 +10,7 @@ import { getDate } from "../../utils";
 import { toast, Toaster } from "react-hot-toast";
 import moment from "moment";
 import axios from "axios";
-
+import { useLocation } from "react-router-dom";
 import {
   LoginState,
   ageFilterState,
@@ -24,6 +24,8 @@ const BookSlider = ({
   overlay,
   showOverlay = true,
 }) => {
+
+  const location = useLocation();
   const {
     main: { user, isLoggedIn },
     wishlist: { bucket },
@@ -35,7 +37,7 @@ const BookSlider = ({
   );
   const [booksScroll, setBooksScroll] = useState(0);
   const booksRef = useRef(null);
-  
+
   const navigate = useNavigate();
   const [wishListBooks, setWishListBooks] = useState([]);
 
@@ -49,6 +51,7 @@ const BookSlider = ({
   };
 
   const [userIdState, setUserIdState] = useRecoilState(UserIdState);
+
   useEffect(() => {
     async function fetchBookSet() {
       try {
@@ -199,13 +202,12 @@ const BookSlider = ({
                     key={i}
                   >
                     <div className="book-image">
-                      <img 
-                      className=" cursor-pointer"
-                      onClick={() =>
-                        navigate(`/book/${book.isbn}`)
-                      }
-                      src={book.image} alt="Book" />
-                      
+                      <img
+                        className=" cursor-pointer"
+                        onClick={() => navigate(`/book/${book.isbn}`)}
+                        src={book.image}
+                        alt="Book"
+                      />
                     </div>
                     <p>{book.name.split(":")[0]}</p>
                     <div className="book-details">
@@ -245,6 +247,15 @@ const BookSlider = ({
                       (!book.stock_available ||
                         book.stock_available === 99) && (
                         <p className="all-copies-booked">All Copies Booked</p>
+                      )}
+                    { location.pathname==="/your-library" &&  showOverlay &&
+                      getOverlay(
+                        overlay,
+                        sectionBooks,
+                        book,
+                        i,
+                        dispatch,
+                        isLoggedIn
                       )}
                   </div>
                 );

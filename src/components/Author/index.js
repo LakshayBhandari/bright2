@@ -1,79 +1,147 @@
-import React ,{useState,useEffect}from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import Star from '../../icons/Star';
+import { Link } from "react-router-dom";
+import Star from "../../icons/Star";
 import price from "../../csvjson.json";
 import data from "../../data.json";
-import {  useSelector } from "react-redux";
-import { Toaster ,toast} from 'react-hot-toast';
-
+import { useSelector } from "react-redux";
+import { Toaster, toast } from "react-hot-toast";
+import {
+  LoginState,
+  ageFilterState,
+  UserIdState,
+} from "../../recoilContextProvider";
 const Author = () => {
   const navigate = useNavigate();
-    const params = useParams();
-    console.log(params.author);
-    const decodedAuthor = decodeURIComponent(params.author);
-    const seriesBook = data.filter((item) => item.Author === decodedAuthor + " ");
-    const {
-      main: { isLoggedIn },
-    } = useSelector((state) => state);
-    const initialExpandedState = Array(seriesBook.length).fill(false);
-    const [expanded, setExpanded] = useState(initialExpandedState);
-    const [authorBooks, setAuthorBooks] = useState(null);
+  const params = useParams();
+  const decodedAuthor = decodeURIComponent(params.author);
+  const seriesBook = data.filter((item) => item.Author === decodedAuthor + " ");
+  const {
+    main: { isLoggedIn },
+  } = useSelector((state) => state);
 
-    const toggleExpanded = (index) => {
-      const updatedExpanded = [...expanded];
-      updatedExpanded[index] = !updatedExpanded[index];
-      setExpanded(updatedExpanded);
-    };
+  const [wishClickedMap, setWishClickedMap] = useState({});
+  const [wishListBooks, setWishListBooks] = useState([]);
+  const initialExpandedState = Array(seriesBook.length).fill(false);
+  const [expanded, setExpanded] = useState(initialExpandedState);
+  const [authorBooks, setAuthorBooks] = useState(null);
+  const [userIdState, setUserIdState] = useRecoilState(UserIdState);
 
-    const limitDescription = (description, limit) => {
-      if (description) {
-        if (description.split(" ").length > limit) {
-          return description.split(" ").slice(0, limit).join(" ") + " ...";
-        }
-        return description;
-      } else {
-        return "";
+  const toggleExpanded = (index) => {
+    const updatedExpanded = [...expanded];
+    updatedExpanded[index] = !updatedExpanded[index];
+    setExpanded(updatedExpanded);
+  };
+
+  const limitDescription = (description, limit) => {
+    if (description) {
+      if (description.split(" ").length > limit) {
+        return description.split(" ").slice(0, limit).join(" ") + " ...";
       }
-    };
-  
-    useEffect(() => {
-      async function fetchBooks() {
+      return description;
+    } else {
+      return "";
+    }
+  };
+  useEffect(() => {
+    async function fetchBookSet() {
+      try {
         const response = await axios.get(
-          `https://server.brightr.club/api_v2_books/getBooksByAuthor?author=${params.author}`
+          `https://server.brightr.club/api_v2/get-wishlists?guid=${userIdState}`,
+          { withCredentials: true }
         );
-        setAuthorBooks(response.data.books);
+        setWishListBooks(response.data.wishlists);
+
+        // Initialize wishClickedMap based on books in the wishlist
+        const initialWishClickedMap = {};
+        response.data.wishlists.forEach((book) => {
+          initialWishClickedMap[book.isbn] = true;
+        });
+        setWishClickedMap(initialWishClickedMap);
+      } catch (error) {
+        console.error(error);
       }
-      fetchBooks();
-    }, []);
-  
-    const addToReadList = (isbn) => {
-      async function addToReadList(isbn) {
-        const isbnData = {
-          isbn: isbn,
-        };
+    }
+    fetchBookSet();
+  }, []);
+
+
+  useEffect(() => {
+    async function fetchBooks() {
+      const response = await axios.get(
+        `https://server.brightr.club/api_v2_books/getBooksByAuthor?author=${params.author}`
+      );
+      setAuthorBooks(response.data.books);
+    }
+    fetchBooks();
+  }, []);
+
+  const addToReadList = async (isbn) => {
+    const isbnData = {
+      isbn: isbn,
+    };
+    
+    try {
+      // Check if the book is already in the wishlist
+      const isBookInWishlist = wishListBooks.some((book) => book.isbn === isbn);
+
+      if (!isBookInWishlist) {
+        // If the book is not in the wishlist, make the API call
+        const response = await axios.post(
+          `https://server.brightr.club/api_v2/add-to-wishlist`,
+          isbnData,
+          { withCredentials: true }
+        );
+
+        // Update wishListBooks state with the new book
+        setWishListBooks((prevBooks) => [...prevBooks, response.data]);
+
+        // Update wishClickedMap to mark the book as clicked
+        setWishClickedMap((prevMap) => {
+          const updatedMap = { ...prevMap };
+          updatedMap[isbn] = true;
+          return updatedMap;
+        });
+
+        toast.success("Added to readlist");
+      } else {
+        // If the book is already in the wishlist, make the API call to remove
+
         try {
           const response = await axios.post(
-            `https://server.brightr.club/api_v2/add-to-wishlist`,
+            `https://server.brightr.club/api_v2/wishlist-remove`,
             isbnData,
             { withCredentials: true }
           );
-          toast.success('Added to WishList')
-          
+
+          // Update wishListBooks state by removing the book
+          setWishListBooks((prevBooks) =>
+            prevBooks.filter((book) => book.isbn !== isbn)
+          );
+
+          // Update wishClickedMap to mark the book as not clicked
+          setWishClickedMap((prevMap) => {
+            const updatedMap = { ...prevMap };
+            updatedMap[isbn] = false;
+            return updatedMap;
+          });
+
+          toast.error("Removed From Readlist");
         } catch (error) {
-          console.error()
+          console.error(error);
         }
-        
       }
-      addToReadList(isbn);
-    };
- 
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-     
       {authorBooks && (
-        <div className=" mt-4 mx-4 md:mx-10" >
+        <div className=" mt-4 mx-4 md:mx-10">
           <div className=" flex gap-10 md:gap-32 lg:gap-48">
             <div className="relative flex justify-center items-center ml-3 md:ml-0">
               <div className="flex justify-center relative ">
@@ -117,7 +185,7 @@ const Author = () => {
                 <>
                   <div className="flex gap-4 md:gap-32 lg:gap-44">
                     <img
-                     onClick={() => navigate(`/book/${book.isbn}`)}
+                      onClick={() => navigate(`/book/${book.isbn}`)}
                       className="h-36 md:h-64  cursor-pointer"
                       src={book.image}
                     />
@@ -142,12 +210,22 @@ const Author = () => {
                           <> ({book.review_count}) Reviews</>
                         </h1>
                       </div>
-                     {isLoggedIn && <button 
-                      onClick={()=>addToReadList(book.isbn)}
-                      style={{border:"1px solid #ffd700"}}
-                      className=" font-bold  tracking-widest p-[0.1rem] w-48 rounded text-[#FFD700] border-[#FFD700] text-[16px] border" >
-                        ADD TO Wishlist
-                      </button>}
+                      {isLoggedIn && (
+                        <button
+                          onClick={() => addToReadList(book.isbn)}
+                          style={{ border: `1px solid  ${ wishClickedMap[book.isbn]
+                            ? "#6b7820"
+                            : "#FFCE44"}` }}
+                          className={`font-bold  tracking-widest p-[0.1rem] w-48 rounded text-[#FFD700] border-[#FFD700] text-[16px] border first-letter first-letter
+                          ${
+                            wishClickedMap[book.isbn]
+                              ? "text-gray-500 border-gray-500"
+                              : "text-[#FFCE44] border-[#FFCE44] text-[12px]"
+                          }`}
+                        >
+                          ADD TO Wishlist
+                        </button>
+                      )}
                       <div
                         className={`text-[12px] md:text-[16px] md:w-[30vw] lg:w-[50vw] ${
                           expanded[index] ? "" : "line-clamp-3"
@@ -168,9 +246,9 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .BoardBook > 2&& (
-                          <div className="text-[16px] font-bold" >
-                            Amazon Price (BoardBook):{" "}₹
+                          .BoardBook > 2 && (
+                          <div className="text-[16px] font-bold">
+                            Amazon Price (BoardBook): ₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
                                 .BoardBook
@@ -180,9 +258,9 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .Hardcover >2&& (
+                          .Hardcover > 2 && (
                           <div className="text-[16px] font-bold">
-                            Amazon Price (Hardcover):{" "}₹
+                            Amazon Price (Hardcover): ₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
                                 .Hardcover
@@ -192,9 +270,9 @@ const Author = () => {
                       {book.isbn &&
                         price.find((item) => item.ISBN === book.isbn) &&
                         price.find((item) => item.ISBN === book.isbn)
-                          .Paperback >2&& (
+                          .Paperback > 2 && (
                           <div className="text-[16px] font-bold">
-                            Amazon Price (Paperback):{" "}₹
+                            Amazon Price (Paperback): ₹
                             {
                               price.find((item) => item.ISBN === book.isbn)
                                 .Paperback
@@ -211,10 +289,9 @@ const Author = () => {
           </div>
         </div>
       )}
-      <Toaster/>
-     
+      <Toaster />
     </div>
-  )
-}
+  );
+};
 
-export default Author
+export default Author;
